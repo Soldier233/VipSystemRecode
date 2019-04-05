@@ -35,5 +35,11 @@ public class ConfigManager {
         return config.getString("lang");
     }
 
+    public boolean isUsePool() {
+        return config.getBoolean("dataBase.usePool", true);
+    }
 
+    public boolean isUseMySQL() {
+        return config.getBoolean("dataBase.useMySQL", false);
+    }
 }
