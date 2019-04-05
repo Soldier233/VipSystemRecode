@@ -47,10 +47,6 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://www.jitpack.io</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -59,11 +55,6 @@
             <artifactId>spigot-api</artifactId>
             <version>1.12.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.gitee.Soldier233</groupId>
-            <artifactId>JdbcConnectionBridge</artifactId>
-            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>

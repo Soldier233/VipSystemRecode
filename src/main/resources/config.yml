@@ -1,1 +1,12 @@
-lang: en
+lang: 'en'
+#Language of VipSystem
+#Now available: en zh_CN
+dataBase:
+  usePool: true
+  #use connection pool or not
+  useMySQL: false
+  #use MySQL or not
+  #if enabled, you need to fill in the blanks in 'MySQL' below
+  MySQL:
+    address:
+    user:

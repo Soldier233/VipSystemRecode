@@ -28,6 +28,7 @@ public final class Main extends JavaPlugin {
         configManager = new ConfigManager();
         MessageManager.init();
         updateManager = new UpdateManager();
+        updateManager.checkUpdate();
     }
 
     @Override
