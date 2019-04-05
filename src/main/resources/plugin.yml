@@ -1,0 +1,8 @@
+name: VipSystem
+version: ${project.version}
+main: me.zhanshi123.vipsystem.Main
+depend: [Vault]
+softdepend: [PlaceholderAPI]
+authors: [Soldier]
+description: A plugin to manage Vip automatically
+website: https://dl.zhanshi123.me#VipSystem
