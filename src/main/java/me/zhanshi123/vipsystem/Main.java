@@ -4,6 +4,7 @@ import me.zhanshi123.vipsystem.data.Database;
 import me.zhanshi123.vipsystem.manager.ConfigManager;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
@@ -36,6 +37,12 @@ public final class Main extends JavaPlugin {
         updateManager = new UpdateManager();
         updateManager.checkUpdate();
         database = new Database();
+        if (!database.checkAvailable()) {
+            Bukkit.getConsoleSender().sendMessage(MessageManager.getString(""));
+            setEnabled(false);
+            return;
+        }
+        database.prepare();
     }
 
     @Override

@@ -7,6 +7,8 @@ import me.zhanshi123.vipsystem.data.connector.PoolHandler;
 import me.zhanshi123.vipsystem.data.connector.SQLHandler;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class Database {
@@ -27,6 +29,20 @@ public class Database {
         }
         handler.init(connectionData);
         connection = handler.getConnection();
+    }
+
+    public boolean checkAvailable() {
+        return connection != null;
+    }
+
+    public void prepare() {
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("");
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Database() {

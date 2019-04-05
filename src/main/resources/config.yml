@@ -8,7 +8,7 @@ dataBase:
   #use MySQL or not
   #if enabled, you need to fill in the blanks in 'MySQL' below
   MySQL:
-    address: 'jdbc:mysql://127.0.0.1:3306/minecraft'
+    address: 'jdbc:mysql://127.0.0.1:3306/minecraft?useSSL=false'
     #jdbc connection address
     #Format: 'jdbc:mysql://IP_ADDRESS/DATABASE_NAME'
     #For example 'jdbc:mysql://127.0.0.1:3306/minecraft' stands for the mysql server on '127.0.0.1' with port '3306' and database 'minecraft'
