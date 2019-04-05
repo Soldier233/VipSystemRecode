@@ -1,5 +1,6 @@
-package me.zhanshi123.vipsystem;
+package me.zhanshi123.vipsystem.manager;
 
+import me.zhanshi123.vipsystem.Main;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
