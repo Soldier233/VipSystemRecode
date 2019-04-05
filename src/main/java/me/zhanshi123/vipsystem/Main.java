@@ -1,5 +1,6 @@
 package me.zhanshi123.vipsystem;
 
+import me.zhanshi123.vipsystem.data.Database;
 import me.zhanshi123.vipsystem.manager.ConfigManager;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
@@ -9,6 +10,7 @@ public final class Main extends JavaPlugin {
     private static Main instance;
     private static ConfigManager configManager;
     private static UpdateManager updateManager;
+    private static Database database;
 
     public static Main getInstance() {
         return instance;
@@ -22,6 +24,10 @@ public final class Main extends JavaPlugin {
         return updateManager;
     }
 
+    public static Database getDatabase() {
+        return database;
+    }
+
     @Override
     public void onEnable() {
         instance = this;
@@ -29,6 +35,7 @@ public final class Main extends JavaPlugin {
         MessageManager.init();
         updateManager = new UpdateManager();
         updateManager.checkUpdate();
+        database = new Database();
     }
 
     @Override
