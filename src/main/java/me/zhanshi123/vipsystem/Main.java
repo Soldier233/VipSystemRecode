@@ -38,7 +38,7 @@ public final class Main extends JavaPlugin {
         updateManager.checkUpdate();
         database = new Database();
         if (!database.checkAvailable()) {
-            Bukkit.getConsoleSender().sendMessage(MessageManager.getString(""));
+            Bukkit.getConsoleSender().sendMessage(MessageManager.getString("fatalError"));
             setEnabled(false);
             return;
         }
@@ -47,6 +47,6 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        database.release();
     }
 }

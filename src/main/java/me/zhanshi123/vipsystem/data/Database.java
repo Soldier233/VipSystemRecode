@@ -40,6 +40,7 @@ public class Database {
             Statement statement = connection.createStatement();
             statement.executeUpdate("");
             statement.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -47,5 +48,9 @@ public class Database {
 
     public Database() {
         init();
+    }
+
+    public void release() {
+        handler.release();
     }
 }

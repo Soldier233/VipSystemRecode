@@ -6,4 +6,6 @@ public interface DatabaseHandler {
     void init(ConnectionData connectionData);
 
     Connection getConnection();
+
+    void release();
 }

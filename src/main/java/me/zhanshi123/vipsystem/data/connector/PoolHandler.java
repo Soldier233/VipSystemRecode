@@ -38,4 +38,9 @@ public class PoolHandler implements DatabaseHandler {
         }
         return null;
     }
+
+    @Override
+    public void release() {
+        dataSource.close();
+    }
 }

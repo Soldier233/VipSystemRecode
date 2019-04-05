@@ -2,6 +2,7 @@ package me.zhanshi123.vipsystem.data.connector;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 public class SQLHandler implements DatabaseHandler {
@@ -39,5 +40,14 @@ public class SQLHandler implements DatabaseHandler {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void release() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
