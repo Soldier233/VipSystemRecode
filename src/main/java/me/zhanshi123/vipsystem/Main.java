@@ -24,7 +24,7 @@ public final class Main extends JavaPlugin {
         return updateManager;
     }
 
-    public static Database getDatabase() {
+    public static Database getDataBase() {
         return database;
     }
 

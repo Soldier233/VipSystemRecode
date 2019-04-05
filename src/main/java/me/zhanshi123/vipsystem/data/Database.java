@@ -13,10 +13,12 @@ public class Database {
     private DatabaseHandler handler;
     private ConnectionData connectionData;
     private Connection connection;
+    private String table;
 
     public void init() {
         boolean useMySQL = Main.getConfigManager().isUseMySQL();
         List<String> mysql = Main.getConfigManager().getMySQL();
+        table = mysql.get(3);
         connectionData = new ConnectionData(useMySQL, mysql);
         if (Main.getConfigManager().isUsePool()) {
             handler = new PoolHandler();
