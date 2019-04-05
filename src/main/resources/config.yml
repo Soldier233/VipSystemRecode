@@ -16,3 +16,5 @@ dataBase:
     #MySQL user name
     password: 'yourpwdhere'
     #MySQL password
+    table: 'vipsys_'
+    #MySQL table prefix

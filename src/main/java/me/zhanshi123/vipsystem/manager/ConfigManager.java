@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
 
 public class ConfigManager {
     private FileConfiguration config = new YamlConfiguration();
@@ -41,5 +43,14 @@ public class ConfigManager {
 
     public boolean isUseMySQL() {
         return config.getBoolean("dataBase.useMySQL", false);
+    }
+
+    public List<String> getMySQL() {
+        return Arrays.asList(new String[]{
+                config.getString("dataBase.MySQL.address"),
+                config.getString("dataBase.MySQL.user"),
+                config.getString("dataBase.MySQL.password"),
+                config.getString("dataBase.MySQL.table")
+        });
     }
 }
