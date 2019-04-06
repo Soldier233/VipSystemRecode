@@ -37,7 +37,7 @@ public final class Main extends JavaPlugin {
         updateManager = new UpdateManager();
         updateManager.checkUpdate();
         database = new Database();
-        if (!database.checkAvailable()) {
+        if (!database.isAvailable()) {
             Bukkit.getConsoleSender().sendMessage(MessageManager.getString("fatalError"));
             setEnabled(false);
             return;

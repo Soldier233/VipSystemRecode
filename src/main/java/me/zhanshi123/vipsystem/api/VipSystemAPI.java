@@ -1,6 +1,8 @@
 package me.zhanshi123.vipsystem.api;
 
+import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.vip.VipManager;
+import org.bukkit.entity.Player;
 
 public class VipSystemAPI {
     private static VipSystemAPI instance = new VipSystemAPI();
@@ -16,5 +18,13 @@ public class VipSystemAPI {
 
     public VipSystemAPI() {
         vipManager = new VipManager();
+    }
+
+
+    public String getPlayerName(Player player) {
+        if (Main.getConfigManager().isUUID()) {
+            return player.getUniqueId().toString();
+        }
+        return player.getName();
     }
 }

@@ -1,6 +1,8 @@
 lang: 'en'
 #Language of VipSystem
 #Now available: en zh_CN
+uuid: false
+#Use UUID for data storage
 dataBase:
   usePool: true
   #use connection pool or not

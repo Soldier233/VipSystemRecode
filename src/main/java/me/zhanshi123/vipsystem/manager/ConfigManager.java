@@ -53,4 +53,8 @@ public class ConfigManager {
                 config.getString("dataBase.MySQL.table")
         });
     }
+
+    public boolean isUUID() {
+        return config.getBoolean("uuid", false);
+    }
 }

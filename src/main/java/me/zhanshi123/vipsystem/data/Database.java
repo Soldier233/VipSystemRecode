@@ -1,6 +1,7 @@
 package me.zhanshi123.vipsystem.data;
 
 import me.zhanshi123.vipsystem.Main;
+import me.zhanshi123.vipsystem.api.vip.VipData;
 import me.zhanshi123.vipsystem.data.connector.ConnectionData;
 import me.zhanshi123.vipsystem.data.connector.DatabaseHandler;
 import me.zhanshi123.vipsystem.data.connector.PoolHandler;
@@ -32,7 +33,7 @@ public class Database {
         connection = handler.getConnection();
     }
 
-    public boolean checkAvailable() {
+    public boolean isAvailable() {
         return connection != null;
     }
 
@@ -43,7 +44,8 @@ public class Database {
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS `" + table + "players` (\n" +
                         "`id`  int UNSIGNED NOT NULL AUTO_INCREMENT ,\n" +
                         "`player`  varchar(40) NOT NULL ,\n" +
-                        "`group`  varchar(20) NOT NULL ,\n" +
+                        "`vip`  varchar(20) NOT NULL ,\n" +
+                        "`previous`  varchar(20) NOT NULL ,\n" +
                         "`start`  bigint UNSIGNED NOT NULL ,\n" +
                         "`duration`  bigint NOT NULL ,\n" +
                         "PRIMARY KEY (`id`, `player`),\n" +
@@ -55,7 +57,8 @@ public class Database {
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS \"main\".\"" + table + "players\" (\n" +
                         "\"id\"  int NOT NULL,\n" +
                         "\"player\"  varchar(40) NOT NULL,\n" +
-                        "\"group\"  varchar(20) NOT NULL,\n" +
+                        "\"vip\"  varchar(20) NOT NULL,\n" +
+                        "\"previous\"  varchar(20) NOT NULL,\n" +
                         "\"start\"  bigint NOT NULL,\n" +
                         "\"duration\"  bigint NOT NULL,\n" +
                         "PRIMARY KEY (\"id\", \"player\")\n" +
@@ -66,11 +69,12 @@ public class Database {
                         "\n");
             }
             statement.close();
-
+            getPlayer = connection.prepareStatement("SELECT `vip`,`previous`,`start`,`duration` FROM `" + table + "players` WHERE `player` = ?;");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     private PreparedStatement getPlayer;
 
     public Database() {
@@ -78,7 +82,21 @@ public class Database {
         prepare();
     }
 
+    public void checkConnection() {
+        try {
+            if (connection.isClosed()) {
+                connection = handler.getConnection();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void release() {
         handler.release();
+    }
+
+    public VipData getVipData(String player) {
+        checkConnection();
     }
 }
