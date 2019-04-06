@@ -3,3 +3,5 @@ latestVersion: '§6§lVipSystem §7>>> §aYou are running the latest version of 
 newUpdate: '§6§lVipSystem §7>>> §aVipSystem {0} has released!'
 fatalError: '§6§lVipSystem §7>>> §cFatal error has occurred! Stop loading!'
 permissionDeny: '§cYou do not have enough permission to do this'
+Command:
+  format: '§7{0} §e{1}'

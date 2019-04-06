@@ -1,7 +1,10 @@
 package me.zhanshi123.vipsystem.command.command;
 
+import me.zhanshi123.vipsystem.manager.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+
+import java.text.MessageFormat;
 
 public abstract class SubCommand {
     private String name;
@@ -40,7 +43,7 @@ public abstract class SubCommand {
 
     public void sendHelp(CommandSender sender) {
         if (usage != null && description != null) {
-            sender.sendMessage("§7" + getUsage() + " §e" + getDescription());
+            sender.sendMessage(MessageFormat.format(MessageManager.getString("Command.format"), usage, description));
         }
     }
 

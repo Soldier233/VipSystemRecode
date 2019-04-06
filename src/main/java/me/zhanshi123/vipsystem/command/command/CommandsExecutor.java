@@ -8,6 +8,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import java.text.MessageFormat;
+
 public class CommandsExecutor implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         if (args.length == 0) {
@@ -76,11 +78,11 @@ public class CommandsExecutor implements CommandExecutor {
     private void sendHelp(CommandSender sender) {
         Main.getCommandHandler().getCommands().stream()
                 .filter(subCommand -> !(subCommand instanceof AdminCommand))
-                .forEach(subCommand -> sender.sendMessage("§7" + subCommand.getUsage() + " §e" + subCommand.getDescription()));
+                .forEach(subCommand -> sender.sendMessage(MessageFormat.format(MessageManager.getString("Command.format"), subCommand.getUsage(), subCommand.getDescription())));
         if (sender.isOp()) {
             Main.getCommandHandler().getCommands().stream()
                     .filter(subCommand -> subCommand instanceof AdminCommand)
-                    .forEach(subCommand -> sender.sendMessage("§7" + subCommand.getUsage() + " §e" + subCommand.getDescription()));
+                    .forEach(subCommand -> sender.sendMessage(MessageFormat.format(MessageManager.getString("Command.format"), subCommand.getUsage(), subCommand.getDescription())));
         }
     }
 }
