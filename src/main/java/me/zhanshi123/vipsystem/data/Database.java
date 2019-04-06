@@ -7,10 +7,7 @@ import me.zhanshi123.vipsystem.data.connector.DatabaseHandler;
 import me.zhanshi123.vipsystem.data.connector.PoolHandler;
 import me.zhanshi123.vipsystem.data.connector.SQLHandler;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 public class Database {
@@ -98,5 +95,16 @@ public class Database {
 
     public VipData getVipData(String player) {
         checkConnection();
+        VipData data = null;
+        try {
+            getPlayer.setString(1, player);
+            ResultSet resultSet = getPlayer.executeQuery();
+            if (resultSet.next()) {
+                data = new VipData(player, resultSet.getString("vip"), resultSet.getString("previous"), resultSet.getLong("start"), resultSet.getLong("duration"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 }
