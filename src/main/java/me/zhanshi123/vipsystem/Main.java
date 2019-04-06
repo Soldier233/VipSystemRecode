@@ -1,5 +1,6 @@
 package me.zhanshi123.vipsystem;
 
+import me.zhanshi123.vipsystem.command.command.CommandHandler;
 import me.zhanshi123.vipsystem.data.Database;
 import me.zhanshi123.vipsystem.manager.ConfigManager;
 import me.zhanshi123.vipsystem.manager.MessageManager;
@@ -15,6 +16,7 @@ public final class Main extends JavaPlugin {
     private static UpdateManager updateManager;
     private static Database database;
     private static Permission permission;
+    private static CommandHandler commandHandler;
 
     public static Main getInstance() {
         return instance;
@@ -36,6 +38,10 @@ public final class Main extends JavaPlugin {
         return permission;
     }
 
+    public static CommandHandler getCommandHandler() {
+        return commandHandler;
+    }
+
     @Override
     public void onEnable() {
         instance = this;
@@ -51,6 +57,7 @@ public final class Main extends JavaPlugin {
         }
         database.prepare();
         setupPermissions();
+        commandHandler = new CommandHandler("vipsys");
     }
 
     @Override
