@@ -52,12 +52,12 @@ public class Database {
                         "\n");
             } else {
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS \"main\".\"" + table + "players\" (\n" +
-                        "\"id\"  int NOT NULL,\n" +
-                        "\"player\"  varchar(40) NOT NULL,\n" +
-                        "\"vip\"  varchar(20) NOT NULL,\n" +
-                        "\"previous\"  varchar(20) NOT NULL,\n" +
-                        "\"start\"  bigint NOT NULL,\n" +
-                        "\"duration\"  bigint NOT NULL,\n" +
+                        "\"id\"  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+                        "\"player\"  TEXT NOT NULL,\n" +
+                        "\"vip\"  TEXT NOT NULL,\n" +
+                        "\"previous\"  TEXT NOT NULL,\n" +
+                        "\"start\"  TEXT NOT NULL,\n" +
+                        "\"duration\"  TEXT NOT NULL,\n" +
                         "PRIMARY KEY (\"id\", \"player\")\n" +
                         ")\n" +
                         ";\n");
@@ -67,12 +67,14 @@ public class Database {
             }
             statement.close();
             getPlayer = connection.prepareStatement("SELECT `vip`,`previous`,`start`,`duration` FROM `" + table + "players` WHERE `player` = ?;");
+            insertPlayer = connection.prepareStatement("INSERT INTO `" + table + "players` (player,vip,previous,start,duration) VALUES(?,?,?,?,?);");
+            updatePlayer = connection.prepareStatement("UPDATE `vip` SET `vip` = ?, `previous` = ?, `start` = ?, `duration` = ? WHERE `player` = ?;");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private PreparedStatement getPlayer;
+    private PreparedStatement getPlayer, insertPlayer, updatePlayer;
 
     public Database() {
         init();
@@ -91,6 +93,37 @@ public class Database {
 
     public void release() {
         handler.release();
+    }
+
+    public void updateVipData(VipData data) {
+        checkConnection();
+        if (getVipData(data.getPlayer()) == null) {
+            insertVipData(data);
+            return;
+        }
+        try {
+            updatePlayer.setString(1, data.getVip());
+            updatePlayer.setString(2, data.getPrevious());
+            updatePlayer.setLong(3, data.getStart());
+            updatePlayer.setLong(4, data.getDuration());
+            updatePlayer.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertVipData(VipData data) {
+        checkConnection();
+        try {
+            insertPlayer.setString(1, data.getPlayer());
+            insertPlayer.setString(2, data.getVip());
+            insertPlayer.setString(3, data.getPrevious());
+            insertPlayer.setLong(4, data.getStart());
+            insertPlayer.setLong(5, data.getDuration());
+            insertPlayer.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public VipData getVipData(String player) {
