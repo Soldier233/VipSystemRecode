@@ -4,7 +4,9 @@ import me.zhanshi123.vipsystem.data.Database;
 import me.zhanshi123.vipsystem.manager.ConfigManager;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
@@ -12,7 +14,7 @@ public final class Main extends JavaPlugin {
     private static ConfigManager configManager;
     private static UpdateManager updateManager;
     private static Database database;
-
+    private static Permission permission;
 
     public static Main getInstance() {
         return instance;
@@ -30,6 +32,10 @@ public final class Main extends JavaPlugin {
         return database;
     }
 
+    public static Permission getPermission() {
+        return permission;
+    }
+
     @Override
     public void onEnable() {
         instance = this;
@@ -44,11 +50,21 @@ public final class Main extends JavaPlugin {
             return;
         }
         database.prepare();
+        setupPermissions();
     }
 
     @Override
     public void onDisable() {
         database.release();
+    }
+
+    private boolean setupPermissions() {
+        RegisteredServiceProvider<Permission> permissionProvider = Bukkit.getServer().getServicesManager()
+                .getRegistration(net.milkbowl.vault.permission.Permission.class);
+        if (permissionProvider != null) {
+            permission = permissionProvider.getProvider();
+        }
+        return (permission != null);
     }
 
 }
