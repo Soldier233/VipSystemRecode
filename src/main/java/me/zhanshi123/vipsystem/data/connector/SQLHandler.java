@@ -34,10 +34,8 @@ public class SQLHandler implements DatabaseHandler {
         try {
             if (connection == null || connection.isClosed()) {
                 reconnect();
-                return connection;
-            } else {
-                return connection;
             }
+            return connection;
         } catch (Exception e) {
             e.printStackTrace();
         }
