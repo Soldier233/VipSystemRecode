@@ -13,6 +13,7 @@ public final class Main extends JavaPlugin {
     private static UpdateManager updateManager;
     private static Database database;
 
+
     public static Main getInstance() {
         return instance;
     }
@@ -49,4 +50,5 @@ public final class Main extends JavaPlugin {
     public void onDisable() {
         database.release();
     }
+
 }
