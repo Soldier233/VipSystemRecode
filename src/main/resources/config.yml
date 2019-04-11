@@ -20,3 +20,19 @@ dataBase:
     #MySQL password
     table: 'vipsys_'
     #MySQL table prefix
+isGlobal: true
+#Use Vault to apply VIP to global group
+worlds:
+  - world
+  - world_nether
+  - world_the_end
+#If isGlobal disabled, apply VIP to worlds above
+#If you are using PermissionsEX, the following config is recommended
+############################
+#isGlobal: false
+#worlds:
+#  - world
+#  - world_nether
+#  - world_the_end
+#add all of your worlds here
+############################

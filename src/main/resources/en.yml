@@ -3,5 +3,10 @@ latestVersion: '§6§lVipSystem §7>>> §aYou are running the latest version of 
 newUpdate: '§6§lVipSystem §7>>> §aVipSystem {0} has released!'
 fatalError: '§6§lVipSystem §7>>> §cFatal error has occurred! Stop loading!'
 permissionDeny: '§cYou do not have enough permission to do this'
+consoleForbid: '§cYou cannot use the command in Console'
 Command:
   format: '§7{0} §e{1}'
+  me:
+    desc: 'Get the Vip information of yourself'
+    result: '§7You are §e{0} §7. Vip expires when §e{1} §7, §e{2} §7days left.'
+    noVip: '§7You have no Vip!'

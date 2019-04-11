@@ -6,15 +6,14 @@ import org.bukkit.entity.Player;
 
 public class VipManager {
     /**
-     * Get player's Vip Data
+     * Get player's VipData
      * return null if not exists
+     *
      * @param player Player
      * @return vip data
      */
     public VipData getVipData(Player player) {
         String name = VipSystemAPI.getInstance().getPlayerName(player);
-        return Main.getDataBase().getVipData(name);
+        return Main.getCache().getVipData(name);
     }
-
-
 }

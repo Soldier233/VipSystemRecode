@@ -1,5 +1,6 @@
-package me.zhanshi123.vipsystem.command.command;
+package me.zhanshi123.vipsystem.command;
 
+import me.zhanshi123.vipsystem.command.sub.MeCommand;
 import org.bukkit.Bukkit;
 
 import java.util.HashSet;
@@ -10,6 +11,7 @@ public class CommandHandler {
     private Set<SubCommand> commands = new HashSet<>();
 
     public CommandHandler(String name) {
+        commands.add(new MeCommand());
         Bukkit.getPluginCommand(name).setExecutor(new CommandsExecutor());
     }
 

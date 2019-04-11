@@ -1,8 +1,8 @@
-package me.zhanshi123.vipsystem.command.command;
+package me.zhanshi123.vipsystem.command;
 
 import me.zhanshi123.vipsystem.Main;
-import me.zhanshi123.vipsystem.command.command.type.AdminCommand;
-import me.zhanshi123.vipsystem.command.command.type.PermissionCommand;
+import me.zhanshi123.vipsystem.command.type.AdminCommand;
+import me.zhanshi123.vipsystem.command.type.PermissionCommand;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

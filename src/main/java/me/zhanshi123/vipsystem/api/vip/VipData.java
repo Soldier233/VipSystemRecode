@@ -62,4 +62,8 @@ public class VipData {
     public void setDuration(long duration) {
         this.duration = duration;
     }
+
+    public long getTimeToExpire() {
+        return System.currentTimeMillis() - (start + duration);
+    }
 }

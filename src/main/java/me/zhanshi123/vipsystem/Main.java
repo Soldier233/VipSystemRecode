@@ -1,6 +1,6 @@
 package me.zhanshi123.vipsystem;
 
-import me.zhanshi123.vipsystem.command.command.CommandHandler;
+import me.zhanshi123.vipsystem.command.CommandHandler;
 import me.zhanshi123.vipsystem.data.Cache;
 import me.zhanshi123.vipsystem.data.Database;
 import me.zhanshi123.vipsystem.manager.ConfigManager;

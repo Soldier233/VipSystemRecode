@@ -1,4 +1,4 @@
-package me.zhanshi123.vipsystem.command.command;
+package me.zhanshi123.vipsystem.command;
 
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import org.bukkit.command.Command;
