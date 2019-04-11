@@ -66,7 +66,7 @@ public class Database {
             statement.close();
             getPlayer = connection.prepareStatement("SELECT `vip`,`previous`,`start`,`duration` FROM `" + table + "players` WHERE `player` = ?;");
             insertPlayer = connection.prepareStatement("INSERT INTO `" + table + "players` (player,vip,previous,start,duration) VALUES(?,?,?,?,?);");
-            updatePlayer = connection.prepareStatement("UPDATE `" + table + "vip` SET `vip` = ?, `previous` = ?, `start` = ?, `duration` = ? WHERE `player` = ?;");
+            updatePlayer = connection.prepareStatement("UPDATE `" + table + "players` SET `vip` = ?, `previous` = ?, `start` = ?, `duration` = ? WHERE `player` = ?;");
         } catch (SQLException e) {
             e.printStackTrace();
         }
