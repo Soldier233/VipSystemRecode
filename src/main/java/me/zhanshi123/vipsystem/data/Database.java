@@ -39,7 +39,6 @@ public class Database {
             Statement statement = connection.createStatement();
             if (connectionData.isUseMySQL()) {
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS `" + table + "players` (\n" +
-                        "`id`  int UNSIGNED NOT NULL AUTO_INCREMENT ,\n" +
                         "`player`  varchar(40) NOT NULL ,\n" +
                         "`vip`  varchar(20) NOT NULL ,\n" +
                         "`previous`  varchar(20) NOT NULL ,\n" +
@@ -52,23 +51,22 @@ public class Database {
                         "\n");
             } else {
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS \"main\".\"" + table + "players\" (\n" +
-                        "\"id\"  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
                         "\"player\"  TEXT NOT NULL,\n" +
                         "\"vip\"  TEXT NOT NULL,\n" +
                         "\"previous\"  TEXT NOT NULL,\n" +
                         "\"start\"  TEXT NOT NULL,\n" +
                         "\"duration\"  TEXT NOT NULL,\n" +
-                        "PRIMARY KEY (\"id\", \"player\")\n" +
+                        "PRIMARY KEY (\"player\")\n" +
                         ")\n" +
                         ";\n");
-                statement.executeUpdate("CREATE UNIQUE INDEX \"main\".\"player\"\n" +
+                statement.executeUpdate("CREATE UNIQUE INDEX IF NOT EXISTS \"main\".\"player\"\n" +
                         "ON \"" + table + "players\" (\"player\" ASC);\n" +
                         "\n");
             }
             statement.close();
             getPlayer = connection.prepareStatement("SELECT `vip`,`previous`,`start`,`duration` FROM `" + table + "players` WHERE `player` = ?;");
             insertPlayer = connection.prepareStatement("INSERT INTO `" + table + "players` (player,vip,previous,start,duration) VALUES(?,?,?,?,?);");
-            updatePlayer = connection.prepareStatement("UPDATE `vip` SET `vip` = ?, `previous` = ?, `start` = ?, `duration` = ? WHERE `player` = ?;");
+            updatePlayer = connection.prepareStatement("UPDATE `" + table + "vip` SET `vip` = ?, `previous` = ?, `start` = ?, `duration` = ? WHERE `player` = ?;");
         } catch (SQLException e) {
             e.printStackTrace();
         }
