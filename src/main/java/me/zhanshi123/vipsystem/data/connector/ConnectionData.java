@@ -20,7 +20,7 @@ public class ConnectionData {
         this.useMySQL = useMySQL;
     }
 
-    public List<String> getMysql() {
+    List<String> getMysql() {
         return mysql;
     }
 
@@ -28,7 +28,7 @@ public class ConnectionData {
         this.mysql = mysql;
     }
 
-    public String getSqlite() {
+    String getSqlite() {
         return sqlite;
     }
 

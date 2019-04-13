@@ -16,7 +16,7 @@ public class VipSystemAPI {
         return vipManager;
     }
 
-    public VipSystemAPI() {
+    private VipSystemAPI() {
         vipManager = new VipManager();
     }
 
