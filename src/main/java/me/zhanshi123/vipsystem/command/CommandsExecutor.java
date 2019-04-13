@@ -41,8 +41,8 @@ public class CommandsExecutor implements CommandExecutor {
                     commandSender.sendMessage(MessageManager.getString("permissionDeny"));
                     return true;
                 }
-            } else if (subCommand instanceof PermissionCommand){
-                if(Main.getPermission().has(commandSender,"vipsystem."+subCommand.getName())){
+            } else if (subCommand instanceof PermissionCommand) {
+                if (Main.getPermission().has(commandSender, "vipsystem." + subCommand.getName())) {
                     if (subCommand.isNeedArg()) {
                         int argLength = subCommand.getArgLength();
                         if (argLength != args.length) {
@@ -54,7 +54,7 @@ public class CommandsExecutor implements CommandExecutor {
                     } else {
                         return subCommand.onCommand(commandSender, command, label, args);
                     }
-                }else{
+                } else {
                     commandSender.sendMessage(MessageManager.getString("permissionDeny"));
                     return true;
                 }

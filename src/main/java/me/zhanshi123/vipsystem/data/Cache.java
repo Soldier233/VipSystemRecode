@@ -56,4 +56,9 @@ public class Cache implements Listener {
         map.remove(name);
         Main.getDataBase().updateVipData(vipData);
     }
+
+    public void addVipData(String playerName, VipData vipData) {
+        map.remove(playerName);
+        map.put(playerName, vipData);
+    }
 }
