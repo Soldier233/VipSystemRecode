@@ -10,11 +10,17 @@ Command:
     desc: 'Get the Vip information of yourself'
     usage: '/vipsys me'
     #Do not add any space in usage!
-    result: '§7You are §e{0} §7. Vip expires when §e{1} §7, §e{2} §7days left'
+    result: '§7You are §e{0}§7. Vip expires when §e{1} §7, §e{2} §7days left'
     noVip: '§7You have no Vip!'
   give:
     desc: 'Give the player specific vip group with specific time, time in xdxhxmxs which refers to x days, x hours, x minutes, x seconds'
     usage: '/vipsys give [Player] [Group] [Time]'
     #Do not add any space in usage!
-    alreadyHaveVip: 'The player has already had a vip'
-    success: 'Vip successfully given'
+    alreadyHaveVip: '§7The player has already had a vip'
+    success: '§7Vip successfully given'
+  remove:
+    desc: 'Remove Vip of the player'
+    usage: '/vipsys remove [Player]'
+    #Do not add any space in usage!
+    noVip: '§cThe player has no Vip!'
+    success: '§7Vip successfully removed'

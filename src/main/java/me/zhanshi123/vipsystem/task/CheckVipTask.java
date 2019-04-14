@@ -24,9 +24,14 @@ public class CheckVipTask extends BukkitRunnable {
         if (vipData == null) {
             return;
         }
-        if (vipData.getTimeToExpire() <= 1000 * 60l) {
+        if (vipData.getTimeToExpire() >= 1000 * 60l) {
             return;
         }
-        new DelayedRemoveVipTask(player).runTaskLater(Main.getInstance(), vipData.getTimeToExpire() / 1000 * 20);
+        long temp = vipData.getTimeToExpire();
+        if (temp < 0) {
+            temp = 0;
+            //Auto fix up
+        }
+        new DelayedRemoveVipTask(player).runTaskLater(Main.getInstance(), temp / 1000 * 20);
     }
 }

@@ -2,17 +2,19 @@ package me.zhanshi123.vipsystem.command;
 
 import me.zhanshi123.vipsystem.command.sub.GiveCommand;
 import me.zhanshi123.vipsystem.command.sub.MeCommand;
+import me.zhanshi123.vipsystem.command.sub.RemoveCommand;
 import org.bukkit.Bukkit;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class CommandHandler {
 
-    private Set<SubCommand> commands = new HashSet<>();
+    private Set<SubCommand> commands = new TreeSet<>();
 
     public CommandHandler(String name) {
         commands.add(new MeCommand());
+        commands.add(new RemoveCommand());
         commands.add(new GiveCommand());
         Bukkit.getPluginCommand(name).setExecutor(new CommandsExecutor());
     }
