@@ -6,11 +6,12 @@ import me.zhanshi123.vipsystem.command.sub.RemoveCommand;
 import org.bukkit.Bukkit;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 public class CommandHandler {
 
-    private Set<SubCommand> commands = Collections.EMPTY_SET;
+    private Set<SubCommand> commands =new HashSet<>();
 
     public CommandHandler(String name) {
         commands.add(new MeCommand());
