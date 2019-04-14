@@ -1,5 +1,6 @@
 package me.zhanshi123.vipsystem.command;
 
+import me.zhanshi123.vipsystem.command.sub.GiveCommand;
 import me.zhanshi123.vipsystem.command.sub.MeCommand;
 import org.bukkit.Bukkit;
 
@@ -12,6 +13,7 @@ public class CommandHandler {
 
     public CommandHandler(String name) {
         commands.add(new MeCommand());
+        commands.add(new GiveCommand());
         Bukkit.getPluginCommand(name).setExecutor(new CommandsExecutor());
     }
 
