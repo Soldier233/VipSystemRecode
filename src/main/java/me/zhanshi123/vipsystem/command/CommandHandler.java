@@ -5,12 +5,12 @@ import me.zhanshi123.vipsystem.command.sub.MeCommand;
 import me.zhanshi123.vipsystem.command.sub.RemoveCommand;
 import org.bukkit.Bukkit;
 
+import java.util.Collections;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class CommandHandler {
 
-    private Set<SubCommand> commands = new TreeSet<>();
+    private Set<SubCommand> commands = Collections.EMPTY_SET;
 
     public CommandHandler(String name) {
         commands.add(new MeCommand());
