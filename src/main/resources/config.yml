@@ -36,3 +36,5 @@ worlds:
 #  - world_the_end
 #add all of your worlds here
 ############################
+dateFormat: 'yyyy-MM-dd HH:mm:ss'
+#Date format to be displayed

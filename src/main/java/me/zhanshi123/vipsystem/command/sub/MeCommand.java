@@ -29,7 +29,7 @@ public class MeCommand extends SubCommand {
             player.sendMessage(MessageManager.getString("Command.me.noVip"));
             return true;
         }
-        player.sendMessage(MessageFormat.format(MessageManager.getString("Command.me.result"), vipData.getVip(), vipData.getTimeToExpire(), vipData.getTimeToExpire()));
+        player.sendMessage(MessageFormat.format(MessageManager.getString("Command.me.result"), vipData.getVip(), vipData.getExpireDate(), vipData.getLeftDays()));
         return true;
     }
 }

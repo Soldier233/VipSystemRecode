@@ -4,6 +4,8 @@ import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import org.bukkit.entity.Player;
 
+import java.util.Date;
+
 public class VipData {
     private String player;
     private String vip;
@@ -77,5 +79,22 @@ public class VipData {
 
     public long getTimeToExpire() {
         return (start + duration) - System.currentTimeMillis();
+    }
+
+    private Date date = new Date();
+
+    public String getExpireDate() {
+        long expire = start + duration;
+        date.setTime(expire);
+        return Main.getConfigManager().getDateFormat().format(date);
+    }
+
+    public float getLeftDays() {
+        long expire = start + duration;
+        long now = System.currentTimeMillis();
+        long left = expire - now;
+        float day = (float) left / (float) 3600 * 24 * 1000;
+        day = Math.round(day * 100) / 100;
+        return day;
     }
 }

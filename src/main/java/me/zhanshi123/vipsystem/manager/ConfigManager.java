@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ConfigManager {
                 plugin.saveResource("config.yml", false);
             }
             config.load(new BufferedReader(new InputStreamReader(new FileInputStream(f), Charsets.UTF_8)));
+            dateFormat = new SimpleDateFormat(config.getString("dateFormat"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,5 +67,11 @@ public class ConfigManager {
 
     public List<String> getWorlds() {
         return config.getStringList("worlds") != null ? config.getStringList("worlds") : new ArrayList<>();
+    }
+
+    private SimpleDateFormat dateFormat;
+
+    public SimpleDateFormat getDateFormat() {
+        return dateFormat;
     }
 }
