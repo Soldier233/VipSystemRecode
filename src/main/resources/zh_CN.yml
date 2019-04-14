@@ -1,0 +1,26 @@
+updateCheckFailure: '§6§lVipSystem §7>>> §a更新检查失败，原因: {0}'
+latestVersion: '§6§lVipSystem §7>>> §a你正在使用最新版本的VipSystem'
+newUpdate: '§6§lVipSystem §7>>> §aVipSystem {0} 更新了，内容: {1}'
+fatalError: '§6§lVipSystem §7>>> §c发生致命错误，停止加载'
+permissionDeny: '§c权限不足'
+consoleForbid: '§c你不能在控制台执行这个命令'
+Command:
+  format: '§7{0} §e{1}'
+  me:
+    desc: '查询你的Vip状态'
+    usage: '/vipsys me'
+    #Do not add any space in usage!
+    result: '§7你是§e{0}§7，到期时间§e{1}§7,剩余§e{2}§7天'
+    noVip: '§7你没有Vip'
+  give:
+    desc: '给指定玩家指定时间的Vip，时间格式为xdxhxmxs，x天 x小时 x分 x秒'
+    usage: '/vipsys give [玩家] [Vip组] [时间]'
+    #Do not add any space in usage!
+    alreadyHaveVip: '§7T该玩家已经拥有Vip'
+    success: '§7Vip发送成功'
+  remove:
+    desc: '删除这个玩家的Vip'
+    usage: '/vipsys remove [玩家]'
+    #Do not add any space in usage!
+    noVip: '§c这个玩家没有Vip'
+    success: '§7Vip移除成功'
