@@ -47,6 +47,10 @@ public class Cache implements Listener {
         return map.get(playerName);
     }
 
+    public void removePlayer(String playerName) {
+        map.remove(playerName);
+    }
+
     public void deCache(Player player) {
         String name = VipSystemAPI.getInstance().getPlayerName(player);
         VipData vipData = getVipData(name);

@@ -24,6 +24,6 @@ public class DelayedRemoveVipTask extends BukkitRunnable {
         if (vipData == null) {
             return;
         }
-        Main.getPermission().playerRemoveGroup(player, vipData.getVip());
+        VipSystemAPI.getInstance().getVipManager().removeVip(player);
     }
 }

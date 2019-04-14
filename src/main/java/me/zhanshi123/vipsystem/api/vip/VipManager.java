@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 
 public class VipManager {
     /**
-     * Get player's VipData
-     * return null if not exists
+     * Get player's VipData.
+     * Return null if not exists.
      *
      * @param player Player
      * @return vip data
@@ -29,5 +29,16 @@ public class VipManager {
         String group = vipData.getVip();
         Main.getPermission().playerAddGroup(player, group);
         new CheckVipTask(player).runTask(Main.getInstance());
+    }
+
+    public void removeVip(Player player) {
+        String name = VipSystemAPI.getInstance().getPlayerName(player);
+        VipData vipData = getVipData(player);
+        if (vipData == null) {
+            return;
+        }
+        Main.getCache().removePlayer(name);
+        Main.getDataBase().deletePlayer(name);
+        Main.getPermission().playerRemoveGroup(player, vipData.getVip());
     }
 }

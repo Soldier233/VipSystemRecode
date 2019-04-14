@@ -14,7 +14,7 @@ import java.text.MessageFormat;
 public class MeCommand extends SubCommand {
 
     public MeCommand() {
-        super("me", "/vipsys me", MessageManager.getString("Command.me.desc"));
+        super("me", MessageManager.getString("Command.me.usage"), MessageManager.getString("Command.me.desc"));
     }
 
     @Override

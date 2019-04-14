@@ -67,12 +67,13 @@ public class Database {
             getPlayer = connection.prepareStatement("SELECT `vip`,`previous`,`start`,`duration` FROM `" + table + "players` WHERE `player` = ?;");
             insertPlayer = connection.prepareStatement("INSERT INTO `" + table + "players` (player,vip,previous,start,duration) VALUES(?,?,?,?,?);");
             updatePlayer = connection.prepareStatement("UPDATE `" + table + "players` SET `vip` = ?, `previous` = ?, `start` = ?, `duration` = ? WHERE `player` = ?;");
+            deletePlayer = connection.prepareStatement("DELETE FROM `" + table + "players` WHERE `player` = ?;");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private PreparedStatement getPlayer, insertPlayer, updatePlayer;
+    private PreparedStatement getPlayer, insertPlayer, updatePlayer, deletePlayer;
 
     public Database() {
         init();
@@ -119,6 +120,16 @@ public class Database {
             insertPlayer.setLong(4, data.getStart());
             insertPlayer.setLong(5, data.getDuration());
             insertPlayer.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletePlayer(String player) {
+        checkConnection();
+        try {
+            deletePlayer.setString(1, player);
+            deletePlayer.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

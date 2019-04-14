@@ -7,6 +7,7 @@ import me.zhanshi123.vipsystem.manager.ConfigManager;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
 import me.zhanshi123.vipsystem.metrics.Metrics;
+import me.zhanshi123.vipsystem.task.CheckAllPlayerTask;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -72,6 +73,7 @@ public final class Main extends JavaPlugin {
         commandHandler = new CommandHandler("vipsys");
         metrics = new Metrics(instance);
         cache = new Cache();
+        new CheckAllPlayerTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
     }
 
     @Override
