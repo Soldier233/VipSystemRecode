@@ -3,6 +3,7 @@ package me.zhanshi123.vipsystem;
 import me.zhanshi123.vipsystem.command.CommandHandler;
 import me.zhanshi123.vipsystem.data.Cache;
 import me.zhanshi123.vipsystem.data.Database;
+import me.zhanshi123.vipsystem.listener.PlayerListener;
 import me.zhanshi123.vipsystem.manager.ConfigManager;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
@@ -74,6 +75,7 @@ public final class Main extends JavaPlugin {
         metrics = new Metrics(instance);
         cache = new Cache();
         new CheckAllPlayerTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(), instance);
     }
 
     @Override
