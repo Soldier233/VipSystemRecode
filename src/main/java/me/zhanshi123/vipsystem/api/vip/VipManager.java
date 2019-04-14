@@ -27,7 +27,12 @@ public class VipManager {
         String name = VipSystemAPI.getInstance().getPlayerName(player);
         Main.getCache().addVipData(name, vipData);
         String group = vipData.getVip();
-        Main.getPermission().playerAddGroup(player, group);
+        if (Main.getConfigManager().isGlobal()) {
+            Main.getPermission().playerAddGroup(player, group);
+        } else {
+            Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, group));
+        }
+
         new CheckVipTask(player).runTask(Main.getInstance());
     }
 
@@ -39,6 +44,11 @@ public class VipManager {
         }
         Main.getCache().removePlayer(name);
         Main.getDataBase().deletePlayer(name);
-        Main.getPermission().playerRemoveGroup(player, vipData.getVip());
+        if (Main.getConfigManager().isGlobal()) {
+            Main.getPermission().playerRemoveGroup(player, vipData.getVip());
+        } else {
+            Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerRemoveGroup(worldName, player, vipData.getVip()));
+        }
+
     }
 }

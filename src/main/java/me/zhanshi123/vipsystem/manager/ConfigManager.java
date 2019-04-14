@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,5 +57,13 @@ public class ConfigManager {
 
     public boolean isUUID() {
         return config.getBoolean("uuid", false);
+    }
+
+    public boolean isGlobal() {
+        return config.getBoolean("isGlobal", true);
+    }
+
+    public List<String> getWorlds() {
+        return config.getStringList("worlds") != null ? config.getStringList("worlds") : new ArrayList<>();
     }
 }
