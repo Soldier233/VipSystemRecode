@@ -49,6 +49,5 @@ public class VipManager {
         } else {
             Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerRemoveGroup(worldName, player, vipData.getVip()));
         }
-
     }
 }

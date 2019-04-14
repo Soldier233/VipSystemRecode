@@ -6,6 +6,7 @@ import me.zhanshi123.vipsystem.api.vip.VipData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -21,7 +22,7 @@ public class Cache implements Listener {
     }
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         cache(player);
@@ -34,7 +35,7 @@ public class Cache implements Listener {
     }
 
     public void cache(Player player) {
-        VipData vipData = VipSystemAPI.getInstance().getVipManager().getVipData(player);
+        VipData vipData = Main.getDataBase().getVipData(VipSystemAPI.getInstance().getPlayerName(player));
         if (vipData == null) {
             return;
         }

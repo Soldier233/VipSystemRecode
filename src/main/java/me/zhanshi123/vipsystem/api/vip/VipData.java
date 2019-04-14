@@ -93,7 +93,7 @@ public class VipData {
         long expire = start + duration;
         long now = System.currentTimeMillis();
         long left = expire - now;
-        float day = (float) left / (float) 3600 * 24 * 1000;
+        float day = (float) left / Float.valueOf(3600 * 24 * 1000);
         day = Math.round(day * 100) / 100;
         return day;
     }

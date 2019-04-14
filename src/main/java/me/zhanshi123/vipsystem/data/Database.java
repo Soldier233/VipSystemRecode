@@ -44,7 +44,7 @@ public class Database {
                         "`previous`  varchar(20) NOT NULL ,\n" +
                         "`start`  bigint UNSIGNED NOT NULL ,\n" +
                         "`duration`  bigint NOT NULL ,\n" +
-                        "PRIMARY KEY (`id`, `player`),\n" +
+                        "PRIMARY KEY (`player`),\n" +
                         "UNIQUE INDEX `player` (`player`) USING BTREE \n" +
                         ")\n" +
                         ";\n" +
@@ -105,6 +105,7 @@ public class Database {
             updatePlayer.setString(2, data.getPrevious());
             updatePlayer.setLong(3, data.getStart());
             updatePlayer.setLong(4, data.getDuration());
+            updatePlayer.setString(5, data.getPlayer());
             updatePlayer.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
