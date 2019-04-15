@@ -16,7 +16,7 @@ Command:
     desc: '给指定玩家指定时间的Vip，时间格式为xdxhxmxs，x天 x小时 x分 x秒'
     usage: '/vipsys give [玩家] [Vip组] [时间]'
     #Do not add any space in usage!
-    alreadyHaveVip: '§7T该玩家已经拥有Vip'
+    alreadyHaveVip: '§7该玩家已经拥有Vip'
     success: '§7Vip发送成功'
   remove:
     desc: '删除这个玩家的Vip'
