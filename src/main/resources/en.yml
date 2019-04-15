@@ -11,13 +11,15 @@ Command:
     usage: '/vipsys me'
     #Do not add any space in usage!
     result: '§7You are §e{0}§7. Vip expires when §e{1} §7, §e{2} §7days left'
-    noVip: '§7You have no Vip!'
+    resultPermanent: '§7You are permanent §e{0}§7.'
+    noVip: '§cYou have no Vip!'
   give:
-    desc: 'Give the player specific vip group with specific time, time in xdxhxmxs which refers to x days, x hours, x minutes, x seconds'
+    desc: 'Give the player specific vip group with specific time, time in xdxhxmxs which refers to x days, x hours, x minutes, x seconds. -1 for permanent'
     usage: '/vipsys give [Player] [Group] [Time]'
     #Do not add any space in usage!
     alreadyHaveVip: '§7The player has already had a vip'
     success: '§7Vip successfully given'
+    invalidTime: '§cTime is invalid. e.g. 1d2h3m4s for 1 day 2 hours 3 minutes and 4 seconds. -1 for permanent.'
   remove:
     desc: 'Remove Vip of the player'
     usage: '/vipsys remove [Player]'
