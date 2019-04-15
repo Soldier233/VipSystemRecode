@@ -81,6 +81,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         database.release();
+        Bukkit.getScheduler().cancelTasks(Main.getInstance());
     }
 
     private boolean setupPermissions() {

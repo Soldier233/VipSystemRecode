@@ -19,13 +19,21 @@ public class GiveCommand extends SubCommand implements PermissionCommand {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         String playerName = args[1];
         Player player = Bukkit.getPlayer(playerName);
-        if (VipSystemAPI.getInstance().getVipManager().hasVip(player)) {
-            sender.sendMessage(MessageManager.getString("Command.give.alreadyHaveVip"));
-            return true;
+        VipData vipData = VipSystemAPI.getInstance().getVipManager().getVipData(player);
+        long temp = VipSystemAPI.getInstance().getTimeMillis(args[3]);
+        if (vipData != null) {
+            if (vipData.getVip() != args[2]) {
+                sender.sendMessage(MessageManager.getString("Command.give.alreadyHaveVip"));
+                return true;
+            }
+            VipSystemAPI.getInstance().getVipManager().renewVip(player, temp);
+            sender.sendMessage(MessageManager.getString("Command.give.success"));
+        } else {
+            vipData = new VipData(player, args[2], temp);
+            VipSystemAPI.getInstance().getVipManager().addVip(player, vipData);
+            sender.sendMessage(MessageManager.getString("Command.give.success"));
         }
-        VipData vipData = new VipData(player, args[2], VipSystemAPI.getInstance().getTimeMillis(args[3]));
-        VipSystemAPI.getInstance().getVipManager().addVip(player, vipData);
-        sender.sendMessage(MessageManager.getString("Command.give.success"));
+
         return true;
     }
 }

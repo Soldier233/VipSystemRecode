@@ -32,7 +32,14 @@ public class VipManager {
         } else {
             Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, group));
         }
+        new CheckVipTask(player).runTask(Main.getInstance());
+    }
 
+    public void renewVip(Player player, long duration) {
+        String name = VipSystemAPI.getInstance().getPlayerName(player);
+        VipData vipData = getVipData(player);
+        vipData.setDuration(vipData.getDuration() + duration);
+        Main.getCache().addVipData(name, vipData);
         new CheckVipTask(player).runTask(Main.getInstance());
     }
 

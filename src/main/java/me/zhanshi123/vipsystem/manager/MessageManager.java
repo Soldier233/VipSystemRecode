@@ -59,7 +59,7 @@ public class MessageManager {
     public static String getString(String path) {
         String str = config.getString(path);
         if (str == null) {
-            return "MISSING_LANGUAGE";
+            return path;
         }
         return str.replace("&", "§");
     }
@@ -67,7 +67,7 @@ public class MessageManager {
     public static List<String> getStringList(String path) {
         List<String> array = config.getStringList(path);
         if (array == null) {
-            array = Arrays.asList(new String[]{"MISSING_LANGUAGE"});
+            array = Arrays.asList(new String[]{path});
         }
         List<String> temp = new ArrayList<>();
         array.forEach(str -> temp.add(str.replace("&", "§")));
