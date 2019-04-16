@@ -1,5 +1,6 @@
 package me.zhanshi123.vipsystem.manager;
 
+import com.google.common.base.Charsets;
 import me.zhanshi123.vipsystem.Main;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -33,6 +34,31 @@ public class MessageManager {
 
     }
 
+    private static void update() {
+        FileConfiguration builtIn = new YamlConfiguration();
+        try {
+            InputStream inputStream = Main.getInstance().getResource(Main.getConfigManager().getLanguage() + ".yml");
+            if (inputStream == null) {
+                inputStream = Main.getInstance().getResource("en.yml");
+            }
+            builtIn.load(new InputStreamReader(inputStream, Charsets.UTF_8));
+            long[] count = {0};
+            builtIn.getKeys(true).stream()
+                    .filter(key -> config.get(key) == null)
+                    .forEach(key -> {
+                        config.set(key, builtIn.get(key));
+                        count[0]++;
+                    });
+            if (count[0] != 0) {
+                config.save(f);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void init() {
         try {
             File folder = new File(Main.getInstance().getDataFolder(), "messages");
@@ -54,6 +80,7 @@ public class MessageManager {
         } catch (InvalidConfigurationException e) {
             e.printStackTrace();
         }
+        update();
     }
 
     public static String getString(String path) {
