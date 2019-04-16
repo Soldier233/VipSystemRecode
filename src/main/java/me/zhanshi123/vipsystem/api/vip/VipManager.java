@@ -2,7 +2,11 @@ package me.zhanshi123.vipsystem.api.vip;
 
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
+import me.zhanshi123.vipsystem.api.event.VipActivateEvent;
+import me.zhanshi123.vipsystem.api.event.VipExpireEvent;
+import me.zhanshi123.vipsystem.api.event.VipRenewEvent;
 import me.zhanshi123.vipsystem.task.CheckVipTask;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class VipManager {
@@ -25,6 +29,7 @@ public class VipManager {
 
     public void addVip(Player player, VipData vipData) {
         String name = VipSystemAPI.getInstance().getPlayerName(player);
+        VipActivateEvent activateEvent = new VipActivateEvent(player, vipData);
         Main.getCache().addVipData(name, vipData);
         String group = vipData.getVip();
         if (Main.getConfigManager().isGlobal()) {
@@ -33,14 +38,20 @@ public class VipManager {
             Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, group));
         }
         new CheckVipTask(player).runTask(Main.getInstance());
+        Bukkit.getPluginManager().callEvent(activateEvent);
     }
 
     public void renewVip(Player player, long duration) {
         String name = VipSystemAPI.getInstance().getPlayerName(player);
         VipData vipData = getVipData(player);
+        if (vipData == null) {
+            return;
+        }
+        VipRenewEvent renewEvent = new VipRenewEvent(player, vipData);
         vipData.setDuration(vipData.getDuration() + duration);
         Main.getCache().addVipData(name, vipData);
         new CheckVipTask(player).runTask(Main.getInstance());
+        Bukkit.getPluginManager().callEvent(renewEvent);
     }
 
     public void removeVip(Player player) {
@@ -49,6 +60,7 @@ public class VipManager {
         if (vipData == null) {
             return;
         }
+        VipExpireEvent expireEvent = new VipExpireEvent(player, vipData);
         Main.getCache().removePlayer(name);
         Main.getDataBase().deletePlayer(name);
         if (Main.getConfigManager().isGlobal()) {
@@ -56,5 +68,6 @@ public class VipManager {
         } else {
             Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerRemoveGroup(worldName, player, vipData.getVip()));
         }
+        Bukkit.getPluginManager().callEvent(expireEvent);
     }
 }
