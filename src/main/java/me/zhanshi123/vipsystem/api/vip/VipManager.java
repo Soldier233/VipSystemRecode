@@ -30,6 +30,8 @@ public class VipManager {
     public void addVip(Player player, VipData vipData) {
         String name = VipSystemAPI.getInstance().getPlayerName(player);
         VipActivateEvent activateEvent = new VipActivateEvent(player, vipData);
+        Bukkit.getPluginManager().callEvent(activateEvent);
+        vipData = activateEvent.getVipData();
         Main.getCache().addVipData(name, vipData);
         String group = vipData.getVip();
         if (Main.getConfigManager().isGlobal()) {
@@ -38,7 +40,7 @@ public class VipManager {
             Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, group));
         }
         new CheckVipTask(player).runTask(Main.getInstance());
-        Bukkit.getPluginManager().callEvent(activateEvent);
+
     }
 
     public void renewVip(Player player, long duration) {
@@ -47,11 +49,12 @@ public class VipManager {
         if (vipData == null) {
             return;
         }
-        VipRenewEvent renewEvent = new VipRenewEvent(player, vipData);
         vipData.setDuration(vipData.getDuration() + duration);
+        VipRenewEvent renewEvent = new VipRenewEvent(player, vipData);
+        Bukkit.getPluginManager().callEvent(renewEvent);
         Main.getCache().addVipData(name, vipData);
         new CheckVipTask(player).runTask(Main.getInstance());
-        Bukkit.getPluginManager().callEvent(renewEvent);
+
     }
 
     public void removeVip(Player player) {
@@ -61,6 +64,7 @@ public class VipManager {
             return;
         }
         VipExpireEvent expireEvent = new VipExpireEvent(player, vipData);
+        Bukkit.getPluginManager().callEvent(expireEvent);
         Main.getCache().removePlayer(name);
         Main.getDataBase().deletePlayer(name);
         if (Main.getConfigManager().isGlobal()) {
@@ -68,6 +72,5 @@ public class VipManager {
         } else {
             Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerRemoveGroup(worldName, player, vipData.getVip()));
         }
-        Bukkit.getPluginManager().callEvent(expireEvent);
     }
 }

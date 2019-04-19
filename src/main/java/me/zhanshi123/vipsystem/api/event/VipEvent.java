@@ -28,4 +28,8 @@ public class VipEvent extends Event {
     public VipData getVipData() {
         return vipData;
     }
+
+    public void setVipData(VipData vipData) {
+        this.vipData = vipData;
+    }
 }
