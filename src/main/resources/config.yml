@@ -3,6 +3,8 @@ lang: 'en'
 #Now available: en zh_CN
 uuid: false
 #Use UUID for data storage
+previousGroup: false
+#whether return to the previous group before activating vip after the vip expires
 dataBase:
   usePool: true
   #use connection pool or not
@@ -22,12 +24,10 @@ dataBase:
     #MySQL table prefix
 isGlobal: true
 #Use Vault to apply VIP to global group
-worlds:
-  - world
-  - world_nether
-  - world_the_end
+worlds: []
 #If isGlobal disabled, apply VIP to worlds above
-#If you are using PermissionsEX, the following config is recommended
+#Set to [] if you want to apply vip to all the worlds which are loaded by bukkit
+#If you want to apply vip to the specific worlds, please turn isGlobal to false and add the world manually
 ############################
 #isGlobal: false
 #worlds:

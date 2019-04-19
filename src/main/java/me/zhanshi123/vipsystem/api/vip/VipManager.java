@@ -69,8 +69,15 @@ public class VipManager {
         Main.getDataBase().deletePlayer(name);
         if (Main.getConfigManager().isGlobal()) {
             Main.getPermission().playerRemoveGroup(player, vipData.getVip());
+            if (Main.getConfigManager().isPreviousGroup()) {
+                Main.getPermission().playerAddGroup(player, vipData.getPrevious());
+            }
+
         } else {
             Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerRemoveGroup(worldName, player, vipData.getVip()));
+            if (Main.getConfigManager().isPreviousGroup()) {
+                Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, vipData.getPrevious()));
+            }
         }
     }
 }

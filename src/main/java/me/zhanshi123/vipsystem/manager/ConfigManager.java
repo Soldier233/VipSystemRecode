@@ -2,6 +2,7 @@ package me.zhanshi123.vipsystem.manager;
 
 import com.google.common.base.Charsets;
 import me.zhanshi123.vipsystem.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -34,6 +35,7 @@ public class ConfigManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public String getLanguage() {
@@ -66,12 +68,23 @@ public class ConfigManager {
     }
 
     public List<String> getWorlds() {
-        return config.getStringList("worlds") != null ? config.getStringList("worlds") : new ArrayList<>();
+        List<String> worlds = config.getStringList("worlds");
+        if (worlds != null) {
+            return worlds;
+        }
+        worlds = new ArrayList<>();
+        List<String> finalWorlds = worlds;
+        Bukkit.getWorlds().forEach(world -> finalWorlds.add(world.getName()));
+        return finalWorlds;
     }
 
     private SimpleDateFormat dateFormat;
 
     public SimpleDateFormat getDateFormat() {
         return dateFormat;
+    }
+
+    public boolean isPreviousGroup() {
+        return config.getBoolean("previousGroup");
     }
 }
