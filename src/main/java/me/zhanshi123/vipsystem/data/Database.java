@@ -1,6 +1,7 @@
 package me.zhanshi123.vipsystem.data;
 
 import me.zhanshi123.vipsystem.Main;
+import me.zhanshi123.vipsystem.api.storage.VipStorage;
 import me.zhanshi123.vipsystem.api.vip.VipData;
 import me.zhanshi123.vipsystem.data.connector.ConnectionData;
 import me.zhanshi123.vipsystem.data.connector.DatabaseHandler;
@@ -8,6 +9,7 @@ import me.zhanshi123.vipsystem.data.connector.PoolHandler;
 import me.zhanshi123.vipsystem.data.connector.SQLHandler;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
@@ -95,7 +97,7 @@ public class Database {
             insertStorage = connection.prepareStatement("INSERT `player`,`vip`,`previous`,`activate`,`left` INTO `" + table + "storage` VALUES(?,?,?,?,?);");
             removeStorage = connection.prepareStatement("DELETE FROM `" + table + "storage` WHERE `player`= ?;");
             getStorageByPlayer = connection.prepareStatement("SELECT `id`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `player` = ?;");
-            getStorageByID = connection.prepareStatement("SELECT `player`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `id` = ?;");
+            getStorageByID = connection.prepareStatement("SELECT `player`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `id` = ? LIMIT 1;");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -179,7 +181,35 @@ public class Database {
         return data;
     }
 
-    public VipStorage getVipStorage() {
+    public List<VipStorage> getVipStorage(String name) {
         checkConnection();
+        List<VipStorage> list = new ArrayList<>();
+        try {
+            getStorageByPlayer.setString(1, name);
+            ResultSet resultSet = getStorageByPlayer.executeQuery();
+            while (resultSet.next()) {
+                list.add(new VipStorage(resultSet.getInt("id"), name, resultSet.getString("vip"), resultSet.getString("previous"), resultSet.getLong("activate"), resultSet.getLong("left")));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public VipStorage getVipStorage(int id) {
+        checkConnection();
+        VipStorage vipStorage = null;
+        try {
+            getStorageByID.setInt(1, id);
+            ResultSet resultSet = getStorageByID.executeQuery();
+            if (resultSet.next()) {
+                vipStorage = new VipStorage(id, resultSet.getString("name"), resultSet.getString("vip"), resultSet.getString("previous"), resultSet.getLong("activate"), resultSet.getLong("left"));
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return vipStorage;
     }
 }

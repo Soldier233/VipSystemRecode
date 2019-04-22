@@ -21,9 +21,13 @@ public class VipSystemAPI {
         return vipManager;
     }
 
+    public VipStorageManager getVipStorageManager() {
+        return vipStorageManager;
+    }
+
     private VipSystemAPI() {
         vipManager = new VipManager();
-        vipStorageManager=new VipStorageManager();
+        vipStorageManager = new VipStorageManager();
     }
 
 
