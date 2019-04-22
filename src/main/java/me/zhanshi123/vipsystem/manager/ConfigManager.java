@@ -2,7 +2,9 @@ package me.zhanshi123.vipsystem.manager;
 
 import com.google.common.base.Charsets;
 import me.zhanshi123.vipsystem.Main;
+import me.zhanshi123.vipsystem.customcommand.CustomCommand;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -32,6 +34,8 @@ public class ConfigManager {
             }
             config.load(new BufferedReader(new InputStreamReader(new FileInputStream(f), Charsets.UTF_8)));
             dateFormat = new SimpleDateFormat(config.getString("dateFormat"));
+            ConfigurationSection customCommands = config.getConfigurationSection("customCommands");
+            customCommands.getKeys(false).forEach(group -> Main.getCustomCommandManager().add(new CustomCommand(group, customCommands.getStringList(group + ".activate"), customCommands.getStringList(group + ".activate"))));
         } catch (Exception e) {
             e.printStackTrace();
         }

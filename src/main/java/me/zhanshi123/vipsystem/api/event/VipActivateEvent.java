@@ -4,23 +4,22 @@ import me.zhanshi123.vipsystem.api.vip.VipData;
 import org.bukkit.entity.Player;
 
 public class VipActivateEvent extends VipEvent {
-    private boolean isNative = true;
+    private boolean executeCommands = true;
 
     public VipActivateEvent(Player player, VipData vipData) {
         super(player, vipData);
     }
 
-    /**
-     * @param player
-     * @param vipData
-     * @param isNative if is called by plugin itself
-     */
-    public VipActivateEvent(Player player, VipData vipData, boolean isNative) {
+    public VipActivateEvent(Player player, VipData vipData, boolean executeCommands) {
         super(player, vipData);
-        this.isNative = isNative;
+        this.executeCommands = executeCommands;
     }
 
-    public boolean isNative() {
-        return isNative;
+    public boolean isExecuteCommands() {
+        return executeCommands;
+    }
+
+    public void setExecuteCommands(boolean executeCommands) {
+        this.executeCommands = executeCommands;
     }
 }

@@ -1,6 +1,7 @@
 package me.zhanshi123.vipsystem;
 
 import me.zhanshi123.vipsystem.command.CommandHandler;
+import me.zhanshi123.vipsystem.customcommand.CustomCommandManager;
 import me.zhanshi123.vipsystem.data.Cache;
 import me.zhanshi123.vipsystem.data.Database;
 import me.zhanshi123.vipsystem.listener.PlayerListener;
@@ -23,6 +24,7 @@ public final class Main extends JavaPlugin {
     private static CommandHandler commandHandler;
     private static Metrics metrics;
     private static Cache cache;
+    private static CustomCommandManager customCommandManager;
 
     public static Main getInstance() {
         return instance;
@@ -56,9 +58,14 @@ public final class Main extends JavaPlugin {
         return cache;
     }
 
+    public static CustomCommandManager getCustomCommandManager() {
+        return customCommandManager;
+    }
+
     @Override
     public void onEnable() {
         instance = this;
+        customCommandManager = new CustomCommandManager();
         configManager = new ConfigManager();
         MessageManager.init();
         updateManager = new UpdateManager();

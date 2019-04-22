@@ -49,6 +49,15 @@ public class Database {
                         ")\n" +
                         ";\n" +
                         "\n");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS `" + table + "storage` (" +
+                        "`id`  int UNSIGNED NOT NULL AUTO_INCREMENT ," +
+                        "`player`  varchar(40) NOT NULL ," +
+                        "`vip`  varchar(20) NOT NULL ," +
+                        "`previous`  varchar(20) NOT NULL ," +
+                        "`activate`  bigint UNSIGNED NOT NULL ," +
+                        "`left`  bigint UNSIGNED NOT NULL ," +
+                        "INDEX `player` (`player`) USING BTREE " +
+                        ");");
             } else {
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS \"main\".\"" + table + "players\" (\n" +
                         "\"player\"  TEXT NOT NULL,\n" +
@@ -59,21 +68,40 @@ public class Database {
                         "PRIMARY KEY (\"player\")\n" +
                         ")\n" +
                         ";\n");
-                statement.executeUpdate("CREATE UNIQUE INDEX IF NOT EXISTS \"main\".\"player\"\n" +
+                statement.executeUpdate("CREATE UNIQUE INDEX IF NOT EXISTS \"main\"." + table + "\"player\"\n" +
                         "ON \"" + table + "players\" (\"player\" ASC);\n" +
+                        "\n");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS \"main\".\"" + table + "storage\" (\n" +
+                        "\"id\"  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+                        "\"player\"  TEXT NOT NULL,\n" +
+                        "\"vip\"  TEXT NOT NULL,\n" +
+                        "\"previous\"  TEXT NOT NULL,\n" +
+                        "\"activate\"  TEXT NOT NULL,\n" +
+                        "\"left\"  TEXT NOT NULL\n" +
+                        ")\n" +
+                        ";");
+                statement.executeUpdate("CREATE UNIQUE INDEX IF NOT EXISTS \"main\"." + table + "\"storage\"\n" +
+                        "ON \"" + table + "storage\" (\"player\" ASC);\n" +
+                        "\n");
+                statement.executeUpdate("CREATE UNIQUE INDEX IF NOT EXISTS \"main\"." + table + "\"storage\"\n" +
+                        "ON \"" + table + "storage\" (\"id\" ASC);\n" +
                         "\n");
             }
             statement.close();
-            getPlayer = connection.prepareStatement("SELECT `vip`,`previous`,`start`,`duration` FROM `" + table + "players` WHERE `player` = ?;");
+            getPlayer = connection.prepareStatement("SELECT `vip`,`previous`,`start`,`duration` FROM `" + table + "players` WHERE `player` = ? LIMIT 1;");
             insertPlayer = connection.prepareStatement("INSERT INTO `" + table + "players` (player,vip,previous,start,duration) VALUES(?,?,?,?,?);");
             updatePlayer = connection.prepareStatement("UPDATE `" + table + "players` SET `vip` = ?, `previous` = ?, `start` = ?, `duration` = ? WHERE `player` = ?;");
             deletePlayer = connection.prepareStatement("DELETE FROM `" + table + "players` WHERE `player` = ?;");
+            insertStorage = connection.prepareStatement("INSERT `player`,`vip`,`previous`,`activate`,`left` INTO `" + table + "storage` VALUES(?,?,?,?,?);");
+            removeStorage = connection.prepareStatement("DELETE FROM `" + table + "storage` WHERE `player`= ?;");
+            getStorageByPlayer = connection.prepareStatement("SELECT `id`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `player` = ?;");
+            getStorageByID = connection.prepareStatement("SELECT `player`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `id` = ?;");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private PreparedStatement getPlayer, insertPlayer, updatePlayer, deletePlayer;
+    private PreparedStatement getPlayer, insertPlayer, updatePlayer, deletePlayer, insertStorage, removeStorage, getStorageByPlayer, getStorageByID;
 
     public Database() {
         init();
@@ -149,5 +177,9 @@ public class Database {
             e.printStackTrace();
         }
         return data;
+    }
+
+    public VipStorage getVipStorage() {
+        checkConnection();
     }
 }

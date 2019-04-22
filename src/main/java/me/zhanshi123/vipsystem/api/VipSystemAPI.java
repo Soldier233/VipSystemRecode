@@ -1,6 +1,7 @@
 package me.zhanshi123.vipsystem.api;
 
 import me.zhanshi123.vipsystem.Main;
+import me.zhanshi123.vipsystem.api.storage.VipStorageManager;
 import me.zhanshi123.vipsystem.api.vip.VipManager;
 import org.bukkit.entity.Player;
 
@@ -10,6 +11,7 @@ import java.util.regex.Pattern;
 public class VipSystemAPI {
     private static VipSystemAPI instance = new VipSystemAPI();
     private VipManager vipManager;
+    private VipStorageManager vipStorageManager;
 
     public static VipSystemAPI getInstance() {
         return instance;
@@ -21,6 +23,7 @@ public class VipSystemAPI {
 
     private VipSystemAPI() {
         vipManager = new VipManager();
+        vipStorageManager=new VipStorageManager();
     }
 
 

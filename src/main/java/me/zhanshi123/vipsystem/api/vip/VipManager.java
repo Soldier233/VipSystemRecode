@@ -5,9 +5,12 @@ import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.api.event.VipActivateEvent;
 import me.zhanshi123.vipsystem.api.event.VipExpireEvent;
 import me.zhanshi123.vipsystem.api.event.VipRenewEvent;
+import me.zhanshi123.vipsystem.customcommand.CustomCommand;
 import me.zhanshi123.vipsystem.task.CheckVipTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import java.text.MessageFormat;
 
 public class VipManager {
     /**
@@ -38,6 +41,10 @@ public class VipManager {
             Main.getPermission().playerAddGroup(player, group);
         } else {
             Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, group));
+        }
+        if (activateEvent.isExecuteCommands()) {
+            CustomCommand customCommand = Main.getCustomCommandManager().get(vipData.getVip());
+            customCommand.getActivate().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(cmd, player.getName())));
         }
         new CheckVipTask(player).runTask(Main.getInstance());
 
@@ -78,6 +85,10 @@ public class VipManager {
             if (Main.getConfigManager().isPreviousGroup()) {
                 Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, vipData.getPrevious()));
             }
+        }
+        if (expireEvent.isExecuteCommands()) {
+            CustomCommand customCommand = Main.getCustomCommandManager().get(vipData.getVip());
+            customCommand.getExpire().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(cmd, player.getName())));
         }
     }
 }
