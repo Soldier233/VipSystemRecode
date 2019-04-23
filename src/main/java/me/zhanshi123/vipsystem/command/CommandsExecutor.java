@@ -78,6 +78,7 @@ public class CommandsExecutor implements CommandExecutor {
     private void sendHelp(CommandSender sender) {
         Main.getCommandHandler().getCommands().stream()
                 .filter(subCommand -> !(subCommand instanceof AdminCommand))
+                .filter(subCommand -> subCommand.getDescription() != null)
                 .forEach(subCommand -> sender.sendMessage(MessageFormat.format(MessageManager.getString("Command.format"), subCommand.getUsage(), subCommand.getDescription())));
         if (sender.isOp()) {
             Main.getCommandHandler().getCommands().stream()

@@ -7,6 +7,7 @@ public class VipStorage {
     private String previous;
     private long activate;
     private long left;
+    //开通秒数
 
     public VipStorage(int id, String player, String vip, String previous, long activate, long left) {
         this.id = id;
@@ -71,5 +72,17 @@ public class VipStorage {
 
     public void setLeft(long left) {
         this.left = left;
+    }
+
+    public boolean isValid() {
+        long activate = this.activate;
+        long last = left;
+        return activate + last >= System.currentTimeMillis();
+    }
+
+    public long getLast() {
+        long now = System.currentTimeMillis();
+        long last = left;
+        return activate + last - now;
     }
 }

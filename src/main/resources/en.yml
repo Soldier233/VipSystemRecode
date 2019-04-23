@@ -26,3 +26,12 @@ Command:
     #Do not add any space in usage!
     noVip: '§cThe player has no Vip!'
     success: '§7Vip successfully removed'
+  changevip:
+    desc: 'Change your activated vip group'
+    usage: '/vipsys changevip'
+    noVipStored: '§cYou have no vip in storage'
+    tellraw:
+      plain: '§7- §e{0}'
+      storeTime: '§7Time when stored: §e{0}'
+      expireTime: '§7Time when expire: §e{0}'
+      click: '§bClick to change the Vip'

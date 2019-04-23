@@ -9,8 +9,9 @@ import me.zhanshi123.vipsystem.data.connector.PoolHandler;
 import me.zhanshi123.vipsystem.data.connector.SQLHandler;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Database {
     private DatabaseHandler handler;
@@ -95,7 +96,7 @@ public class Database {
             updatePlayer = connection.prepareStatement("UPDATE `" + table + "players` SET `vip` = ?, `previous` = ?, `start` = ?, `duration` = ? WHERE `player` = ?;");
             deletePlayer = connection.prepareStatement("DELETE FROM `" + table + "players` WHERE `player` = ?;");
             insertStorage = connection.prepareStatement("INSERT `player`,`vip`,`previous`,`activate`,`left` INTO `" + table + "storage` VALUES(?,?,?,?,?);");
-            removeStorage = connection.prepareStatement("DELETE FROM `" + table + "storage` WHERE `player`= ?;");
+            removeStorage = connection.prepareStatement("DELETE FROM `" + table + "storage` WHERE `id`= ?;");
             getStorageByPlayer = connection.prepareStatement("SELECT `id`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `player` = ?;");
             getStorageByID = connection.prepareStatement("SELECT `player`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `id` = ? LIMIT 1;");
         } catch (SQLException e) {
@@ -181,20 +182,35 @@ public class Database {
         return data;
     }
 
-    public List<VipStorage> getVipStorage(String name) {
+    public Set<VipStorage> getVipStorage(String name) {
         checkConnection();
-        List<VipStorage> list = new ArrayList<>();
+        Set<VipStorage> set = new HashSet<>();
         try {
             getStorageByPlayer.setString(1, name);
             ResultSet resultSet = getStorageByPlayer.executeQuery();
             while (resultSet.next()) {
-                list.add(new VipStorage(resultSet.getInt("id"), name, resultSet.getString("vip"), resultSet.getString("previous"), resultSet.getLong("activate"), resultSet.getLong("left")));
+                set.add(new VipStorage(resultSet.getInt("id"), name, resultSet.getString("vip"), resultSet.getString("previous"), resultSet.getLong("activate"), resultSet.getLong("left")));
             }
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+        validVerify(set);
+        return set;
+    }
+
+    public void addVipStorage(VipStorage vipStorage) {
+        checkConnection();
+        try {
+            insertStorage.setString(1, vipStorage.getPlayer());
+            insertStorage.setString(2, vipStorage.getVip());
+            insertStorage.setString(3, vipStorage.getPrevious());
+            insertStorage.setLong(4, vipStorage.getActivate());
+            insertPlayer.setLong(5, vipStorage.getLeft());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public VipStorage getVipStorage(int id) {
@@ -210,6 +226,32 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return vipStorage;
+        if (vipStorage == null) {
+            return null;
+        }
+        if (vipStorage.isValid()) {
+            return vipStorage;
+        }
+        return null;
+    }
+
+    public void removeVipStorage(int id) {
+        checkConnection();
+        try {
+            removeStorage.setInt(1, id);
+            removeStorage.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void validVerify(Set<VipStorage> data) {
+        new HashSet<>(data).stream()
+                .filter(entry -> !entry.isValid())
+                .forEach(entry -> {
+                            removeVipStorage(entry.getId());
+                            data.remove(entry);
+                        }
+                );
     }
 }

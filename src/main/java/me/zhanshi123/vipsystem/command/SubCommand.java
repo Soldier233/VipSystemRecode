@@ -8,7 +8,7 @@ import java.text.MessageFormat;
 
 public abstract class SubCommand {
     private String name;
-    private String usage, description;
+    private String usage, description = null;
 
     private int argLength = -1;
 
