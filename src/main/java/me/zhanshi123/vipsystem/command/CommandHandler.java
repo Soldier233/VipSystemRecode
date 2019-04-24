@@ -1,22 +1,21 @@
 package me.zhanshi123.vipsystem.command;
 
-import me.zhanshi123.vipsystem.command.sub.GiveCommand;
-import me.zhanshi123.vipsystem.command.sub.MeCommand;
-import me.zhanshi123.vipsystem.command.sub.RemoveCommand;
+import me.zhanshi123.vipsystem.command.sub.*;
 import org.bukkit.Bukkit;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 public class CommandHandler {
 
-    private Set<SubCommand> commands =new HashSet<>();
+    private Set<SubCommand> commands = new HashSet<>();
 
     public CommandHandler(String name) {
         commands.add(new MeCommand());
         commands.add(new RemoveCommand());
         commands.add(new GiveCommand());
+        commands.add(new ChangeVipCommand());
+        commands.add(new ClaimCommand());
         Bukkit.getPluginCommand(name).setExecutor(new CommandsExecutor());
     }
 

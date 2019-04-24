@@ -33,7 +33,7 @@ public class ClaimCommand extends SubCommand implements PermissionCommand {
         if (!vipStorage.getPlayer().equalsIgnoreCase(VipSystemAPI.getInstance().getPlayerName(player))) {
             return true;
         }
-
+        VipSystemAPI.getInstance().getVipStorageManager().store(player);
         VipSystemAPI.getInstance().getVipManager().addVip(player, new VipData(VipSystemAPI.getInstance().getPlayerName(player), vipStorage.getVip(), vipStorage.getPrevious(), vipStorage.getLast()));
         return true;
     }
