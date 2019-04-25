@@ -89,8 +89,8 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> Main.getCache().deCache(player));
-        database.release();
         Bukkit.getScheduler().cancelTasks(Main.getInstance());
+        database.release();
     }
 
     private boolean setupPermissions() {

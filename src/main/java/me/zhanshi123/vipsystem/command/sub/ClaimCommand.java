@@ -34,7 +34,8 @@ public class ClaimCommand extends SubCommand implements PermissionCommand {
             return true;
         }
         VipSystemAPI.getInstance().getVipStorageManager().store(player);
-        VipSystemAPI.getInstance().getVipManager().addVip(player, new VipData(VipSystemAPI.getInstance().getPlayerName(player), vipStorage.getVip(), vipStorage.getPrevious(), vipStorage.getLast()));
+        VipSystemAPI.getInstance().getVipManager().addVipWithoutCommands(player, new VipData(VipSystemAPI.getInstance().getPlayerName(player), vipStorage.getVip(), vipStorage.getPrevious(), vipStorage.getLast()));
+        VipSystemAPI.getInstance().getVipStorageManager().removeVipStorage(id);
         return true;
     }
 }

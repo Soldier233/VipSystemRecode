@@ -45,7 +45,7 @@ public class ChangeVipCommand extends SubCommand implements PermissionCommand {
                     new TextComponent(MessageManager.getString("Command.changevip.tellraw.click"))
             }));
             component.setText(text);
-            component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/vips claim " + entry.getId()));
+            component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/vipsys claim " + entry.getId()));
             player.spigot().sendMessage(component);
         });
         return true;

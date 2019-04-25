@@ -223,7 +223,7 @@ public class Database {
             getStorageByID.setInt(1, id);
             ResultSet resultSet = getStorageByID.executeQuery();
             if (resultSet.next()) {
-                vipStorage = new VipStorage(id, resultSet.getString("name"), resultSet.getString("vip"), resultSet.getString("previous"), resultSet.getLong("activate"), resultSet.getLong("left"));
+                vipStorage = new VipStorage(id, resultSet.getString("player"), resultSet.getString("vip"), resultSet.getString("previous"), resultSet.getLong("activate"), resultSet.getLong("left"));
             }
             resultSet.close();
         } catch (SQLException e) {
