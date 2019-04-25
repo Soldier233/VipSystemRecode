@@ -208,7 +208,8 @@ public class Database {
             insertStorage.setString(2, vipStorage.getVip());
             insertStorage.setString(3, vipStorage.getPrevious());
             insertStorage.setLong(4, vipStorage.getActivate());
-            insertPlayer.setLong(5, vipStorage.getLeft());
+            insertStorage.setLong(5, vipStorage.getLeft());
+            insertStorage.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

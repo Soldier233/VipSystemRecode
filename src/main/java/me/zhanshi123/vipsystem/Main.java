@@ -1,5 +1,6 @@
 package me.zhanshi123.vipsystem;
 
+import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.command.CommandHandler;
 import me.zhanshi123.vipsystem.customcommand.CustomCommandManager;
 import me.zhanshi123.vipsystem.data.Cache;
@@ -87,6 +88,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> Main.getCache().deCache(player));
         database.release();
         Bukkit.getScheduler().cancelTasks(Main.getInstance());
     }

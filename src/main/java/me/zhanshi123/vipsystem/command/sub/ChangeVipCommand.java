@@ -1,5 +1,6 @@
 package me.zhanshi123.vipsystem.command.sub;
 
+import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.api.storage.VipStorage;
 import me.zhanshi123.vipsystem.command.SubCommand;
@@ -14,12 +15,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
 public class ChangeVipCommand extends SubCommand implements PermissionCommand {
-    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public ChangeVipCommand() {
         super("changevip", MessageManager.getString("Command.changevip.usage"), MessageManager.getString("Command.changevip.desc"));
@@ -54,6 +53,6 @@ public class ChangeVipCommand extends SubCommand implements PermissionCommand {
 
     private String getTimeString(long time) {
         Date date = new Date(time);
-        return format.format(date);
+        return Main.getConfigManager().getDateFormat().format(date);
     }
 }

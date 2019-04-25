@@ -3,8 +3,12 @@ package me.zhanshi123.vipsystem.api;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.storage.VipStorageManager;
 import me.zhanshi123.vipsystem.api.vip.VipManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,4 +87,21 @@ public class VipSystemAPI {
         }
         return 0L;
     }
+
+    public Collection<Player> getOnlinePlayers() {
+        Collection<Player> players = null;
+        try {
+            Class<?> clazz = Class.forName("org.bukkit.Bukkit");
+            Method method = clazz.getMethod("getOnlinePlayers");
+            if (method.getReturnType().equals(Collection.class)) {
+                players = (Collection<Player>) method.invoke(Bukkit.getServer());
+            } else {
+                players = Arrays.asList((Player[]) method.invoke(Bukkit.getServer()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return players;
+    }
+
 }
