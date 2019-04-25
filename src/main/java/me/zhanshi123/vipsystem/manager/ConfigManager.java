@@ -35,7 +35,9 @@ public class ConfigManager {
             config.load(new BufferedReader(new InputStreamReader(new FileInputStream(f), Charsets.UTF_8)));
             dateFormat = new SimpleDateFormat(config.getString("dateFormat"));
             ConfigurationSection customCommands = config.getConfigurationSection("customCommands");
-            customCommands.getKeys(false).forEach(group -> Main.getCustomCommandManager().add(new CustomCommand(group, customCommands.getStringList(group + ".activate"), customCommands.getStringList(group + ".activate"))));
+            if (customCommands != null) {
+                customCommands.getKeys(false).forEach(group -> Main.getCustomCommandManager().add(new CustomCommand(group, customCommands.getStringList(group + ".activate"), customCommands.getStringList(group + ".activate"))));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

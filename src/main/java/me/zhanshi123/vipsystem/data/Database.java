@@ -59,7 +59,9 @@ public class Database {
                         "`previous`  varchar(20) NOT NULL ," +
                         "`activate`  bigint UNSIGNED NOT NULL ," +
                         "`left`  bigint UNSIGNED NOT NULL ," +
-                        "INDEX `player` (`player`) USING BTREE " +
+                        "PRIMARY KEY (`id`),\n" +
+                        "INDEX `player` (`player`) USING BTREE ," +
+                        "UNIQUE INDEX `id` (`id`) USING BTREE " +
                         ");");
             } else {
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS \"main\".\"" + table + "players\" (\n" +
@@ -71,7 +73,7 @@ public class Database {
                         "PRIMARY KEY (\"player\")\n" +
                         ")\n" +
                         ";\n");
-                statement.executeUpdate("CREATE UNIQUE INDEX IF NOT EXISTS \"main\"." + table + "\"player\"\n" +
+                statement.executeUpdate("CREATE UNIQUE INDEX IF NOT EXISTS \"main\".\"" + table + "player\"\n" +
                         "ON \"" + table + "players\" (\"player\" ASC);\n" +
                         "\n");
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS \"main\".\"" + table + "storage\" (\n" +
@@ -83,19 +85,19 @@ public class Database {
                         "\"left\"  TEXT NOT NULL\n" +
                         ")\n" +
                         ";");
-                statement.executeUpdate("CREATE UNIQUE INDEX IF NOT EXISTS \"main\"." + table + "\"storage\"\n" +
+                statement.executeUpdate("CREATE INDEX IF NOT EXISTS \"main\".\"" + table + "storage_player\"\n" +
                         "ON \"" + table + "storage\" (\"player\" ASC);\n" +
                         "\n");
-                statement.executeUpdate("CREATE UNIQUE INDEX IF NOT EXISTS \"main\"." + table + "\"storage\"\n" +
+                statement.executeUpdate("CREATE UNIQUE INDEX IF NOT EXISTS \"main\".\"" + table + "storage_id\"\n" +
                         "ON \"" + table + "storage\" (\"id\" ASC);\n" +
                         "\n");
             }
             statement.close();
             getPlayer = connection.prepareStatement("SELECT `vip`,`previous`,`start`,`duration` FROM `" + table + "players` WHERE `player` = ? LIMIT 1;");
-            insertPlayer = connection.prepareStatement("INSERT INTO `" + table + "players` (player,vip,previous,start,duration) VALUES(?,?,?,?,?);");
+            insertPlayer = connection.prepareStatement("INSERT INTO `" + table + "players` (`player`,`vip`,`previous`,`start`,`duration`) VALUES(?,?,?,?,?);");
             updatePlayer = connection.prepareStatement("UPDATE `" + table + "players` SET `vip` = ?, `previous` = ?, `start` = ?, `duration` = ? WHERE `player` = ?;");
             deletePlayer = connection.prepareStatement("DELETE FROM `" + table + "players` WHERE `player` = ?;");
-            insertStorage = connection.prepareStatement("INSERT `player`,`vip`,`previous`,`activate`,`left` INTO `" + table + "storage` VALUES(?,?,?,?,?);");
+            insertStorage = connection.prepareStatement("INSERT INTO `" + table + "storage` (`player`,`vip`,`previous`,`activate`,`left`) VALUES(?,?,?,?,?);");
             removeStorage = connection.prepareStatement("DELETE FROM `" + table + "storage` WHERE `id`= ?;");
             getStorageByPlayer = connection.prepareStatement("SELECT `id`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `player` = ?;");
             getStorageByID = connection.prepareStatement("SELECT `player`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `id` = ? LIMIT 1;");
