@@ -41,3 +41,53 @@ VipSystem可以帮你自主管理服务器的vip，支持限时，永久，可�
 | %vipsystem_expire% | 到期时间 |
 | %vipsystem_previous% | 开通之前的组名 |
 
+### 进阶用法
+#### 语言设置
+插件内置了英语和中文，你可以将配置文件中的```lang```项目的值改为```zh_CN```或```en```来使用插件内置的两种语言  
+你也可以自定义语言，将```lang```的值改为语言名之后，重载插件，插件会在```messages```目录下多生成一个以英文为模板的语言文件，你可以自主修改并重载生效语言文件
+#### UUID模式
+如果你的服务器是正版服务器  
+建议你在配置文件中启用UUID模式```uuid: true```  
+#### 数据库
+插件默认使用HikariCP连接池连接SQLite数据库，如果没有特殊需要，你无需改动该部分配置文件  
+如果你的服务端无法使用默认配置文件启动，并且报错中有hikarcp字样，请修改```usePool```的值为```false```  
+如果你需要使用MySQL，你可以设置```useMySQL```的值为```true```并在下方配置数据库地址等信息
+#### 全局Vip
+如果你使用GroupManager作为权限组插件，无特殊需要，不需要更改此部分配置  
+如果你使用PermissionsEx作为权限组插件，并且默认配置下vip无法生效到全部世界，请将```isGlobal```的值设置为```false```，如果仍无法生效到全部世界，请在```worlds```下手动添加你所有的世界名，例如
+```
+worlds:
+  - world
+  - world_nether
+  - world_the_end
+```
+#### 自定义到期时间格式
+如果需要更改日期格式，可以参考[https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html)的占位符进行修改
+#### 自定义命令
+你可以自定义vip开通/到期时的命令，下面是默认的配置文件
+```
+customCommands:
+  vip:
+    activate:
+      - 'say {0} has activated vip!'
+      - 'give {0} minecraft:diamond'
+    expire:
+      - 'say {0} is no longer a vip'
+  svip:
+    activate:
+      - 'say {0} has activated svip!'
+      - 'give {0} minecraft:diamond'
+    expire:
+      - 'say {0} is no longer a svip'
+```
+意思是，在vip开通时，执行下方命令，发送消息并给玩家一个钻石
+```
+say {0} has activated vip!
+give {0} minecraft:diamond
+```
+在vip到期时，执行下方命令，发送消息
+```
+say {0} is no longer a vip
+```
+svip组同理，如果你有更多的vip种类，可以按照上方格式自行添加  
+如果不需要使用该功能，可以直接整项删除

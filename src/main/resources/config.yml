@@ -50,7 +50,7 @@ customCommands:
       - 'say {0} has activated svip!'
       - 'give {0} minecraft:diamond'
     expire:
-        - 'say {0} is no longer a svip'
+      - 'say {0} is no longer a svip'
 #Custom commands to be executed when activating the vip or expire
 #format:
 #  groupName:
