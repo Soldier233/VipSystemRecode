@@ -14,7 +14,7 @@ commands:
 permissions:
   vipsystem.changevip:
     description: Allows to use changevip Command
-    default: default
+    default: true
   vipsystem.give:
     description: Allows to use give Command
     default: op
