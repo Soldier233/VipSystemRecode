@@ -4,13 +4,12 @@ import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.api.storage.VipStorage;
 import me.zhanshi123.vipsystem.api.vip.VipData;
 import me.zhanshi123.vipsystem.command.SubCommand;
-import me.zhanshi123.vipsystem.command.type.PermissionCommand;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class ClaimCommand extends SubCommand implements PermissionCommand {
+public class ClaimCommand extends SubCommand {
     public ClaimCommand() {
         super("claim");
     }

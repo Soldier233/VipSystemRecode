@@ -8,3 +8,19 @@ description: A plugin to manage Vip automatically
 website: https://dl.zhanshi123.me#VipSystem
 commands:
   vipsys:
+    description: Main command of VipSystem
+    aliases:
+      - vip
+permissions:
+  vipsystem.changevip:
+    description: Allows to use changevip Command
+    default: default
+  vipsystem.give:
+    description: Allows to use give Command
+    default: op
+  vipsystem.remove:
+    description: Allows to use remove Command
+    default: op
+  vipsystem.reload:
+    description: Allows to use remove Command
+    default: op
