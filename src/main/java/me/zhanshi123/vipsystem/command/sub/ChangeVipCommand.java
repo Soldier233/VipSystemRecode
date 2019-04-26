@@ -36,6 +36,7 @@ public class ChangeVipCommand extends SubCommand implements PermissionCommand {
             player.sendMessage(MessageManager.getString("Command.changevip.noVipStored"));
             return true;
         }
+        player.sendMessage(MessageManager.getString("Command.changevip.vipStored"));
         data.forEach(entry -> {
             TextComponent component = new TextComponent();
             String text = MessageFormat.format(MessageManager.getString("Command.changevip.tellraw.plain"), entry.getVip());

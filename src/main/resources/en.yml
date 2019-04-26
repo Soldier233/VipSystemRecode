@@ -30,6 +30,7 @@ Command:
     desc: 'Change your activated vip group'
     usage: '/vipsys changevip'
     noVipStored: '§cYou have no vip in storage'
+    vipStored: '§7Following are your vip in storage. Hover the entry to get more details'
     tellraw:
       plain: '§7- §e{0}'
       storeTime: '§7Time when stored: §e{0}'

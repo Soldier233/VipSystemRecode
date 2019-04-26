@@ -11,6 +11,7 @@ Command:
     usage: '/vipsys me'
     #Do not add any space in usage!
     result: '§7你是§e{0}§7，到期时间§e{1}§7,剩余§e{2}§7天'
+    resultPermanent: '§7你是永久§e{0}'
     noVip: '§7你没有Vip'
   give:
     desc: '给指定玩家指定时间的Vip，时间格式为xdxhxmxs，x天 x小时 x分 x秒'
@@ -18,9 +19,20 @@ Command:
     #Do not add any space in usage!
     alreadyHaveVip: '§7该玩家已经拥有Vip'
     success: '§7Vip发送成功'
+    invalidTime: '§c时间格式不正确。例如1d2h3m4s为1天2小时3分钟4秒，-1为永久'
   remove:
     desc: '删除这个玩家的Vip'
     usage: '/vipsys remove [玩家]'
     #Do not add any space in usage!
     noVip: '§c这个玩家没有Vip'
     success: '§7Vip移除成功'
+  changevip:
+    desc: '切换你已经开通的Vip组'
+    usage: '/vipsys changevip'
+    noVipStored: '§c没有已经开通的Vip组'
+    vipStored: '§7下面是你已经开通的可切换的Vip，鼠标移到文本上可以看到详细内容'
+    tellraw:
+      plain: '§7- §e{0}'
+      storeTime: '§7存放时间: §e{0}'
+      expireTime: '§7到期时间: §e{0}'
+      click: '§b点击切换'
