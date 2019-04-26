@@ -91,3 +91,14 @@ say {0} is no longer a vip
 ```
 svip组同理，如果你有更多的vip种类，可以按照上方格式自行添加  
 如果不需要使用该功能，可以直接整项删除
+### 插件下载
+改插件为免费插件，但是不提供jar的直接下载地址  
+你可以clone/fork该项目并自行构建，只需安装maven后进入项目目录，输入```mvn install```即可自动完成构建。目标文件会生成在```/target```目录下  
+如果你没有自行构建的能力，你可以进入[https://www.spigotmc.org/resources/vipsystem-premium.66740/](https://www.spigotmc.org/resources/vipsystem-premium.66740/)支付$3或￥20下载文件  
+所有支付的款项都是对作者开发极大的支持!
+### API
+你可以通过```VipSystemAPI.getInstance()```来获取```VipSystemAPI```的实例  
+更多内容待补充
+### 联系作者
+如果你想提交bug，你可以发送issue或加群563012939联系群主获取帮助  
+你同样也可以通过email联系 Email: [i@zhanshi123.me](mailto:i@zhanshi123.me)
