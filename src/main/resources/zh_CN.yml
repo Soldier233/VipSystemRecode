@@ -19,7 +19,7 @@ Command:
     #Do not add any space in usage!
     alreadyHaveVip: '§7该玩家已经拥有Vip'
     success: '§7Vip发送成功'
-    invalidTime: '§c时间格式不正确。例如1d2h3m4s为1天2小时3分钟4秒，-1为永久'
+    invalidTime: '§c时间格式不正确。例如1d2h3m4s为1天2小时3分钟4秒，-1为永久。时间最少为1分钟'
   remove:
     desc: '删除这个玩家的Vip'
     usage: '/vipsys remove [玩家]'

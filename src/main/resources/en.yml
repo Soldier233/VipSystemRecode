@@ -19,7 +19,7 @@ Command:
     #Do not add any space in usage!
     alreadyHaveVip: '§7The player has already had a vip'
     success: '§7Vip successfully given'
-    invalidTime: '§cTime is invalid. e.g. 1d2h3m4s for 1 day 2 hours 3 minutes and 4 seconds. -1 for permanent.'
+    invalidTime: '§cTime is invalid. e.g. 1d2h3m4s for 1 day 2 hours 3 minutes and 4 seconds. -1 for permanent. Time should be larger than 60 seconds'
   remove:
     desc: 'Remove Vip of the player'
     usage: '/vipsys remove [Player]'

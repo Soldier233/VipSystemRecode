@@ -48,6 +48,9 @@ public class VipSystemAPI {
     private String sMatches = "[0-9]+s";
 
     public long getTimeMillis(String text) {
+        if(text.equalsIgnoreCase("-1")){
+            return -1;
+        }
         long d = 0L;
         long h = 0L;
         long m = 0L;
