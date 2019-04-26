@@ -27,10 +27,14 @@ public class GiveCommand extends SubCommand implements PermissionCommand {
         VipData vipData = VipSystemAPI.getInstance().getVipManager().getVipData(player);
         if (vipData != null) {
             if (!vipData.getVip().equalsIgnoreCase(args[2])) {
-                VipSystemAPI.getInstance().getVipStorageManager().store(player);
-                vipData = new VipData(player, args[2], temp);
-                VipSystemAPI.getInstance().getVipManager().addVip(player, vipData);
-                sender.sendMessage(MessageManager.getString("Command.give.success"));
+                if (vipData.getDuration() != -1) {
+                    VipSystemAPI.getInstance().getVipStorageManager().store(player);
+                    vipData = new VipData(player, args[2], temp);
+                    VipSystemAPI.getInstance().getVipManager().addVip(player, vipData);
+                    sender.sendMessage(MessageManager.getString("Command.give.success"));
+                    return true;
+                }
+                sender.sendMessage(MessageManager.getString("Command.give.alreadyHaveVip"));
                 return true;
             }
             VipSystemAPI.getInstance().getVipManager().renewVip(player, temp);
