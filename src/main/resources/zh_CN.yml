@@ -36,3 +36,8 @@ Command:
       storeTime: '§7存放时间: §e{0}'
       expireTime: '§7到期时间: §e{0}'
       click: '§b点击切换'
+  reload:
+    desc: '重载插件'
+    usage: '/vipsys reload'
+    #Do not add any space in usage!
+    success: '§7重载完成'

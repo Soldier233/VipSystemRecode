@@ -102,4 +102,24 @@ public final class Main extends JavaPlugin {
         return (permission != null);
     }
 
+    public void reload() {
+        VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> Main.getCache().deCache(player));
+        Bukkit.getScheduler().cancelTasks(Main.getInstance());
+        database.release();
+        //disable & enable
+        customCommandManager = new CustomCommandManager();
+        configManager = new ConfigManager();
+        MessageManager.init();
+        database = new Database();
+        if (!database.isAvailable()) {
+            Bukkit.getConsoleSender().sendMessage(MessageManager.getString("fatalError"));
+            setEnabled(false);
+            return;
+        }
+        database.prepare();
+        commandHandler = new CommandHandler("vipsys");
+        cache = new Cache();
+        new CheckAllPlayerTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
+    }
+
 }

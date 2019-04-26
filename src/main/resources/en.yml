@@ -36,3 +36,8 @@ Command:
       storeTime: '§7Time when stored: §e{0}'
       expireTime: '§7Time when expire: §e{0}'
       click: '§bClick to change the Vip'
+  reload:
+    desc: 'Reload the plugin'
+    usage: '/vipsys reload'
+    #Do not add any space in usage!
+    success: '§7Reload complete.'
