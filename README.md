@@ -10,7 +10,7 @@ VipSystem可以帮你自主管理服务器的vip，支持限时，永久，可�
 | 命令 | 用途 | 权限 |
 | :-: | :-: | :-:|
 |/vipsys me | 查看你的vip情况 | 无 |
-|/vipsys changevip | 切换已开通的Vip | visys.changevip |
+|/vipsys changevip | 切换已开通的Vip | vipsys.changevip |
 |/vipsys give [玩家名] [Vip组名] [时间] | 给予玩家Vip(时间格式为xdxhxmxs，x天 x小时 x分 x秒) | vipsys.give |
 |/vipsys remove [玩家名] | 移除玩家的Vip | vipsys.remove |
 |/vipsys reload | 重载插件 | vipsys.reload |
@@ -31,8 +31,7 @@ VipSystem可以帮你自主管理服务器的vip，支持限时，永久，可�
 若需要移除vip，只需管理员输入```/vipsys remove Test```即可移除  
 #### 使用占位符
 如果你需要使用VipSystem提供的占位符，你需要安装PlaceholderAPI插件  
-并下载 [VipSystemPlaceholderExtension](https://static.zhanshi123.me/vipsystem/VipSystemPlaceholderExtension.jar) 并安装到 ```/plugins/PlaceholderAPI/expansions/```中  
-输入命令```/papi reload```以载入占位符支持  
+输入命令```/papi ecloud download vipsystem```以载入占位符支持  
 然后你就可以使用占位符了，占位符映射如下  
 
 | 占位符 | 用途 |
