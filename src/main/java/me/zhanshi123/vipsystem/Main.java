@@ -7,6 +7,7 @@ import me.zhanshi123.vipsystem.data.Cache;
 import me.zhanshi123.vipsystem.data.Database;
 import me.zhanshi123.vipsystem.listener.PlayerListener;
 import me.zhanshi123.vipsystem.manager.ConfigManager;
+import me.zhanshi123.vipsystem.convert.ConvertManager;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
 import me.zhanshi123.vipsystem.metrics.Metrics;
@@ -25,6 +26,7 @@ public final class Main extends JavaPlugin {
     private static CommandHandler commandHandler;
     private static Metrics metrics;
     private static Cache cache;
+    private static ConvertManager convertManager;
     private static CustomCommandManager customCommandManager;
 
     public static Main getInstance() {
@@ -63,9 +65,14 @@ public final class Main extends JavaPlugin {
         return customCommandManager;
     }
 
+    public static ConvertManager getConvertManager() {
+        return convertManager;
+    }
+
     @Override
     public void onEnable() {
         instance = this;
+        convertManager = new ConvertManager();
         customCommandManager = new CustomCommandManager();
         configManager = new ConfigManager();
         MessageManager.init();
