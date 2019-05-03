@@ -54,7 +54,7 @@ public class ConvertManager {
             ConfigurationSection customCommands = oldConfig.getConfigurationSection("Config.Commands");
             String dateFormat = oldConfig.getString("Config.DateFormat");
             String prefix = oldConfig.getString("Config.DataBase.prefix");
-            String type = oldConfig.getString("Config.DataBase.type");
+            String type = oldConfig.getString("Config.DataBase.Type");
             String address = oldConfig.getString("Config.DataBase.MySQL.addr");
             String port = oldConfig.getString("Config.DataBase.MySQL.port");
             String database = oldConfig.getString("Config.DataBase.MySQL.base");

@@ -2,12 +2,12 @@ package me.zhanshi123.vipsystem;
 
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.command.CommandHandler;
+import me.zhanshi123.vipsystem.convert.ConvertManager;
 import me.zhanshi123.vipsystem.customcommand.CustomCommandManager;
 import me.zhanshi123.vipsystem.data.Cache;
 import me.zhanshi123.vipsystem.data.Database;
 import me.zhanshi123.vipsystem.listener.PlayerListener;
 import me.zhanshi123.vipsystem.manager.ConfigManager;
-import me.zhanshi123.vipsystem.convert.ConvertManager;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
 import me.zhanshi123.vipsystem.metrics.Metrics;

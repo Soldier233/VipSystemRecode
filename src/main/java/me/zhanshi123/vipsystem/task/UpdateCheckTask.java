@@ -42,7 +42,7 @@ public class UpdateCheckTask extends BukkitRunnable {
                 if (String.valueOf(finalUpdate.getVersion()).equalsIgnoreCase(Main.getInstance().getDescription().getVersion())) {
                     Bukkit.getConsoleSender().sendMessage(MessageManager.getString("latestVersion"));
                 } else {
-                    Bukkit.getConsoleSender().sendMessage(MessageFormat.format(MessageManager.getString("newUpdate"), finalUpdate.getVersion(), finalUpdate.getMessage()));
+                    Bukkit.getConsoleSender().sendMessage(MessageFormat.format(MessageManager.getString("newUpdate"), String.valueOf(finalUpdate.getVersion()), finalUpdate.getMessage()));
                 }
             }
         }.runTask(Main.getInstance());
