@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
+import java.text.MessageFormat;
 import java.util.List;
 
 public class ConvertManager {
@@ -20,7 +21,8 @@ public class ConvertManager {
     public ConvertManager() {
         oldVersion = detectOldVersion();
         if (oldVersion) {
-
+            convertConfig();
+            Main.getInstance().getLogger().info("Configuration from previous version has been converted.");
         }
     }
 
@@ -59,12 +61,27 @@ public class ConvertManager {
             String user = oldConfig.getString("Config.DataBase.MySQL.user");
             String pwd = oldConfig.getString("Config.DataBase.MySQL.pwd");
             String extra = oldConfig.getString("Config.DataBase.MySQL.extra");
+            String jdbc = MessageFormat.format("jdbc:mysql://{0}:{1}/{2}{3}", address, port, database, extra);
             oldFile.renameTo(new File(Main.getInstance().getDataFolder(), "config.old.yml"));
             File newFile = new File(Main.getInstance().getDataFolder(), "config.yml");
             if (!newFile.exists()) {
-                Main.getInstance().saveResource("config.yml", false);
+                newFile.createNewFile();
             }
-            
+            newConfig.load(new BufferedReader(new InputStreamReader(new FileInputStream(newFile), Charsets.UTF_8)));
+            newConfig.set("lang", lang);
+            newConfig.set("uuid", uuid);
+            newConfig.set("previousGroup", previous);
+            newConfig.set("dataBase.usePool", true);
+            newConfig.set("dataBase.useMySQL", type.equalsIgnoreCase("mysql"));
+            newConfig.set("dataBase.MySQL.address", jdbc);
+            newConfig.set("dataBase.MySQL.user", user);
+            newConfig.set("dataBase.MySQL.password", pwd);
+            newConfig.set("dataBase.MySQL.table", prefix);
+            newConfig.set("isGlobal", global);
+            newConfig.set("worlds", worlds);
+            newConfig.set("dateFormat", dateFormat);
+            newConfig.set("customCommands", customCommands);
+            newConfig.save(newFile);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InvalidConfigurationException e) {
