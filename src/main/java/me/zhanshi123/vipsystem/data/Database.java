@@ -3,12 +3,15 @@ package me.zhanshi123.vipsystem.data;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.storage.VipStorage;
 import me.zhanshi123.vipsystem.api.vip.VipData;
+import me.zhanshi123.vipsystem.convert.Info;
 import me.zhanshi123.vipsystem.data.connector.ConnectionData;
 import me.zhanshi123.vipsystem.data.connector.DatabaseHandler;
 import me.zhanshi123.vipsystem.data.connector.PoolHandler;
 import me.zhanshi123.vipsystem.data.connector.SQLHandler;
 
 import java.sql.*;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -106,10 +109,55 @@ public class Database {
         }
     }
 
+    public void checkOldVersion() {
+        if (!Main.getConvertManager().isOldVersion()) {
+            return;
+        }
+        List<Info> oldData = new ArrayList<>();
+        try {
+            Statement queryStatement = connection.createStatement();
+            ResultSet resultSet = queryStatement.executeQuery("SELECT * FROM `" + table + "players`;");
+            while (resultSet.next()) {
+                Info data = new Info(resultSet.getString("player"), resultSet.getLong("time"), resultSet.getString("vipg"), resultSet.getInt("left"), resultSet.getInt("expired"));
+                oldData.add(data);
+            }
+            resultSet.close();
+            queryStatement.close();
+            List<VipData> newData = new ArrayList<>();
+            oldData.forEach(old -> {
+                String[] args = old.getGroup().split("#");
+                String previous = args[1];
+                String vip = args[0];
+                VipData vipData = new VipData(old.getPlayer(), vip, previous, old.getTime(), old.getLeft() * 1000);
+                newData.add(vipData);
+            });
+            connection.setAutoCommit(false);
+            Statement convertStatement = connection.createStatement();
+            newData.forEach(data -> {
+                try {
+                    convertStatement.addBatch(MessageFormat.format("INSERT INTO `" + table + "players` (`player`,`vip`,`previous`,`start`,`duration`) VALUES({0},{1},{2},{3},{4},{5})", data.getPlayer(), data.getVip(), data.getPrevious(), data.getStart(), data.getDuration()));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+            convertStatement.executeBatch();
+            connection.setAutoCommit(true);
+            convertStatement.close();
+            Statement dropStatement = connection.createStatement();
+            dropStatement.executeUpdate("DROP TABLE `" + table + "players`;");
+            dropStatement.executeUpdate("DROP TABLE `" + table + "vipkeys`;");
+            dropStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private PreparedStatement getPlayer, insertPlayer, updatePlayer, deletePlayer, insertStorage, removeStorage, getStorageByPlayer, getStorageByID;
 
     public Database() {
         init();
+        checkOldVersion();
         prepare();
     }
 
