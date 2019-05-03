@@ -22,8 +22,9 @@ VipSystem可以帮你自主管理服务器的vip，支持限时，永久，可�
 如果你需要使用中文版的插件，请找到```/plugins/VipSystem/config.yml```  
 将文件中的```lang: en```改为```lang: zh_CN```  
 并在服务器输入命令```/vipsys reload```以重载  
-你不需要额外配置默认组，插件会自动根据权限组插件返回默认组  
+你不需要额外配置默认组，插件会自动根据权限组插件返回默认组    
 创建好对应的vip组待命，例如创建一个组名为vip的组  
+如果你之前使用了旧版本的VipSystem 你可以直接将新版本安装进服务器并删除旧版本 插件会自动进行版本间的配置文件更新和数据结构更新
 #### 发放Vip
 设玩家名为 Test 需要发放给Test 30天的vip权限组  
 则输入命令```/vipsys give Test vip 30d```  
@@ -91,7 +92,7 @@ say {0} is no longer a vip
 svip组同理，如果你有更多的vip种类，可以按照上方格式自行添加  
 如果不需要使用该功能，可以直接整项删除
 ## 插件下载
-改插件为免费插件，但是不提供jar的直接下载地址  
+该插件为免费插件，但是不提供jar的直接下载地址  
 你可以clone/fork该项目并自行构建，只需安装maven后进入项目目录，输入```mvn install```即可自动完成构建。目标文件会生成在```/target```目录下  
 如果你没有自行构建的能力，你可以进入[https://www.spigotmc.org/resources/vipsystem-premium.66740/](https://www.spigotmc.org/resources/vipsystem-premium.66740/)支付$3或￥20下载文件  
 人民币支付请加群联系群主 下方有联系方式  
