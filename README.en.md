@@ -53,7 +53,8 @@ If the plugin goes wrong when enabling, you need to set```usePool``` to ```false
 If you need to use MySQL,you can set```useMySQL``` to ```true``` and configure the jdbc address below.
 #### Global Vip
 If you are using GroupManager, you need not to modify the section without special intention.   
-If you are using PermissionsEx, in case the vip cannot be applied to all the worlds, you need to set```isGlobal``` to ```false```If the problem still occurs, you need to add all you worlds in```worlds```  
+If you are using PermissionsEx, in case the vip cannot be applied to all the worlds, you need to set```isGlobal``` to ```false```  
+If the problem still occurs, you need to add all you worlds in```worlds```  
 ```
 worlds:
   - world
