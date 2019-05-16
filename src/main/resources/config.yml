@@ -3,6 +3,8 @@ lang: 'en'
 #Now available: en zh_CN
 uuid: false
 #Use UUID for data storage
+#defaultGroup: builder
+#if you want to customize default group, delete '#' at the beginning of previous line
 previousGroup: false
 #whether return to the previous group before activating vip after the vip expires
 dataBase:
