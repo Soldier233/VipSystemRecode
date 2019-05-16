@@ -24,6 +24,9 @@ public class CheckVipTask extends BukkitRunnable {
         if (vipData == null) {
             return;
         }
+        if (vipData.getDuration() == -1) {
+            return;
+        }
         if (vipData.getTimeToExpire() >= 1000 * 60l) {
             return;
         }

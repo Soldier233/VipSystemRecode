@@ -46,8 +46,11 @@ public class VipManager {
     }
 
     public void addVip(Player player, VipData vipData) {
-        addVipWithoutCommands(player,vipData);
+        addVipWithoutCommands(player, vipData);
         CustomCommand customCommand = Main.getCustomCommandManager().get(vipData.getVip());
+        if (customCommand == null) {
+            return;
+        }
         customCommand.getActivate().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(cmd, player.getName())));
     }
 
@@ -64,11 +67,11 @@ public class VipManager {
         new CheckVipTask(player).runTask(Main.getInstance());
     }
 
-    public void removeVipWithoutCommands(Player player){
+    public VipData removeVipWithoutCommands(Player player) {
         String name = VipSystemAPI.getInstance().getPlayerName(player);
         VipData vipData = getVipData(player);
         if (vipData == null) {
-            return;
+            return null;
         }
         VipExpireEvent expireEvent = new VipExpireEvent(player, vipData);
         Bukkit.getPluginManager().callEvent(expireEvent);
@@ -79,38 +82,21 @@ public class VipManager {
             if (Main.getConfigManager().isPreviousGroup()) {
                 Main.getPermission().playerAddGroup(player, vipData.getPrevious());
             }
-
         } else {
             Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerRemoveGroup(worldName, player, vipData.getVip()));
             if (Main.getConfigManager().isPreviousGroup()) {
                 Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, vipData.getPrevious()));
             }
         }
+        return vipData;
     }
 
     public void removeVip(Player player) {
-        String name = VipSystemAPI.getInstance().getPlayerName(player);
-        VipData vipData = getVipData(player);
-        if (vipData == null) {
+        VipData vipData = removeVipWithoutCommands(player);
+        CustomCommand customCommand = Main.getCustomCommandManager().get(vipData.getVip());
+        if (customCommand == null) {
             return;
         }
-        VipExpireEvent expireEvent = new VipExpireEvent(player, vipData);
-        Bukkit.getPluginManager().callEvent(expireEvent);
-        Main.getCache().removePlayer(name);
-        Main.getDataBase().deletePlayer(name);
-        if (Main.getConfigManager().isGlobal()) {
-            Main.getPermission().playerRemoveGroup(player, vipData.getVip());
-            if (Main.getConfigManager().isPreviousGroup()) {
-                Main.getPermission().playerAddGroup(player, vipData.getPrevious());
-            }
-
-        } else {
-            Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerRemoveGroup(worldName, player, vipData.getVip()));
-            if (Main.getConfigManager().isPreviousGroup()) {
-                Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, vipData.getPrevious()));
-            }
-        }
-        CustomCommand customCommand = Main.getCustomCommandManager().get(vipData.getVip());
         customCommand.getExpire().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(cmd, player.getName())));
     }
 }
