@@ -6,7 +6,7 @@
 
     <groupId>me.zhanshi123</groupId>
     <artifactId>VipSystem</artifactId>
-    <version>4.1</version>
+    <version>4.2</version>
     <packaging>jar</packaging>
 
     <name>VipSystem</name>

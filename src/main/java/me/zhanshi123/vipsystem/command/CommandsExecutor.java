@@ -26,52 +26,36 @@ public class CommandsExecutor implements CommandExecutor {
             }
             if (subCommand instanceof AdminCommand) {
                 if (commandSender.isOp()) {
-                    if (subCommand.isNeedArg()) {
-                        int argLength = subCommand.getArgLength();
-                        if (argLength != args.length) {
-                            subCommand.sendHelp(commandSender);
-                            return true;
-                        } else {
-                            return subCommand.onCommand(commandSender, command, label, args);
-                        }
-                    } else {
-                        return subCommand.onCommand(commandSender, command, label, args);
-                    }
+                    return handle(commandSender, command, label, args, subCommand);
                 } else {
                     commandSender.sendMessage(MessageManager.getString("permissionDeny"));
                     return true;
                 }
             } else if (subCommand instanceof PermissionCommand) {
                 if (Main.getPermission().has(commandSender, "vipsystem." + subCommand.getName())) {
-                    if (subCommand.isNeedArg()) {
-                        int argLength = subCommand.getArgLength();
-                        if (argLength != args.length) {
-                            subCommand.sendHelp(commandSender);
-                            return true;
-                        } else {
-                            return subCommand.onCommand(commandSender, command, label, args);
-                        }
-                    } else {
-                        return subCommand.onCommand(commandSender, command, label, args);
-                    }
+                    return handle(commandSender, command, label, args, subCommand);
                 } else {
                     commandSender.sendMessage(MessageManager.getString("permissionDeny"));
                     return true;
                 }
 
             } else {
-                if (subCommand.isNeedArg()) {
-                    int argLength = subCommand.getArgLength();
-                    if (argLength != args.length) {
-                        subCommand.sendHelp(commandSender);
-                        return true;
-                    } else {
-                        return subCommand.onCommand(commandSender, command, label, args);
-                    }
-                } else {
-                    return subCommand.onCommand(commandSender, command, label, args);
-                }
+                return handle(commandSender, command, label, args, subCommand);
             }
+        }
+    }
+
+    private boolean handle(CommandSender commandSender, Command command, String label, String[] args, SubCommand subCommand) {
+        if (subCommand.isNeedArg()) {
+            int argLength = subCommand.getArgLength();
+            if (argLength != args.length) {
+                subCommand.sendHelp(commandSender);
+                return true;
+            } else {
+                return subCommand.onCommand(commandSender, command, label, args);
+            }
+        } else {
+            return subCommand.onCommand(commandSender, command, label, args);
         }
     }
 

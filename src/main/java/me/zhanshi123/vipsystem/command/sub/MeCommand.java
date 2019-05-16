@@ -29,7 +29,11 @@ public class MeCommand extends SubCommand {
             player.sendMessage(MessageManager.getString("Command.me.noVip"));
             return true;
         }
-        player.sendMessage(MessageFormat.format(MessageManager.getString("Command.me.result"), vipData.getVip(), vipData.getExpireDate(), vipData.getLeftDays()));
+        if (vipData.getDuration() == -1) {
+            player.sendMessage(MessageFormat.format(MessageManager.getString("Command.me.resultPermanent"), vipData.getVip()));
+        } else {
+            player.sendMessage(MessageFormat.format(MessageManager.getString("Command.me.result"), vipData.getVip(), vipData.getExpireDate(), String.valueOf(vipData.getLeftDays())));
+        }
         return true;
     }
 }
