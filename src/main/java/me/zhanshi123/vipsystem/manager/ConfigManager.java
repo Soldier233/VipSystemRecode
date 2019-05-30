@@ -93,4 +93,8 @@ public class ConfigManager {
     public boolean isPreviousGroup() {
         return config.getBoolean("previousGroup");
     }
+
+    public String getDefaultGroup() {
+        return config.getString("defaultGroup");
+    }
 }

@@ -81,11 +81,15 @@ public class VipManager {
             Main.getPermission().playerRemoveGroup(player, vipData.getVip());
             if (Main.getConfigManager().isPreviousGroup()) {
                 Main.getPermission().playerAddGroup(player, vipData.getPrevious());
+            } else if (Main.getConfigManager().getDefaultGroup() != null) {
+                Main.getPermission().playerAddGroup(player, Main.getConfigManager().getDefaultGroup());
             }
         } else {
             Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerRemoveGroup(worldName, player, vipData.getVip()));
             if (Main.getConfigManager().isPreviousGroup()) {
                 Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, vipData.getPrevious()));
+            } else if (Main.getConfigManager().getDefaultGroup() != null) {
+                Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, Main.getConfigManager().getDefaultGroup()));
             }
         }
         return vipData;
