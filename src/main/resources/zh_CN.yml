@@ -42,3 +42,10 @@ Command:
     usage: '/vipsys reload'
     #Do not add any space in usage!
     success: '§7重载完成'
+  look:
+    desc: '查询指定玩家的Vip状态'
+    usage: '/vipsys me [玩家]'
+    #Do not add any space in usage!
+    result: '§7{3}是§e{0}§7，到期时间§e{1}§7,剩余§e{2}§7天'
+    resultPermanent: '§7{1}是永久§e{0}'
+    noVip: '§7{0}没有Vip'
