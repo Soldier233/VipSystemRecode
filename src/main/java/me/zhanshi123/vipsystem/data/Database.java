@@ -111,6 +111,7 @@ public class Database {
                 convertStatement.close();
                 Main.getInstance().getLogger().info("Database from previous version has been converted.");
             }
+            getAllPlayer = connection.prepareStatement("SELECT `player`,`vip`,`previous`,`start`,`duration` FROM `" + table + "players`;");
             getPlayer = connection.prepareStatement("SELECT `vip`,`previous`,`start`,`duration` FROM `" + table + "players` WHERE `player` = ? LIMIT 1;");
             insertPlayer = connection.prepareStatement("INSERT INTO `" + table + "players` (`player`,`vip`,`previous`,`start`,`duration`) VALUES(?,?,?,?,?);");
             updatePlayer = connection.prepareStatement("UPDATE `" + table + "players` SET `vip` = ?, `previous` = ?, `start` = ?, `duration` = ? WHERE `player` = ?;");
@@ -158,7 +159,7 @@ public class Database {
 
     }
 
-    private PreparedStatement getPlayer, insertPlayer, updatePlayer, deletePlayer, insertStorage, removeStorage, getStorageByPlayer, getStorageByID;
+    private PreparedStatement getAllPlayer, getPlayer, insertPlayer, updatePlayer, deletePlayer, insertStorage, removeStorage, getStorageByPlayer, getStorageByID;
 
     public Database() {
         init();
@@ -234,6 +235,20 @@ public class Database {
             e.printStackTrace();
         }
         return data;
+    }
+
+    public Set<VipData> getVipDatum() {
+        checkConnection();
+        Set<VipData> dataSet = new HashSet<>();
+        try {
+            ResultSet resultSet = getAllPlayer.executeQuery();
+            while (resultSet.next()) {
+                dataSet.add(new VipData(resultSet.getString("player"), resultSet.getString("vip"), resultSet.getString("previous"), resultSet.getLong("start"), resultSet.getLong("duration")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dataSet;
     }
 
     public Set<VipStorage> getVipStorage(String name) {

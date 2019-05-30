@@ -50,3 +50,8 @@ Command:
     result: '§7{3} is §e{0}§7. Vip expires when §e{1} §7, §e{2} §7days left'
     resultPermanent: '§7{1} is permanent §e{0}§7.'
     noVip: '§c{0} has no Vip!'
+  list:
+    desc: 'List the vips'
+    usage: '/vipsys list'
+    #Do not add any space in usage!
+    list: '§7Below are the vips(Player,Vip,Date To Expire):'

@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
+import java.util.Set;
 
 public class VipManager {
     /**
@@ -102,5 +103,9 @@ public class VipManager {
             return;
         }
         customCommand.getExpire().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(cmd, player.getName())));
+    }
+
+    public Set<VipData> getVipDatum() {
+        return Main.getDataBase().getVipDatum();
     }
 }

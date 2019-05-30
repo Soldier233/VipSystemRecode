@@ -49,3 +49,8 @@ Command:
     result: '§7{3}是§e{0}§7，到期时间§e{1}§7,剩余§e{2}§7天'
     resultPermanent: '§7{1}是永久§e{0}'
     noVip: '§7{0}没有Vip'
+  list:
+    desc: '列出所有VIP'
+    usage: '/vipsys list'
+    #Do not add any space in usage!
+    list: '§7下方是Vip列表(玩家名,Vip组,到期时间):'
