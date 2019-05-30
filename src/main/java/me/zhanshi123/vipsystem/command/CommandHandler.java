@@ -17,6 +17,7 @@ public class CommandHandler {
         commands.add(new ChangeVipCommand());
         commands.add(new ClaimCommand());
         commands.add(new ReloadCommand());
+        commands.add(new LookCommand());
         Bukkit.getPluginCommand(name).setExecutor(new CommandsExecutor());
     }
 

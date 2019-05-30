@@ -42,3 +42,11 @@ Command:
     usage: '/vipsys reload'
     #Do not add any space in usage!
     success: '§7Reload complete.'
+  look:
+    desc: 'Get the Vip information of the specific player'
+    usage: '/vipsys look [Player]'
+    #Do not add any space in usage!
+    notFound: '§7{7} is not online'
+    result: '§7{3} is §e{0}§7. Vip expires when §e{1} §7, §e{2} §7days left'
+    resultPermanent: '§7{1} is permanent §e{0}§7.'
+    noVip: '§c{0} has no Vip!'
