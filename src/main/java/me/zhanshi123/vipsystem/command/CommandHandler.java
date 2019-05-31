@@ -18,6 +18,7 @@ public class CommandHandler {
         commands.add(new ClaimCommand());
         commands.add(new ReloadCommand());
         commands.add(new LookCommand());
+        commands.add(new ListCommand());
         Bukkit.getPluginCommand(name).setExecutor(new CommandsExecutor());
     }
 

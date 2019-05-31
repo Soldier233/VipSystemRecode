@@ -20,7 +20,7 @@ public class ListCommand extends SubCommand implements PermissionCommand {
         sender.sendMessage(MessageManager.getString("Command.list.list"));
         Set<VipData> dataSet = VipSystemAPI.getInstance().getVipManager().getVipDatum();
         dataSet.forEach(data -> {
-            sender.sendMessage("§7"+data.getPlayer()+","+"");
+            sender.sendMessage("§7" + data.getPlayer() + "," + data.getVip() + "," + data.getExpireDate());
         });
         return true;
     }
