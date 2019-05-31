@@ -14,6 +14,8 @@ VipSystemEx use cached MySQL or SQLite with indexes as database, supporting enab
 |/vipsys changevip | Change activated vip group | vipsys.changevip |
 |/vipsys give [Player] [Group] [Time] | Give vip(Time format: xdxhxmxs, x days x hours x minutes x seconds) | vipsys.give |
 |/vipsys remove [Player] | Remove vip | vipsys.remove |
+|/vipsys list | Show the list of vip | vipsys.list |
+|/vipsys look [Player] | Get the vip detail of a specific player | vipsys.look |
 |/vipsys reload | Reload the plugin | vipsys.reload |
 
 ## Instructions
@@ -46,7 +48,11 @@ The plugin has two languages,Chinese & English, built-in.You can set```lang```to
 You can also customize your language，set```lang```to your own language,reload the plugin,and the plugin will generate a new file named as what you set in folder```messages```copying from en.yml. You can edit it as you wish.  
 #### UUID Mode
 If you enabled online mode  
-It is recommended to apply ```uuid: true```  
+It is recommended to apply ```uuid: true```
+#### Default Group
+The plugin will determine the group to return according to the permission plugin.  
+If you want to override the default group, you can set```defaultGroup: builder```    
+To set the default group to builder or something else.
 #### Database
 The plugin use HikariCP as database to connect SQLite database as default.If you don't have special needs, you can ignore the section.    
 If the plugin goes wrong when enabling, you need to set```usePool``` to ```false```  

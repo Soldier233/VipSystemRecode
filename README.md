@@ -13,6 +13,8 @@ VipSystemEx可以帮你自主管理服务器的vip，支持限时，永久，可
 |/vipsys changevip | 切换已开通的Vip | vipsys.changevip |
 |/vipsys give [玩家名] [Vip组名] [时间] | 给予玩家Vip(时间格式为xdxhxmxs，x天 x小时 x分 x秒) | vipsys.give |
 |/vipsys remove [玩家名] | 移除玩家的Vip | vipsys.remove |
+|/vipsys list | 查看Vip列表 | vipsys.list |
+|/vipsys look [玩家名] | 查看玩家Vip情况 | vipsys.look |
 |/vipsys reload | 重载插件 | vipsys.reload |
 
 ## 用法介绍
@@ -47,7 +49,11 @@ VipSystemEx可以帮你自主管理服务器的vip，支持限时，永久，可
 你也可以自定义语言，将```lang```的值改为语言名之后，重载插件，插件会在```messages```目录下多生成一个以英文为模板的语言文件，你可以自主修改并重载生效语言文件
 #### UUID模式
 如果你的服务器是正版服务器  
-建议你在配置文件中启用UUID模式```uuid: true```  
+建议你在配置文件中启用UUID模式```uuid: true```
+#### 默认组设置
+插件会根据权限组插件来决定vip到期后返回的权限组  
+如果你需要修改默认组，请在配置文件中设置 ```defaultGroup: builder```  
+将返回的默认组改为builder或其他
 #### 数据库
 插件默认使用HikariCP连接池连接SQLite数据库，如果没有特殊需要，你无需改动该部分配置文件  
 如果你的服务端无法使用默认配置文件启动，并且报错中有hikarcp字样，请修改```usePool```的值为```false```  
