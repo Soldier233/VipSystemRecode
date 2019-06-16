@@ -19,6 +19,10 @@ public class GiveCommand extends SubCommand implements PermissionCommand {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         String playerName = args[1];
         Player player = Bukkit.getPlayer(playerName);
+        if (player == null) {
+            sender.sendMessage(MessageManager.getString("Command.look.notFound"));
+            return true;
+        }
         long temp = VipSystemAPI.getInstance().getTimeMillis(args[3]);
         if (temp == 0 || (temp >= 1 && temp < 60000)) {
             sender.sendMessage(MessageManager.getString("Command.give.invalidTime"));
