@@ -75,7 +75,7 @@ public class ConfigManager {
 
     public List<String> getWorlds() {
         List<String> worlds = config.getStringList("worlds");
-        if (worlds != null) {
+        if (!worlds.isEmpty()) {
             return worlds;
         }
         worlds = new ArrayList<>();
