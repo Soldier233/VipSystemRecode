@@ -8,6 +8,7 @@ import me.zhanshi123.vipsystem.data.connector.ConnectionData;
 import me.zhanshi123.vipsystem.data.connector.DatabaseHandler;
 import me.zhanshi123.vipsystem.data.connector.PoolHandler;
 import me.zhanshi123.vipsystem.data.connector.SQLHandler;
+import org.bukkit.Bukkit;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,13 +27,20 @@ public class Database {
         List<String> mysql = Main.getConfigManager().getMySQL();
         table = mysql.get(3);
         connectionData = new ConnectionData(useMySQL, mysql);
-        if (Main.getConfigManager().isUsePool()) {
-            handler = new PoolHandler();
-        } else {
-            handler = new SQLHandler();
+        try {
+            if (Main.getConfigManager().isUsePool()) {
+                handler = new PoolHandler();
+            } else {
+                handler = new SQLHandler();
+            }
+            handler.init(connectionData);
+            connection = handler.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Bukkit.getConsoleSender().sendMessage("§6[VipSystem] §cError! Cannot initialize database connection.Please try to turn usePool to false in config or check the passwords");
+            Bukkit.getConsoleSender().sendMessage("§6[VipSystem] §c错误! 无法初始化数据库连接，请尝试在配置文件中更改 usePool 为 false 或检查数据库密码等信息");
         }
-        handler.init(connectionData);
-        connection = handler.getConnection();
+
     }
 
     public boolean isAvailable() {

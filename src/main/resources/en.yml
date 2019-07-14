@@ -55,3 +55,4 @@ Command:
     usage: '/vipsys list'
     #Do not add any space in usage!
     list: '§7Below are the vips(Player,Vip,Date To Expire):'
+    amount: '§7Total Vip amount: §e{0}'

@@ -54,3 +54,4 @@ Command:
     usage: '/vipsys list'
     #Do not add any space in usage!
     list: '§7下方是Vip列表(玩家名,Vip组,到期时间):'
+    amount: '§7Vip总数量: §e{0}'
