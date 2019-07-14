@@ -27,13 +27,13 @@ public class LookCommand extends SubCommand implements PermissionCommand {
         }
         VipData vipData = Main.getCache().getVipData(VipSystemAPI.getInstance().getPlayerName(player));
         if (vipData == null) {
-            player.sendMessage(MessageManager.getString("Command.look.noVip"));
+            sender.sendMessage(MessageManager.getString("Command.look.noVip"));
             return true;
         }
         if (vipData.getDuration() == -1) {
-            player.sendMessage(MessageFormat.format(MessageManager.getString("Command.look.resultPermanent"), vipData.getVip(), args[1]));
+            sender.sendMessage(MessageFormat.format(MessageManager.getString("Command.look.resultPermanent"), vipData.getVip(), args[1]));
         } else {
-            player.sendMessage(MessageFormat.format(MessageManager.getString("Command.look.result"), vipData.getVip(), vipData.getExpireDate(), String.valueOf(vipData.getLeftDays()), args[1]));
+            sender.sendMessage(MessageFormat.format(MessageManager.getString("Command.look.result"), vipData.getVip(), vipData.getExpireDate(), String.valueOf(vipData.getLeftDays()), args[1]));
         }
         return true;
     }
