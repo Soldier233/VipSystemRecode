@@ -54,6 +54,10 @@ VipSystemEx可以帮你自主管理服务器的vip，支持限时，永久，可
 插件会根据权限组插件来决定vip到期后返回的权限组  
 如果你需要修改默认组，请在配置文件中设置 ```defaultGroup: builder```  
 将返回的默认组改为builder或其他
+#### 返回开通前的上一个组
+如果你想在玩家Vip到期时返回玩家开通Vip前的权限组  
+你可以设置```previousGroup: true```来实现这个功能  
+*注意: 本功能和默认组设置不能同时使用*
 #### 数据库
 插件默认使用HikariCP连接池连接SQLite数据库，如果没有特殊需要，你无需改动该部分配置文件  
 如果你的服务端无法使用默认配置文件启动，并且报错中有hikarcp字样，请修改```usePool```的值为```false```  
@@ -100,8 +104,7 @@ svip组同理，如果你有更多的vip种类，可以按照上方格式自行�
 ## 插件下载
 该插件为免费插件，但是不提供jar的直接下载地址  
 你可以clone/fork该项目并自行构建，只需安装maven后进入项目目录，输入```mvn install```即可自动完成构建。目标文件会生成在```/target```目录下  
-如果你没有自行构建的能力，你可以进入[https://www.spigotmc.org/resources/vipsystem-premium.66740/](https://www.spigotmc.org/resources/vipsystem-premium.66740/)支付$3或￥20下载文件  
-人民币支付请加群联系群主 下方有联系方式  
+如果你没有自行构建的能力，你可以联系作者支付￥20作为赞助，并由作者提供构建后的文件
 所有支付的款项都是对作者开发极大的支持!
 ## API
 你可以通过```VipSystemAPI.getInstance()```来获取```VipSystemAPI```的实例  
