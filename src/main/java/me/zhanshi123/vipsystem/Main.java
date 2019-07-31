@@ -91,6 +91,7 @@ public final class Main extends JavaPlugin {
         cache = new Cache();
         new CheckAllPlayerTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), instance);
+        VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> cache.cache(player));
     }
 
     @Override
@@ -127,6 +128,7 @@ public final class Main extends JavaPlugin {
         commandHandler = new CommandHandler("vipsys");
         cache = new Cache();
         new CheckAllPlayerTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
+        VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> cache.cache(player));
     }
 
 }
