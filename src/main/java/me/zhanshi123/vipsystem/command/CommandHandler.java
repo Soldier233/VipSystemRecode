@@ -11,15 +11,19 @@ public class CommandHandler {
     private Set<SubCommand> commands = new HashSet<>();
 
     public CommandHandler(String name) {
+        Bukkit.getPluginCommand(name).setExecutor(new CommandsExecutor());
         commands.add(new MeCommand());
         commands.add(new RemoveCommand());
         commands.add(new GiveCommand());
-        commands.add(new ChangeVipCommand());
         commands.add(new ClaimCommand());
         commands.add(new ReloadCommand());
         commands.add(new LookCommand());
         commands.add(new ListCommand());
-        Bukkit.getPluginCommand(name).setExecutor(new CommandsExecutor());
+        try {
+            commands.add(new ChangeVipCommand());
+        } catch (Exception e) {
+            Bukkit.getConsoleSender().sendMessage("§c[VipSystem] Cannot initialize command ChangeVip, skipping registration. Reason: " + e.getMessage());
+        }
     }
 
     public SubCommand getSubCommand(String cmd) {
