@@ -27,7 +27,7 @@ public class LookCommand extends SubCommand implements PermissionCommand {
         }
         VipData vipData = Main.getCache().getVipData(VipSystemAPI.getInstance().getPlayerName(player));
         if (vipData == null) {
-            sender.sendMessage(MessageManager.getString("Command.look.noVip"));
+            sender.sendMessage(MessageFormat.format(MessageManager.getString("Command.look.noVip"), player.getName()));
             return true;
         }
         if (vipData.getDuration() == -1) {
