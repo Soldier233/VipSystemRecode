@@ -111,6 +111,7 @@ public class VipManager {
         Set<VipData> vipDataSet = Main.getDataBase().getVipDatum();
         Map<String, VipData> cache = Main.getCache().getCachedData();
         Set<VipData> result = new HashSet<>(vipDataSet);
+        result.addAll(cache.values());
         vipDataSet.forEach(vipData -> {
             if (cache.containsKey(vipData.getPlayer())) {
                 result.remove(vipData);
