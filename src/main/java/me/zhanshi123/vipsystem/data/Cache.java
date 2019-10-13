@@ -66,4 +66,8 @@ public class Cache implements Listener {
         map.remove(playerName);
         map.put(playerName, vipData);
     }
+
+    public Map<String, VipData> getCachedData() {
+        return map;
+    }
 }

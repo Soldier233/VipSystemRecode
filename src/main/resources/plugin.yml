@@ -11,6 +11,7 @@ commands:
     description: Main command of VipSystem
     aliases:
       - vip
+    usage: Plugin initializing failed, please check the log
 permissions:
   vipsystem.changevip:
     description: Allows to use changevip Command

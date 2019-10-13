@@ -39,6 +39,12 @@ public class Database {
             e.printStackTrace();
             Bukkit.getConsoleSender().sendMessage("§6[VipSystem] §cError! Cannot initialize database connection.Please try to turn usePool to false in config or check the passwords");
             Bukkit.getConsoleSender().sendMessage("§6[VipSystem] §c错误! 无法初始化数据库连接，请尝试在配置文件中更改 usePool 为 false 或检查数据库密码等信息");
+            Bukkit.getConsoleSender().sendMessage("§6[VipSystem] §cTrying to disable pooled connection");
+            Bukkit.getConsoleSender().sendMessage("§6[VipSystem] §c尝试使用非连接池连接");
+            handler = new SQLHandler();
+            handler.init(connectionData);
+            connection = handler.getConnection();
+
         }
 
     }
