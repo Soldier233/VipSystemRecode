@@ -20,7 +20,7 @@ public class GiveCommand extends SubCommand implements PermissionCommand {
         String playerName = args[1];
         Player player = Bukkit.getPlayer(playerName);
         if (player == null) {
-            sender.sendMessage(MessageManager.getString("Command.look.notFound"));
+            sender.sendMessage(MessageManager.getString("playerNotFound"));
             return true;
         }
         long temp = VipSystemAPI.getInstance().getTimeMillis(args[3]);

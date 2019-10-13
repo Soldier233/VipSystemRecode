@@ -22,7 +22,7 @@ public class LookCommand extends SubCommand implements PermissionCommand {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player player = Bukkit.getPlayerExact(args[1]);
         if (player == null) {
-            sender.sendMessage(MessageManager.getString("Command.look.notFound"));
+            sender.sendMessage(MessageManager.getString("playerNotFound"));
             return true;
         }
         VipData vipData = Main.getCache().getVipData(VipSystemAPI.getInstance().getPlayerName(player));
