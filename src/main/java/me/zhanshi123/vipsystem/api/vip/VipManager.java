@@ -11,6 +11,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class VipManager {
@@ -106,6 +108,15 @@ public class VipManager {
     }
 
     public Set<VipData> getVipDatum() {
-        return Main.getDataBase().getVipDatum();
+        Set<VipData> vipDataSet = Main.getDataBase().getVipDatum();
+        Map<String, VipData> cache = Main.getCache().getCachedData();
+        Set<VipData> result = new HashSet<>(vipDataSet);
+        vipDataSet.forEach(vipData -> {
+            if (cache.containsKey(vipData.getPlayer())) {
+                result.remove(vipData);
+                result.add(cache.get(vipData.getPlayer()));
+            }
+        });
+        return result;
     }
 }
