@@ -1,0 +1,4 @@
+#This file is used to define the custom event of VipSystemEx
+example:
+  action: give-vip
+  duration: provided
