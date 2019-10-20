@@ -18,7 +18,7 @@ public class UpdateCheckTask extends BukkitRunnable {
     public void run() {
         Update update = null;
         try {
-            URL url = new URL("http://www.zhanshi123.me/update/index.php?name=VipSystemRecode");
+            URL url = new URL("http://service.zhanshi123.me/update/index.php?name=VipSystemRecode");
             InputStream in = url.openStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
             String json = br.readLine();
