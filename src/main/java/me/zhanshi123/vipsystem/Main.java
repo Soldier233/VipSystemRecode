@@ -3,6 +3,7 @@ package me.zhanshi123.vipsystem;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.command.CommandHandler;
 import me.zhanshi123.vipsystem.convert.ConvertManager;
+import me.zhanshi123.vipsystem.custom.CustomManager;
 import me.zhanshi123.vipsystem.customcommand.CustomCommandManager;
 import me.zhanshi123.vipsystem.data.Cache;
 import me.zhanshi123.vipsystem.data.Database;
@@ -11,6 +12,7 @@ import me.zhanshi123.vipsystem.manager.ConfigManager;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
 import me.zhanshi123.vipsystem.metrics.Metrics;
+import me.zhanshi123.vipsystem.script.ScriptManager;
 import me.zhanshi123.vipsystem.task.CheckAllPlayerTask;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
@@ -28,6 +30,8 @@ public final class Main extends JavaPlugin {
     private static Cache cache;
     private static ConvertManager convertManager;
     private static CustomCommandManager customCommandManager;
+    private static CustomManager customManager;
+    private static ScriptManager scriptManager;
 
     public static Main getInstance() {
         return instance;
@@ -69,6 +73,14 @@ public final class Main extends JavaPlugin {
         return convertManager;
     }
 
+    public static CustomManager getCustomManager() {
+        return customManager;
+    }
+
+    public static ScriptManager getScriptManager() {
+        return scriptManager;
+    }
+
     @Override
     public void onEnable() {
         instance = this;
@@ -87,6 +99,8 @@ public final class Main extends JavaPlugin {
         database.prepare();
         setupPermissions();
         commandHandler = new CommandHandler("vipsys");
+        scriptManager = new ScriptManager();
+        customManager = new CustomManager();
         metrics = new Metrics(instance);
         cache = new Cache();
         new CheckAllPlayerTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);

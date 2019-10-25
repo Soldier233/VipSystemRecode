@@ -1,23 +1,26 @@
 package me.zhanshi123.vipsystem.script;
 
 import me.zhanshi123.vipsystem.Main;
+import me.zhanshi123.vipsystem.custom.CustomFunction;
 
+import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import java.util.Map;
 
 public class ScriptManager {
-    private ScriptEngine nashorn;
-
-    public ScriptManager() {
-        nashorn = new ScriptEngineManager().getEngineByName("nashorn");
+    public ScriptEngine getNashorn() {
+        ScriptEngine nashorn = new ScriptEngineManager().getEngineByName("nashorn");
         if (nashorn == null) {
             Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
-            return;
+            return null;
         }
-        this.nashorn = nashorn;
+        return nashorn;
     }
 
-    public ScriptEngine getNashorn() {
-        return nashorn;
+    public Object invokeCustomFunction(CustomFunction customFunction, String function, Map<String, String> args) {
+        ScriptEngine nashorn = customFunction.getNashorn();
+        Invocable invocable = (Invocable) nashorn;
+
     }
 }

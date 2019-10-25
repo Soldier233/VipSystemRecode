@@ -1,4 +1,13 @@
-#This file is used to define the custom event of VipSystemEx
-example:
-  action: give-vip
-  duration: provided
+description: 'Give vip by moving group manually'
+#Description of the custom function
+args: ["Player","Group","Time"]
+#Arguments of the custom function
+onStart:
+  - '[Console] pex user {Player} group remove {Group}'
+#The procedure of the function on start
+onEnd:
+  - '[Console] pex user {Player} group remove {Group}'
+#Function tag available:
+#'[Console] command' execute a console command
+#'[Player] command' execute a player command
+#'[Script] func(arg1,arg2)' invoke the function in 'script.js' with the provided arguments

@@ -15,7 +15,7 @@ public class MessageManager {
     private static FileConfiguration config = new YamlConfiguration();
     private static File f = null;
 
-    private static void writeFile(InputStream input, File file) {
+    public static void writeFile(InputStream input, File file) {
         try {
             int index;
             byte[] bytes = new byte[10240];
@@ -31,7 +31,6 @@ public class MessageManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private static void update() {
