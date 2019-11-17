@@ -54,7 +54,7 @@ public class VipManager {
         if (customCommand == null) {
             return;
         }
-        customCommand.getActivate().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(cmd, player.getName())));
+        customCommand.getActivate().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(cmd, player.getName(), vipData.getPrevious())));
     }
 
     public void renewVip(Player player, long duration) {
@@ -104,7 +104,7 @@ public class VipManager {
         if (customCommand == null) {
             return;
         }
-        customCommand.getExpire().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(cmd, player.getName())));
+        customCommand.getExpire().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(cmd, player.getName(), vipData.getPrevious())));
     }
 
     public Set<VipData> getVipDatum() {

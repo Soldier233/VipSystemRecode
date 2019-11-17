@@ -6,7 +6,9 @@ import javax.script.ScriptEngine;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CustomFunction {
@@ -16,7 +18,7 @@ public class CustomFunction {
     private List<String> onEnd;
     private File script;
     private List<String> scripts = new ArrayList<>();
-    //TODO 将Scripts解析为Map<String,String[]> 对应函数名 参数
+    private Map<String, String[]> functions = new HashMap<>();
     private ScriptEngine nashorn;
 
     public CustomFunction(String name, String[] args, List<String> onStart, List<String> onEnd, File script) {
@@ -35,6 +37,22 @@ public class CustomFunction {
             try {
                 nashorn = Main.getScriptManager().getNashorn();
                 nashorn.eval(new FileReader(script));
+                scripts.forEach(function -> {
+                    if (function.contains("(") && function.contains(")")) {
+                        String functionName = function.substring(0, function.indexOf("("));
+                        String arguments = function.substring(function.indexOf("(")).replace("(", "").replace(")", "");
+                        String[] argArray;
+                        if (arguments.contains(",")) {
+                            argArray = arguments.split(",");
+                            for (int i = 0; i < argArray.length; i++) {
+                                argArray[i] = argArray[i].trim();
+                            }
+                        } else {
+                            argArray = new String[]{arguments};
+                        }
+                        functions.put(functionName, argArray);
+                    }
+                });
             } catch (Exception e) {
                 Main.getInstance().getLogger().warning("Script resolve error! File path: " + script.getAbsolutePath());
                 e.printStackTrace();
@@ -86,10 +104,12 @@ public class CustomFunction {
         return nashorn;
     }
 
-    /*
     public String[] getSortedArguments(String functionName) {
-
+        return functions.get(functionName);
     }
 
-     */
+    public Object executeFunction(String functionName, String... args) {
+        return Main.getScriptManager().invokeCustomFunction(this, functionName, args);
+    }
+
 }

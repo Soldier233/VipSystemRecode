@@ -44,9 +44,7 @@ public class Database {
             handler = new SQLHandler();
             handler.init(connectionData);
             connection = handler.getConnection();
-
         }
-
     }
 
     public boolean isAvailable() {
@@ -294,7 +292,6 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public VipStorage getVipStorage(int id) {

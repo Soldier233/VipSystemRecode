@@ -6,7 +6,7 @@ import me.zhanshi123.vipsystem.custom.CustomFunction;
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import java.util.Map;
+import javax.script.ScriptException;
 
 public class ScriptManager {
     public ScriptEngine getNashorn() {
@@ -18,9 +18,14 @@ public class ScriptManager {
         return nashorn;
     }
 
-    public Object invokeCustomFunction(CustomFunction customFunction, String function, Map<String, String> args) {
-        ScriptEngine nashorn = customFunction.getNashorn();
-        Invocable invocable = (Invocable) nashorn;
-
+    public Object invokeCustomFunction(CustomFunction customFunction, String function, String[] args) {
+        try {
+            ScriptEngine nashorn = customFunction.getNashorn();
+            Invocable invocable = (Invocable) nashorn;
+            return invocable.invokeFunction(function, args);
+        } catch (ScriptException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

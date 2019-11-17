@@ -44,11 +44,14 @@ public class CustomManager {
                 yamlConfig.load(new BufferedReader(new InputStreamReader(new FileInputStream(config), Charsets.UTF_8)));
                 List<String> onStart = new ArrayList<>();
                 onStart.add("[Script] onStart");
-                onStart = yamlConfig.get("onStart") == null ? onStart : yamlConfig.getStringList("onStart");
+                onStart = yamlConfig.get("onStart") == null || !(yamlConfig.get("onStart") instanceof List) ? onStart : yamlConfig.getStringList("onStart");
                 List<String> onEnd = new ArrayList<>();
                 onEnd.add("[Script] onEnd");
-                onEnd = yamlConfig.get("onEnd") == null ? onStart : yamlConfig.getStringList("onEnd");
-                CustomFunction customFunction = new CustomFunction(function.getName(), (String[]) yamlConfig.get("args"), onStart, onEnd, script);
+                onEnd = yamlConfig.get("onEnd") == null || !(yamlConfig.get("onEnd") instanceof List) ? onStart : yamlConfig.getStringList("onEnd");
+                List<String> tmp = yamlConfig.getStringList("args");
+                String[] array = new String[tmp.size()];
+                tmp.toArray(array);
+                CustomFunction customFunction = new CustomFunction(function.getName(), array, onStart, onEnd, script);
                 functionMap.putIfAbsent(customFunction.getName(), customFunction);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -56,5 +59,9 @@ public class CustomManager {
                 e.printStackTrace();
             }
         }
+    }
+
+    public CustomFunction getCustomFunction(String name) {
+        return functionMap.get(name);
     }
 }

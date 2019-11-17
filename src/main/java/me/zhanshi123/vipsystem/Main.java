@@ -141,6 +141,8 @@ public final class Main extends JavaPlugin {
         database.prepare();
         commandHandler = new CommandHandler("vipsys");
         cache = new Cache();
+        scriptManager = new ScriptManager();
+        customManager = new CustomManager();
         new CheckAllPlayerTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
         VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> cache.cache(player));
     }
