@@ -51,7 +51,7 @@ public class CustomManager {
                 List<String> tmp = yamlConfig.getStringList("args");
                 String[] array = new String[tmp.size()];
                 tmp.toArray(array);
-                CustomFunction customFunction = new CustomFunction(function.getName(), array, onStart, onEnd, script);
+                CustomFunction customFunction = new CustomFunction(function.getName(), yamlConfig.getString("description"), array, onStart, onEnd, script);
                 functionMap.putIfAbsent(customFunction.getName(), customFunction);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -63,5 +63,9 @@ public class CustomManager {
 
     public CustomFunction getCustomFunction(String name) {
         return functionMap.get(name);
+    }
+
+    public Map<String, CustomFunction> getFunctionMap() {
+        return functionMap;
     }
 }

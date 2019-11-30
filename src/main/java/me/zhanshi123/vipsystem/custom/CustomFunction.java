@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class CustomFunction {
     private String name;
+    private String description;
     private String[] args;
     private List<String> onStart;
     private List<String> onEnd;
@@ -21,8 +22,9 @@ public class CustomFunction {
     private Map<String, String[]> functions = new HashMap<>();
     private ScriptEngine nashorn;
 
-    public CustomFunction(String name, String[] args, List<String> onStart, List<String> onEnd, File script) {
+    public CustomFunction(String name, String description, String[] args, List<String> onStart, List<String> onEnd, File script) {
         this.name = name;
+        this.description = description;
         this.args = args;
         this.onStart = onStart;
         this.onEnd = onEnd;
@@ -72,6 +74,18 @@ public class CustomFunction {
         return args;
     }
 
+    public String getFormattedArgs() {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < args.length; i++) {
+            stringBuffer.append("[");
+            stringBuffer.append(args[i]);
+            stringBuffer.append("] ");
+        }
+        String tmp = stringBuffer.toString();
+        tmp = tmp.substring(0, tmp.length() - 1);
+        return tmp;
+    }
+
     public void setArgs(String[] args) {
         this.args = args;
     }
@@ -112,4 +126,7 @@ public class CustomFunction {
         return Main.getScriptManager().invokeCustomFunction(this, functionName, args);
     }
 
+    public String getDescription() {
+        return description;
+    }
 }

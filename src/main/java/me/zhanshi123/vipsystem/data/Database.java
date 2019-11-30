@@ -61,8 +61,7 @@ public class Database {
                         "`previous`  varchar(20) NOT NULL ,\n" +
                         "`start`  bigint UNSIGNED NOT NULL ,\n" +
                         "`duration`  bigint NOT NULL ,\n" +
-                        "PRIMARY KEY (`player`),\n" +
-                        "UNIQUE INDEX `player` (`player`) USING BTREE \n" +
+                        "PRIMARY KEY (`player`)\n" +
                         ")\n" +
                         ";\n" +
                         "\n");
@@ -76,6 +75,15 @@ public class Database {
                         "PRIMARY KEY (`id`),\n" +
                         "INDEX `player` (`player`) USING BTREE ," +
                         "UNIQUE INDEX `id` (`id`) USING BTREE " +
+                        ");");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS `" + table + "custom` (" +
+                        "`id`  int UNSIGNED NOT NULL AUTO_INCREMENT ," +
+                        "`name`  varchar(40) NOT NULL ," +
+                        "`args`  mediumtext NOT NULL ," +
+                        "`activate`  bigint UNSIGNED NOT NULL ," +
+                        "`left`  bigint UNSIGNED NOT NULL ," +
+                        "PRIMARY KEY (`id`),\n" +
+                        "INDEX `name` (`name`) USING BTREE" +
                         ");");
             } else {
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS \"main\".\"" + table + "players\" (\n" +

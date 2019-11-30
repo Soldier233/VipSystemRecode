@@ -19,6 +19,7 @@ public class CommandHandler {
         commands.add(new ReloadCommand());
         commands.add(new LookCommand());
         commands.add(new ListCommand());
+        commands.add(new CustomsCommand());
         try {
             commands.add(new ChangeVipCommand());
         } catch (Exception e) {

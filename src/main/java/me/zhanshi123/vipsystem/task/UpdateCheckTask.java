@@ -28,6 +28,7 @@ public class UpdateCheckTask extends BukkitRunnable {
                 @Override
                 public void run() {
                     Bukkit.getConsoleSender().sendMessage(MessageFormat.format(MessageManager.getString("updateCheckFailure"), e.getMessage()));
+                    e.printStackTrace();
                 }
             }.runTask(Main.getInstance());
         }

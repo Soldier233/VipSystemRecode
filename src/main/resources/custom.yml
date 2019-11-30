@@ -2,6 +2,10 @@ description: 'Give vip by moving group manually'
 #Description of the custom function
 args: ["Player","Group","Time"]
 #Arguments of the custom function
+duration: '{Time}'
+#Duration of the custom function
+#You can use {Time} to replace it with the time provided in the arguments
+#Or you can use a time stamp in milli seconds
 onStart:
   - '[Console] pex user {Player} group remove {Group}'
 #The procedure of the function on start
