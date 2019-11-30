@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 
 public class CustomsCommand extends SubCommand implements AdminCommand {
     public CustomsCommand() {
-        super("customs");
+        super("customs",MessageManager.getString("Command.customs.usage"), MessageManager.getString("Command.customs.desc"));
     }
 
     @Override
