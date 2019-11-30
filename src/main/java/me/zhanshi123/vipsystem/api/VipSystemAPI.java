@@ -48,7 +48,7 @@ public class VipSystemAPI {
     private String sMatches = "[0-9]+s";
 
     public long getTimeMillis(String text) {
-        if(text.equalsIgnoreCase("-1")){
+        if (text.equalsIgnoreCase("-1")) {
             return -1;
         }
         long d = 0L;
@@ -88,7 +88,11 @@ public class VipSystemAPI {
         if (m.find()) {
             return Long.parseLong(m.group());
         }
-        return 0L;
+        try {
+            return Integer.parseInt(a);
+        } catch (Exception e) {
+        }
+        return 0;
     }
 
     public Collection<Player> getOnlinePlayers() {

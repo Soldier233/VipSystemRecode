@@ -20,6 +20,7 @@ public class CommandHandler {
         commands.add(new LookCommand());
         commands.add(new ListCommand());
         commands.add(new CustomsCommand());
+        commands.add(new RunCommand());
         try {
             commands.add(new ChangeVipCommand());
         } catch (Exception e) {

@@ -15,6 +15,7 @@ public class CustomFunction {
     private String name;
     private String description;
     private String[] args;
+    private long duration;
     private List<String> onStart;
     private List<String> onEnd;
     private File script;
@@ -22,10 +23,11 @@ public class CustomFunction {
     private Map<String, String[]> functions = new HashMap<>();
     private ScriptEngine nashorn;
 
-    public CustomFunction(String name, String description, String[] args, List<String> onStart, List<String> onEnd, File script) {
+    public CustomFunction(String name, String description, String[] args, long duration, List<String> onStart, List<String> onEnd, File script) {
         this.name = name;
         this.description = description;
         this.args = args;
+        this.duration = duration;
         this.onStart = onStart;
         this.onEnd = onEnd;
         this.script = script;

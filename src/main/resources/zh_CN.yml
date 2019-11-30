@@ -60,3 +60,7 @@ Command:
     usage: '/vipsys customs'
     #Do not add any space in usage!
     list: '§7下方是已加载的自定义函数'
+  run:
+    usage: '/vipsys run [函数名] <函数参数>'
+    notFound: '函数不存在'
+    argNotMatch: '参数个数不匹配'

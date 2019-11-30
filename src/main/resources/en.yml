@@ -55,3 +55,11 @@ Command:
     #Do not add any space in usage!
     list: '§7Below are the vips(Player,Vip,Date To Expire):'
     amount: '§7Total Vip amount: §e{0}'
+  customs:
+    desc: 'List the custom functions'
+    usage: '/vipsys customs'
+    #Do not add any space in usage!
+    list: '§7Below are the loaded custom functions'
+  run:
+    usage: '/vipsys run [Function] <Args>'
+    notFound: 'Function not found'
