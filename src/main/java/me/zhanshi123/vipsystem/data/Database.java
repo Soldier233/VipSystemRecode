@@ -1,9 +1,12 @@
 package me.zhanshi123.vipsystem.data;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.storage.VipStorage;
 import me.zhanshi123.vipsystem.api.vip.VipData;
 import me.zhanshi123.vipsystem.convert.Info;
+import me.zhanshi123.vipsystem.custom.CustomArg;
 import me.zhanshi123.vipsystem.custom.CustomFunction;
 import me.zhanshi123.vipsystem.custom.StoredFunction;
 import me.zhanshi123.vipsystem.data.connector.ConnectionData;
@@ -389,11 +392,28 @@ public class Database {
         try {
             ResultSet resultSet = getAllFunction.executeQuery();
             while (resultSet.next()) {
-                functions.add(new StoredFunction(resultSet.getInt("id"),resultSet.getString()))
+                List<CustomArg> mustArgs = new ArrayList<>();
+                List<CustomArg> customArgs = new ArrayList<>();
+                String text = resultSet.getString("args");
+                JsonObject jsonObject = new JsonParser().parse(text).getAsJsonObject();
+                JsonObject mustArg = jsonObject.getAsJsonObject("must");
+                mustArg.entrySet().forEach(entry -> {
+                    String key = entry.getKey();
+                    String value = entry.getValue().getAsString();
+                    mustArgs.add(new CustomArg(key, value));
+                });
+                JsonObject customArg = jsonObject.getAsJsonObject("custom");
+                customArg.entrySet().forEach(entry -> {
+                    String key = entry.getKey();
+                    String value = entry.getValue().getAsString();
+                    customArgs.add(new CustomArg(key, value));
+                });
+                functions.add(new StoredFunction(resultSet.getString("name"), resultSet.getInt("id"), mustArgs, customArgs));
             }
-
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return functions;
     }
 }

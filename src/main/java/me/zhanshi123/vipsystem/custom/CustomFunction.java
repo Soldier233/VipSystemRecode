@@ -23,6 +23,10 @@ public class CustomFunction {
     private Map<String, String[]> functions = new HashMap<>();
     private ScriptEngine nashorn;
 
+    public CustomFunction(String name) {
+        this.name = name;
+    }
+
     public CustomFunction(String name, String description, String[] args, long duration, List<String> onStart, List<String> onEnd, File script) {
         this.name = name;
         this.description = description;
@@ -134,5 +138,13 @@ public class CustomFunction {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 }

@@ -1,23 +1,19 @@
 package me.zhanshi123.vipsystem.custom;
 
-import java.io.File;
-import java.util.ArrayList;
+import me.zhanshi123.vipsystem.Main;
+
 import java.util.List;
 
 public class StoredFunction extends CustomFunction {
     private int id;
+    private List<CustomArg> mustArgs;
     private List<CustomArg> customizableArgs;
 
-    public StoredFunction(String name, String description, String[] args, long duration, List<String> onStart, List<String> onEnd, File script, int id, List<CustomArg> customizableArgs) {
-        super(name, description, args, duration, onStart, onEnd, script);
+    public StoredFunction(String name, int id, List<CustomArg> mustArgs, List<CustomArg> customizableArgs) {
+        super(name);
         this.id = id;
         this.customizableArgs = customizableArgs;
-    }
-
-    public StoredFunction(String name, String description, String[] args, long duration, List<String> onStart, List<String> onEnd, File script, int id) {
-        super(name, description, args, duration, onStart, onEnd, script);
-        this.id = id;
-        this.customizableArgs = new ArrayList<>();
+        this.mustArgs = mustArgs;
     }
 
     public int getId() {
@@ -34,6 +30,18 @@ public class StoredFunction extends CustomFunction {
 
     public void setCustomizableArgs(List<CustomArg> customizableArgs) {
         this.customizableArgs = customizableArgs;
+    }
+
+    public List<CustomArg> getMustArgs() {
+        return mustArgs;
+    }
+
+    public void setMustArgs(List<CustomArg> mustArgs) {
+        this.mustArgs = mustArgs;
+    }
+
+    public CustomFunction getCustomFunction() {
+        return Main.getCustomManager().getCustomFunction(this.getName());
     }
 }
 
