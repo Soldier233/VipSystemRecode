@@ -5,6 +5,7 @@ import me.zhanshi123.vipsystem.api.storage.VipStorage;
 import me.zhanshi123.vipsystem.api.vip.VipData;
 import me.zhanshi123.vipsystem.convert.Info;
 import me.zhanshi123.vipsystem.custom.CustomFunction;
+import me.zhanshi123.vipsystem.custom.StoredFunction;
 import me.zhanshi123.vipsystem.data.connector.ConnectionData;
 import me.zhanshi123.vipsystem.data.connector.DatabaseHandler;
 import me.zhanshi123.vipsystem.data.connector.PoolHandler;
@@ -153,7 +154,7 @@ public class Database {
             getStorageByPlayer = connection.prepareStatement("SELECT `id`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `player` = ?;");
             getStorageByID = connection.prepareStatement("SELECT `player`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `id` = ? LIMIT 1;");
             insertFunction = connection.prepareStatement("INSERT INTO `" + table + "custom`(`name`,`args`,`activate`,`left`) VALUES(?,?,?,?);");
-            getFunction = connection.prepareStatement("SELECT `id`,`args`,`activate`,`left` FROM `" + table + "custom` WHERE `name` = ?;");
+            getAllFunction = connection.prepareStatement("SELECT `id`,`args`,`activate`,`left` FROM `" + table + "custom`;");
             removeFunction = connection.prepareStatement("DELETE FROM `" + table + "custom` WHERE `id` = ?;");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -194,7 +195,7 @@ public class Database {
 
     }
 
-    private PreparedStatement getAllPlayer, getPlayer, insertPlayer, updatePlayer, deletePlayer, insertStorage, removeStorage, getStorageByPlayer, getStorageByID, insertFunction, getFunction, removeFunction;
+    private PreparedStatement getAllPlayer, getPlayer, insertPlayer, updatePlayer, deletePlayer, insertStorage, removeStorage, getStorageByPlayer, getStorageByID, insertFunction, getAllFunction, removeFunction;
 
     public Database() {
         init();
@@ -372,11 +373,27 @@ public class Database {
         }
     }
 
-    public void removeFunction() {
-
+    public void removeFunction(int id) {
+        checkConnection();
+        try {
+            removeFunction.setInt(1, id);
+            removeFunction.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public List<CustomFunction> getAllFunctions() {
+    public List<StoredFunction> getAllFunctions() {
+        checkConnection();
+        List<StoredFunction> functions = new ArrayList<>();
+        try {
+            ResultSet resultSet = getAllFunction.executeQuery();
+            while (resultSet.next()) {
+                functions.add(new StoredFunction(resultSet.getInt("id"),resultSet.getString()))
+            }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
