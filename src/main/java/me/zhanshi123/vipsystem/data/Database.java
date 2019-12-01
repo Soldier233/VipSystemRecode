@@ -359,8 +359,24 @@ public class Database {
                 );
     }
 
-    public void addCustomFunction(CustomFunction customFunction) {
+    public void addCustomFunction(CustomFunction customFunction, String args) {
         checkConnection();
+        try {
+            insertFunction.setString(1, customFunction.getName());
+            insertFunction.setString(2, args);
+            insertFunction.setLong(3, System.currentTimeMillis());
+            insertFunction.setLong(4, customFunction.getDuration());
+            insertFunction.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeFunction() {
+
+    }
+
+    public List<CustomFunction> getAllFunctions() {
 
     }
 }

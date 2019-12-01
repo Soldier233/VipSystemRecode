@@ -88,6 +88,10 @@ public class CustomFunction {
         return tmp;
     }
 
+    public long getDuration() {
+        return duration;
+    }
+
     public void setArgs(String[] args) {
         this.args = args;
     }
