@@ -4,6 +4,7 @@ import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.storage.VipStorage;
 import me.zhanshi123.vipsystem.api.vip.VipData;
 import me.zhanshi123.vipsystem.convert.Info;
+import me.zhanshi123.vipsystem.custom.CustomFunction;
 import me.zhanshi123.vipsystem.data.connector.ConnectionData;
 import me.zhanshi123.vipsystem.data.connector.DatabaseHandler;
 import me.zhanshi123.vipsystem.data.connector.PoolHandler;
@@ -113,6 +114,17 @@ public class Database {
                 statement.executeUpdate("CREATE UNIQUE INDEX IF NOT EXISTS \"main\".\"" + table + "storage_id\"\n" +
                         "ON \"" + table + "storage\" (\"id\" ASC);\n" +
                         "\n");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS \"main\".\"" + table + "custom\" (\n" +
+                        "\"id\"  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+                        "\"name\"  TEXT NOT NULL,\n" +
+                        "\"args\"  TEXT NOT NULL,\n" +
+                        "\"activate\"  TEXT NOT NULL,\n" +
+                        "\"left\"  TEXT NOT NULL\n" +
+                        ")\n" +
+                        ";");
+                statement.executeUpdate("CREATE INDEX IF NOT EXISTS \"main\".\"" + table + "custom_name\"\n" +
+                        "ON \"" + table + "custom\" (\"name\" ASC);\n" +
+                        "\n");
             }
             statement.close();
             if (newData != null) {
@@ -140,6 +152,9 @@ public class Database {
             removeStorage = connection.prepareStatement("DELETE FROM `" + table + "storage` WHERE `id`= ?;");
             getStorageByPlayer = connection.prepareStatement("SELECT `id`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `player` = ?;");
             getStorageByID = connection.prepareStatement("SELECT `player`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `id` = ? LIMIT 1;");
+            insertFunction = connection.prepareStatement("INSERT INTO `" + table + "custom`(`name`,`args`,`activate`,`left`) VALUES(?,?,?,?);");
+            getFunction = connection.prepareStatement("SELECT `id`,`args`,`activate`,`left` FROM `" + table + "custom` WHERE `name` = ?;");
+            removeFunction = connection.prepareStatement("DELETE FROM `" + table + "custom` WHERE `id` = ?;");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -179,7 +194,7 @@ public class Database {
 
     }
 
-    private PreparedStatement getAllPlayer, getPlayer, insertPlayer, updatePlayer, deletePlayer, insertStorage, removeStorage, getStorageByPlayer, getStorageByID;
+    private PreparedStatement getAllPlayer, getPlayer, insertPlayer, updatePlayer, deletePlayer, insertStorage, removeStorage, getStorageByPlayer, getStorageByID, insertFunction, getFunction, removeFunction;
 
     public Database() {
         init();
@@ -342,5 +357,10 @@ public class Database {
                             data.remove(entry);
                         }
                 );
+    }
+
+    public void addCustomFunction(CustomFunction customFunction) {
+        checkConnection();
+
     }
 }
