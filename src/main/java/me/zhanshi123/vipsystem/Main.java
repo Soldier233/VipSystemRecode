@@ -13,7 +13,7 @@ import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
 import me.zhanshi123.vipsystem.metrics.Metrics;
 import me.zhanshi123.vipsystem.script.ScriptManager;
-import me.zhanshi123.vipsystem.task.CheckAllPlayerTask;
+import me.zhanshi123.vipsystem.task.CheckAllTask;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -103,7 +103,7 @@ public final class Main extends JavaPlugin {
         customManager = new CustomManager();
         metrics = new Metrics(instance);
         cache = new Cache();
-        new CheckAllPlayerTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
+        new CheckAllTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), instance);
         VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> cache.cache(player));
     }
@@ -143,7 +143,7 @@ public final class Main extends JavaPlugin {
         cache = new Cache();
         scriptManager = new ScriptManager();
         customManager = new CustomManager();
-        new CheckAllPlayerTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
+        new CheckAllTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
         VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> cache.cache(player));
     }
 

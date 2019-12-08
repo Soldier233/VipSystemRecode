@@ -408,7 +408,7 @@ public class Database {
                     String value = entry.getValue().getAsString();
                     customArgs.add(new CustomArg(key, value));
                 });
-                functions.add(new StoredFunction(resultSet.getString("name"), resultSet.getInt("id"), mustArgs, customArgs));
+                functions.add(new StoredFunction(resultSet.getString("name"), resultSet.getInt("id"),resultSet.getLong("activate"), mustArgs, customArgs));
             }
             resultSet.close();
         } catch (SQLException e) {

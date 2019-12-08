@@ -6,12 +6,14 @@ import java.util.List;
 
 public class StoredFunction extends CustomFunction {
     private int id;
+    private long activate;
     private List<CustomArg> mustArgs;
     private List<CustomArg> customizableArgs;
 
-    public StoredFunction(String name, int id, List<CustomArg> mustArgs, List<CustomArg> customizableArgs) {
+    public StoredFunction(String name, int id, long activate, List<CustomArg> mustArgs, List<CustomArg> customizableArgs) {
         super(name);
         this.id = id;
+        this.activate = activate;
         this.customizableArgs = customizableArgs;
         this.mustArgs = mustArgs;
     }
@@ -22,6 +24,14 @@ public class StoredFunction extends CustomFunction {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public long getActivate() {
+        return activate;
+    }
+
+    public void setActivate(long activate) {
+        this.activate = activate;
     }
 
     public List<CustomArg> getCustomizableArgs() {
@@ -42,6 +52,10 @@ public class StoredFunction extends CustomFunction {
 
     public CustomFunction getCustomFunction() {
         return Main.getCustomManager().getCustomFunction(this.getName());
+    }
+
+    public long getTimeToExpire() {
+        return (activate + this.getDuration()) - System.currentTimeMillis();
     }
 }
 
