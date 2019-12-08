@@ -57,5 +57,10 @@ public class StoredFunction extends CustomFunction {
     public long getTimeToExpire() {
         return (activate + this.getDuration()) - System.currentTimeMillis();
     }
+
+    public void execute() {
+        this.getOnStart().stream()
+                .filter(string->string.startsWith("[Command]"));
+    }
 }
 
