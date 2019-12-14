@@ -10,6 +10,5 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         new CheckVipTask(e.getPlayer()).runTask(Main.getInstance());
-//        Main.getCustomManager().getCustomFunction("Example").executeFunction("doAnnoucements", "Soldier__", "Test");
     }
 }

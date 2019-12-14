@@ -12,6 +12,7 @@ import me.zhanshi123.vipsystem.manager.ConfigManager;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
 import me.zhanshi123.vipsystem.metrics.Metrics;
+import me.zhanshi123.vipsystem.script.ScriptHelper;
 import me.zhanshi123.vipsystem.script.ScriptManager;
 import me.zhanshi123.vipsystem.task.CheckAllTask;
 import net.milkbowl.vault.permission.Permission;

@@ -76,21 +76,23 @@ public class StoredFunction extends CustomFunction {
     }
 
     public void executeStart() {
-        this.getOnStart().stream()
+        getOnStart().stream()
                 .filter(string -> string.startsWith("[Console]"))
                 .map(string -> string = string.replace("[Console]", "").trim())
                 .forEach(cmd -> {
-                    getMustArgs().forEach(customArg -> cmd.replace("{" + customArg.getName() + "}", customArg.getValue()));
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+                    final String[] tmp = {cmd};
+                    getMustArgs().forEach(customArg -> tmp[0] = tmp[0].replace("{" + customArg.getName() + "}", customArg.getValue()));
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), tmp[0]);
                 });
-        this.getOnStart().stream()
+        getOnStart().stream()
                 .filter(string -> string.startsWith("[Script]"))
                 .map(string -> string = string.replace("[Script]", "").trim())
+                .map(string -> string = string.substring(0, string.lastIndexOf("(")))
                 .forEach(script -> {
-                    String[] array = this.getFunctions().get(script);
+                    String[] array = getFunctions().get(script);
                     String[] arg = new String[array.length];
                     for (int i = 0; i < arg.length; i++) {
-                        arg[i] = getMustArg(array[i]).getValue();
+                        arg[i] = getMustArg(array[i].replace("{", "").replace("}", "")).getValue();
                     }
                     executeFunction(script, arg);
                 });

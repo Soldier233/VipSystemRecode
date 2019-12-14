@@ -9,7 +9,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,12 +42,8 @@ public class CustomManager {
                 }
                 FileConfiguration yamlConfig = new YamlConfiguration();
                 yamlConfig.load(new BufferedReader(new InputStreamReader(new FileInputStream(config), Charsets.UTF_8)));
-                List<String> onStart = new ArrayList<>();
-                onStart.add("[Script] onStart");
-                onStart = yamlConfig.get("onStart") == null || !(yamlConfig.get("onStart") instanceof List) ? onStart : yamlConfig.getStringList("onStart");
-                List<String> onEnd = new ArrayList<>();
-                onEnd.add("[Script] onEnd");
-                onEnd = yamlConfig.get("onEnd") == null || !(yamlConfig.get("onEnd") instanceof List) ? onStart : yamlConfig.getStringList("onEnd");
+                List<String> onStart = yamlConfig.getStringList("onStart");
+                List<String> onEnd = yamlConfig.getStringList("onEnd");
                 List<String> tmp = yamlConfig.getStringList("args");
                 String[] array = new String[tmp.size()];
                 tmp.toArray(array);

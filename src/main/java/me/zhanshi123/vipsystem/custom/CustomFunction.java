@@ -25,6 +25,15 @@ public class CustomFunction {
 
     public CustomFunction(String name) {
         this.name = name;
+        CustomFunction customFunction = Main.getCustomManager().getCustomFunction(name);
+        this.description = customFunction.getDescription();
+        this.args = customFunction.getArgs();
+        this.duration = customFunction.getDuration();
+        this.onStart = customFunction.getOnStart();
+        this.onEnd = customFunction.getOnEnd();
+        this.script = customFunction.getScript();
+        this.functions = customFunction.getFunctions();
+        this.nashorn = customFunction.getNashorn();
     }
 
     public CustomFunction(String name, String description, String[] args, long duration, List<String> onStart, List<String> onEnd, File script) {
@@ -133,7 +142,7 @@ public class CustomFunction {
     }
 
     public Object executeFunction(String functionName, String... args) {
-        return Main.getScriptManager().invokeCustomFunction(this, functionName, args);
+        return Main.getScriptManager().invokeCustomFunction(nashorn, functionName, args);
     }
 
     public String getDescription() {

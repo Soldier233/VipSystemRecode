@@ -12,4 +12,8 @@ public class ScriptHelper {
     public static void sendMessage(Player player, String message) {
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
+
+    public static Player getPlayer(String name) {
+        return Bukkit.getPlayer(name);
+    }
 }
