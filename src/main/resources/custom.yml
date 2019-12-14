@@ -13,5 +13,4 @@ onEnd:
   - '[Console] pex user {Player} group remove {Group}'
 #Function tag available:
 #'[Console] command' execute a console command
-#'[Player] command' execute a player command
 #'[Script] func(arg1,arg2)' invoke the function in 'script.js' with the provided arguments

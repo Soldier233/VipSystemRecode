@@ -144,6 +144,10 @@ public class CustomFunction {
         this.description = description;
     }
 
+    public Map<String, String[]> getFunctions() {
+        return functions;
+    }
+
     public void setDuration(long duration) {
         this.duration = duration;
     }

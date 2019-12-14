@@ -5,6 +5,7 @@ import me.zhanshi123.vipsystem.command.SubCommand;
 import me.zhanshi123.vipsystem.command.type.AdminCommand;
 import me.zhanshi123.vipsystem.custom.CustomArg;
 import me.zhanshi123.vipsystem.custom.CustomFunction;
+import me.zhanshi123.vipsystem.custom.StoredFunction;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -38,7 +39,8 @@ public class RunCommand extends SubCommand implements AdminCommand {
         for (int i = 2; i < args.length; i++) {
             argList.add(new CustomArg(functionArg[i - 2], args[i]));
         }
-        
+        StoredFunction storedFunction = new StoredFunction(name, System.currentTimeMillis(), argList, new ArrayList<>());
+        storedFunction.executeStart();
         return true;
     }
 }
