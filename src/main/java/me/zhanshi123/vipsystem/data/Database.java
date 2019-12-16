@@ -68,7 +68,7 @@ public class Database {
                         "`duration`  bigint NOT NULL ,\n" +
                         "PRIMARY KEY (`player`)\n" +
                         ")\n" +
-                        "DEFAULT CHARSET = utf8;");
+                        "DEFAULT CHARSET = utf8mb4;");
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS `" + table + "storage` (" +
                         "`id`  int UNSIGNED NOT NULL AUTO_INCREMENT ," +
                         "`player`  varchar(40) NOT NULL ," +
@@ -79,7 +79,7 @@ public class Database {
                         "PRIMARY KEY (`id`),\n" +
                         "INDEX `player` (`player`) USING BTREE ," +
                         "UNIQUE INDEX `id` (`id`) USING BTREE " +
-                        ")DEFAULT CHARSET = utf8;");
+                        ")DEFAULT CHARSET = utf8mb4;");
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS `" + table + "custom` (" +
                         "`id`  int UNSIGNED NOT NULL AUTO_INCREMENT ," +
                         "`name`  varchar(40) NOT NULL ," +
@@ -88,7 +88,7 @@ public class Database {
                         "`left`  bigint UNSIGNED NOT NULL ," +
                         "PRIMARY KEY (`id`),\n" +
                         "INDEX `name` (`name`) USING BTREE" +
-                        ")DEFAULT CHARSET = utf8;");
+                        ")DEFAULT CHARSET = utf8mb4;");
             } else {
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS \"main\".\"" + table + "players\" (\n" +
                         "\"player\"  TEXT NOT NULL,\n" +
