@@ -1,11 +1,14 @@
 package me.zhanshi123.vipsystem.custom;
 
+import com.google.common.base.Charsets;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 
 import javax.script.ScriptEngine;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +63,7 @@ public class CustomFunction {
         if (scripts.size() != 0) {
             try {
                 nashorn = Main.getScriptManager().getNashorn();
-                nashorn.eval(new FileReader(script));
+                nashorn.eval(new BufferedReader(new InputStreamReader(new FileInputStream(script), Charsets.UTF_8)));
                 scripts.forEach(function -> {
                     if (function.contains("(") && function.contains(")")) {
                         String functionName = function.substring(0, function.indexOf("("));
