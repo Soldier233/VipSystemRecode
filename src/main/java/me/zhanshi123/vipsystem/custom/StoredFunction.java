@@ -1,6 +1,7 @@
 package me.zhanshi123.vipsystem.custom;
 
 import me.zhanshi123.vipsystem.Main;
+import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import org.bukkit.Bukkit;
 
 import java.util.List;
@@ -16,12 +17,16 @@ public class StoredFunction extends CustomFunction {
         this.activate = activate;
         this.customizableArgs = customizableArgs;
         this.mustArgs = mustArgs;
+        if (this.getDuration() == 0L) {
+            this.setDuration(VipSystemAPI.getInstance().getTimeMillis(getProvidedDuration().getValue()));
+        }
     }
 
-    public StoredFunction(String name, int id, long activate, List<CustomArg> mustArgs, List<CustomArg> customizableArgs) {
+    public StoredFunction(String name, int id, long activate, long left, List<CustomArg> mustArgs, List<CustomArg> customizableArgs) {
         super(name);
         this.id = id;
         this.activate = activate;
+        this.setDuration(left);
         this.customizableArgs = customizableArgs;
         this.mustArgs = mustArgs;
     }
@@ -52,6 +57,15 @@ public class StoredFunction extends CustomFunction {
 
     public List<CustomArg> getMustArgs() {
         return mustArgs;
+    }
+
+    public CustomArg getProvidedDuration() {
+        for (CustomArg mustArg : mustArgs) {
+            if (mustArg.getName().equalsIgnoreCase(this.getDurationArgName())) {
+                return mustArg;
+            }
+        }
+        return null;
     }
 
     public CustomArg getMustArg(String name) {

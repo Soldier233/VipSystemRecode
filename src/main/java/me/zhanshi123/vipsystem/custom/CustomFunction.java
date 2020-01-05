@@ -1,6 +1,7 @@
 package me.zhanshi123.vipsystem.custom;
 
 import me.zhanshi123.vipsystem.Main;
+import me.zhanshi123.vipsystem.api.VipSystemAPI;
 
 import javax.script.ScriptEngine;
 import java.io.File;
@@ -22,6 +23,7 @@ public class CustomFunction {
     private List<String> scripts = new ArrayList<>();
     private Map<String, String[]> functions = new HashMap<>();
     private ScriptEngine nashorn;
+    private String durationArgName;
 
     public CustomFunction(String name) {
         this.name = name;
@@ -34,13 +36,18 @@ public class CustomFunction {
         this.script = customFunction.getScript();
         this.functions = customFunction.getFunctions();
         this.nashorn = customFunction.getNashorn();
+        this.durationArgName = customFunction.getDurationArgName();
     }
 
-    public CustomFunction(String name, String description, String[] args, long duration, List<String> onStart, List<String> onEnd, File script) {
+    public CustomFunction(String name, String description, String[] args, String durationArgName, List<String> onStart, List<String> onEnd, File script) {
         this.name = name;
         this.description = description;
         this.args = args;
-        this.duration = duration;
+        this.duration = 0;
+        if (durationArgName.contains("{") && durationArgName.contains("}")) {
+            this.durationArgName = durationArgName.replace("{", "").replace("}", "");
+            this.duration = VipSystemAPI.getInstance().getTimeMillis(this.durationArgName);
+        }
         this.onStart = onStart;
         this.onEnd = onEnd;
         this.script = script;
@@ -159,5 +166,9 @@ public class CustomFunction {
 
     public void setDuration(long duration) {
         this.duration = duration;
+    }
+
+    public String getDurationArgName() {
+        return durationArgName;
     }
 }

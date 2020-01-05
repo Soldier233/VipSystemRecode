@@ -40,6 +40,7 @@ public class RunCommand extends SubCommand implements AdminCommand {
         for (int i = 2; i < args.length; i++) {
             argList.add(new CustomArg(functionArg[i - 2], args[i]));
         }
+
         StoredFunction storedFunction = new StoredFunction(name, System.currentTimeMillis(), argList, new ArrayList<>());
         Main.getDataBase().addCustomFunction(storedFunction, VipSystemAPI.getInstance().getJsonForCustomArgs(argList, new ArrayList<>()));
         storedFunction.executeStart();

@@ -155,7 +155,7 @@ public class Database {
             getStorageByPlayer = connection.prepareStatement("SELECT `id`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `player` = ?;");
             getStorageByID = connection.prepareStatement("SELECT `player`,`vip`,`previous`,`activate`,`left` FROM `" + table + "storage` WHERE `id` = ? LIMIT 1;");
             insertFunction = connection.prepareStatement("INSERT INTO `" + table + "custom`(`name`,`args`,`activate`,`left`) VALUES(?,?,?,?);");
-            getAllFunction = connection.prepareStatement("SELECT `id`,`args`,`activate`,`left` FROM `" + table + "custom`;");
+            getAllFunction = connection.prepareStatement("SELECT `name`,`id`,`args`,`activate`,`left` FROM `" + table + "custom`;");
             removeFunction = connection.prepareStatement("DELETE FROM `" + table + "custom` WHERE `id` = ?;");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -406,7 +406,7 @@ public class Database {
                     String value = entry.getValue().getAsString();
                     customArgs.add(new CustomArg(key, value));
                 });
-                functions.add(new StoredFunction(resultSet.getString("name"), resultSet.getInt("id"), resultSet.getLong("activate"), mustArgs, customArgs));
+                functions.add(new StoredFunction(resultSet.getString("name"), resultSet.getInt("id"), resultSet.getLong("activate"), resultSet.getLong("left"), mustArgs, customArgs));
             }
             resultSet.close();
         } catch (SQLException e) {

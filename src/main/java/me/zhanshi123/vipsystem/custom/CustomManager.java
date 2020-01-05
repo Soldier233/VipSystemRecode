@@ -2,7 +2,6 @@ package me.zhanshi123.vipsystem.custom;
 
 import com.google.common.base.Charsets;
 import me.zhanshi123.vipsystem.Main;
-import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -47,7 +46,7 @@ public class CustomManager {
                 List<String> tmp = yamlConfig.getStringList("args");
                 String[] array = new String[tmp.size()];
                 tmp.toArray(array);
-                CustomFunction customFunction = new CustomFunction(function.getName(), yamlConfig.getString("description"), array, VipSystemAPI.getInstance().getTimeMillis(yamlConfig.getString("duration")), onStart, onEnd, script);
+                CustomFunction customFunction = new CustomFunction(function.getName(), yamlConfig.getString("description"), array, yamlConfig.getString("duration"), onStart, onEnd, script);
                 functionMap.putIfAbsent(customFunction.getName(), customFunction);
             } catch (IOException e) {
                 e.printStackTrace();
