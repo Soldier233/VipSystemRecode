@@ -7,7 +7,6 @@ import me.zhanshi123.vipsystem.api.storage.VipStorage;
 import me.zhanshi123.vipsystem.api.vip.VipData;
 import me.zhanshi123.vipsystem.convert.Info;
 import me.zhanshi123.vipsystem.custom.CustomArg;
-import me.zhanshi123.vipsystem.custom.CustomFunction;
 import me.zhanshi123.vipsystem.custom.StoredFunction;
 import me.zhanshi123.vipsystem.data.connector.ConnectionData;
 import me.zhanshi123.vipsystem.data.connector.DatabaseHandler;
@@ -362,12 +361,12 @@ public class Database {
                 );
     }
 
-    public void addCustomFunction(CustomFunction customFunction, String args) {
+    public void addCustomFunction(StoredFunction customFunction, String args) {
         checkConnection();
         try {
             insertFunction.setString(1, customFunction.getName());
             insertFunction.setString(2, args);
-            insertFunction.setLong(3, System.currentTimeMillis());
+            insertFunction.setLong(3, customFunction.getActivate());
             insertFunction.setLong(4, customFunction.getDuration());
             insertFunction.executeUpdate();
         } catch (SQLException e) {

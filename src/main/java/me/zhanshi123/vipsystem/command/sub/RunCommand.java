@@ -1,6 +1,7 @@
 package me.zhanshi123.vipsystem.command.sub;
 
 import me.zhanshi123.vipsystem.Main;
+import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.command.SubCommand;
 import me.zhanshi123.vipsystem.command.type.AdminCommand;
 import me.zhanshi123.vipsystem.custom.CustomArg;
@@ -40,6 +41,7 @@ public class RunCommand extends SubCommand implements AdminCommand {
             argList.add(new CustomArg(functionArg[i - 2], args[i]));
         }
         StoredFunction storedFunction = new StoredFunction(name, System.currentTimeMillis(), argList, new ArrayList<>());
+        Main.getDataBase().addCustomFunction(storedFunction, VipSystemAPI.getInstance().getJsonForCustomArgs(argList, new ArrayList<>()));
         storedFunction.executeStart();
         return true;
     }

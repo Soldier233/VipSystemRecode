@@ -23,7 +23,7 @@ public class CommandHandler {
         commands.add(new RunCommand());
         try {
             commands.add(new ChangeVipCommand());
-        } catch (Exception e) {
+        } catch (NoClassDefFoundError e) {
             Bukkit.getConsoleSender().sendMessage("§c[VipSystem] Cannot initialize command ChangeVip, skipping registration. Reason: " + e.getMessage());
         }
     }

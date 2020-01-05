@@ -1,6 +1,6 @@
 package me.zhanshi123.vipsystem.task;
 
-import me.zhanshi123.vipsystem.api.VipSystemAPI;
+import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.custom.StoredFunction;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -20,6 +20,7 @@ public class DelayedExecuteFunctionTask extends BukkitRunnable {
         if (storedFunction.getTimeToExpire() > 0) {
             return;
         }
-        //TODO 执行脚本
+        storedFunction.executeEnd();
+        Main.getDataBase().removeFunction(storedFunction.getId());
     }
 }

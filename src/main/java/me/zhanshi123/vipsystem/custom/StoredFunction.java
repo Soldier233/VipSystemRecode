@@ -76,7 +76,15 @@ public class StoredFunction extends CustomFunction {
     }
 
     public void executeStart() {
-        getOnStart().stream()
+        handleCustomProcedure(getOnStart());
+    }
+
+    public void executeEnd() {
+        handleCustomProcedure(getOnEnd());
+    }
+
+    private void handleCustomProcedure(List<String> procedureList) {
+        procedureList.stream()
                 .filter(string -> string.startsWith("[Console]"))
                 .map(string -> string = string.replace("[Console]", "").trim())
                 .forEach(cmd -> {
@@ -84,7 +92,7 @@ public class StoredFunction extends CustomFunction {
                     getMustArgs().forEach(customArg -> tmp[0] = tmp[0].replace("{" + customArg.getName() + "}", customArg.getValue()));
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), tmp[0]);
                 });
-        getOnStart().stream()
+        procedureList.stream()
                 .filter(string -> string.startsWith("[Script]"))
                 .map(string -> string = string.replace("[Script]", "").trim())
                 .map(string -> string = string.substring(0, string.lastIndexOf("(")))
