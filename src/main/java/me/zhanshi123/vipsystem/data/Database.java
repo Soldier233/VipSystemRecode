@@ -57,6 +57,22 @@ public class Database {
 
     public void prepare() {
         try {
+            if (newData != null) {
+                connection.setAutoCommit(false);
+                Statement convertStatement = connection.createStatement();
+                newData.forEach(data -> {
+                    try {
+                        String sql = "INSERT INTO `" + table + "players` (`player`,`vip`,`previous`,`start`,`duration`) VALUES('" + data.getPlayer() + "','" + data.getVip() + "','" + data.getPrevious() + "','" + data.getStart() + "','" + data.getDuration() + "');";
+                        convertStatement.addBatch(sql);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                });
+                convertStatement.executeBatch();
+                connection.setAutoCommit(true);
+                convertStatement.close();
+                Main.getInstance().getLogger().info("Database from previous version has been converted.");
+            }
             Statement statement = connection.createStatement();
             if (connectionData.isUseMySQL()) {
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS `" + table + "players` (\n" +
@@ -129,22 +145,6 @@ public class Database {
                         "\n");
             }
             statement.close();
-            if (newData != null) {
-                connection.setAutoCommit(false);
-                Statement convertStatement = connection.createStatement();
-                newData.forEach(data -> {
-                    try {
-                        String sql = "INSERT INTO `" + table + "players` (`player`,`vip`,`previous`,`start`,`duration`) VALUES('" + data.getPlayer() + "','" + data.getVip() + "','" + data.getPrevious() + "','" + data.getStart() + "','" + data.getDuration() + "');";
-                        convertStatement.addBatch(sql);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                });
-                convertStatement.executeBatch();
-                connection.setAutoCommit(true);
-                convertStatement.close();
-                Main.getInstance().getLogger().info("Database from previous version has been converted.");
-            }
             getAllPlayer = connection.prepareStatement("SELECT `player`,`vip`,`previous`,`start`,`duration` FROM `" + table + "players`;");
             getPlayer = connection.prepareStatement("SELECT `vip`,`previous`,`start`,`duration` FROM `" + table + "players` WHERE `player` = ? LIMIT 1;");
             insertPlayer = connection.prepareStatement("INSERT INTO `" + table + "players` (`player`,`vip`,`previous`,`start`,`duration`) VALUES(?,?,?,?,?);");
