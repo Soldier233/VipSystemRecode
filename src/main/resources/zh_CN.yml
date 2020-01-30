@@ -55,3 +55,12 @@ Command:
     #Do not add any space in usage!
     list: '§7下方是Vip列表(玩家名,Vip组,到期时间):'
     amount: '§7Vip总数量: §e{0}'
+  customs:
+    desc: '查看所有自定义函数'
+    usage: '/vipsys customs'
+    #Do not add any space in usage!
+    list: '§7下方是已加载的自定义函数'
+  run:
+    usage: '/vipsys run [函数名] <函数参数>'
+    notFound: '函数不存在'
+    argNotMatch: '参数个数不匹配'

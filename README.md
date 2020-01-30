@@ -16,6 +16,7 @@ VipSystemEx可以帮你自主管理服务器的vip，支持限时，永久，可
 |/vipsys list | 查看Vip列表 | vipsys.list |
 |/vipsys look [玩家名] | 查看玩家Vip情况 | vipsys.look |
 |/vipsys reload | 重载插件 | vipsys.reload |
+|/vipsys customs | 查看自定义函数 | vipsys.customs |
 
 ## 用法介绍
 ### 基础用法
@@ -42,6 +43,7 @@ VipSystemEx可以帮你自主管理服务器的vip，支持限时，永久，可
 | %vipsystem_vip% | vip组名 |
 | %vipsystem_expire% | 到期时间 |
 | %vipsystem_previous% | 开通之前的组名 |
+| %vipsystem_left% | 剩余天数 |
 
 ### 进阶用法
 #### 语言设置

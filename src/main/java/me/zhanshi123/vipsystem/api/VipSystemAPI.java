@@ -1,14 +1,16 @@
 package me.zhanshi123.vipsystem.api;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.storage.VipStorageManager;
 import me.zhanshi123.vipsystem.api.vip.VipManager;
+import me.zhanshi123.vipsystem.custom.CustomArg;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +18,7 @@ public class VipSystemAPI {
     private static VipSystemAPI instance = new VipSystemAPI();
     private VipManager vipManager;
     private VipStorageManager vipStorageManager;
+    private Gson gson = new Gson();
 
     public static VipSystemAPI getInstance() {
         return instance;
@@ -48,7 +51,7 @@ public class VipSystemAPI {
     private String sMatches = "[0-9]+s";
 
     public long getTimeMillis(String text) {
-        if(text.equalsIgnoreCase("-1")){
+        if (text.equalsIgnoreCase("-1")) {
             return -1;
         }
         long d = 0L;
@@ -88,7 +91,11 @@ public class VipSystemAPI {
         if (m.find()) {
             return Long.parseLong(m.group());
         }
-        return 0L;
+        try {
+            return Integer.parseInt(a);
+        } catch (Exception e) {
+        }
+        return 0;
     }
 
     public Collection<Player> getOnlinePlayers() {
@@ -105,6 +112,17 @@ public class VipSystemAPI {
             e.printStackTrace();
         }
         return players;
+    }
+
+    public String getJsonForCustomArgs(List<CustomArg> mustArgs, List<CustomArg> customArgs) {
+        Map<String, String> tmp = new HashMap<>();
+        mustArgs.forEach(customArg -> tmp.put(customArg.getName(), customArg.getValue()));
+        JsonObject result = new JsonObject();
+        result.add("must", gson.toJsonTree(tmp));
+        tmp.clear();
+        customArgs.forEach(customArg -> tmp.put(customArg.getName(), customArg.getValue()));
+        result.add("custom", gson.toJsonTree(tmp));
+        return result.toString();
     }
 
 }
