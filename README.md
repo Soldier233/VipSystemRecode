@@ -17,6 +17,7 @@ VipSystemEx可以帮你自主管理服务器的vip，支持限时，永久，可
 |/vipsys look [玩家名] | 查看玩家Vip情况 | vipsys.look |
 |/vipsys reload | 重载插件 | vipsys.reload |
 |/vipsys customs | 查看自定义函数 | vipsys.customs |
+
 ![](http://www.zhanshi123.me/wp-content/uploads/2020/02/QQ截图20200215093116.png)
 
 
