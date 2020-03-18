@@ -11,8 +11,8 @@ import me.zhanshi123.vipsystem.listener.PlayerListener;
 import me.zhanshi123.vipsystem.manager.ConfigManager;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
+import me.zhanshi123.vipsystem.metrics.CStats;
 import me.zhanshi123.vipsystem.metrics.Metrics;
-import me.zhanshi123.vipsystem.script.ScriptHelper;
 import me.zhanshi123.vipsystem.script.ScriptManager;
 import me.zhanshi123.vipsystem.task.CheckAllTask;
 import net.milkbowl.vault.permission.Permission;
@@ -28,6 +28,7 @@ public final class Main extends JavaPlugin {
     private static Permission permission;
     private static CommandHandler commandHandler;
     private static Metrics metrics;
+    private static CStats cStats;
     private static Cache cache;
     private static ConvertManager convertManager;
     private static CustomCommandManager customCommandManager;
@@ -103,6 +104,7 @@ public final class Main extends JavaPlugin {
         scriptManager = new ScriptManager();
         customManager = new CustomManager();
         metrics = new Metrics(instance);
+        cStats = new CStats(instance);
         cache = new Cache();
         new CheckAllTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), instance);

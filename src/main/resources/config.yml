@@ -1,31 +1,64 @@
 lang: 'en'
 #Language of VipSystem
 #Now available: en zh_CN
+#VipSystem的语言
+#可用语言: en zh_CN
+groupCommands:
+  enable: false
+  #Use commands rather than Vault to move group
+  #是否使用命令而非Vault来移动权限组
+  #如果你使用的是较新的权限组插件，例如新版GroupManager,PermissionsEx,LuckPerms
+  #Vault对他们的兼容不是很好，所以可以自己在这里编辑移动组的命令
+  addGroup: 'pex user {0} group add {1}'
+  #add group command
+  #添加组命令
+  removeGroup: 'pex user {0} group remove {1}'
+  #remove group command
+  #删除组命令
+  addWorldGroup: 'pex user {0} group add {1} {2}'
+  #add world group command
+  #添加世界组命令
+  removeWorldGroup: 'pex user {0} group remove {1} {2}'
+  #remove world group command
+  #删除世界组命令
 uuid: false
 #Use UUID for data storage
+#是否使用uuid存储数据
 #defaultGroup: builder
 #if you want to customize default group, delete '#' at the beginning of previous line
+#如果你想自定义默认组，你可以删除上方defaultGroup前的'#'
 previousGroup: false
 #whether return to the previous group before activating vip after the vip expires
+#是否在VIP过期后返回开通VIP前的组
 dataBase:
   usePool: true
   #use connection pool or not
+  #是否使用HikariCP连接池，不支持1.8.8及以下的服务端
   useMySQL: false
   #use MySQL or not
   #if enabled, you need to fill in the blanks in 'MySQL' below
+  #是否使用MySQL
+  #如果使用，请填好下方的连接信息
   MySQL:
     address: 'jdbc:mysql://127.0.0.1:3306/minecraft?useSSL=false'
     #jdbc connection address
     #Format: 'jdbc:mysql://IP_ADDRESS/DATABASE_NAME'
     #For example 'jdbc:mysql://127.0.0.1:3306/minecraft' stands for the mysql server on '127.0.0.1' with port '3306' and database 'minecraft'
+    #jdbc地址
+    #格式: 'jdbc:mysql://ip/数据库名'
+    #比如 'jdbc:mysql://127.0.0.1:3306/minecraft' 代表地址为 '127.0.0.1' 端口为 '3306' 的数据库 'minecraft'
     user: 'root'
     #MySQL user name
+    #MySQL用户名
     password: 'yourpwdhere'
     #MySQL password
+    #MySQL密码
     table: 'vipsys_'
     #MySQL table prefix
+    #MySQL表前缀(不懂请不要修改)
 isGlobal: true
 #Use Vault to apply VIP to global group
+#是否将VIP生效到全部世界
 worlds: []
 #If isGlobal disabled, apply VIP to worlds above
 #Set to [] if you want to apply vip to all the worlds which are loaded by bukkit
@@ -38,8 +71,20 @@ worlds: []
 #  - world_the_end
 #add all of your worlds here
 ############################
+#如果isGlobal被设置成false，就将vip添加到上方的世界中
+#设置成[]如果你想生效到所有已加载的世界
+#如果你想设置成单独的世界，把isGlobal改为false然后手动添加世界到worlds中
+############################
+#isGlobal: false
+#worlds:
+#  - world
+#  - world_nether
+#  - world_the_end
+#在这里添加你所有的世界
+############################
 dateFormat: 'yyyy-MM-dd HH:mm:ss'
 #Date format to be displayed
+#时间格式
 customCommands:
   vip:
     activate:
@@ -61,3 +106,11 @@ customCommands:
 #      - 'multi commands'
 #    expire:
 #      - 'commands to be executed'
+#在开通vip/vip到期时执行的自定义命令
+#格式:
+#  组名:
+#    activate:
+#      - '需要执行的命令'
+#      - '支持多行命令'
+#    expire:
+#      - '需要执行的命令'

@@ -95,10 +95,6 @@ say {0} is no longer a vip
 ```
 If you need to add more groups, it is the same method.  
 If you don't need the function, you can delete it.
-## Download
-The plugin is made to premium to support the development.
-You can also clone/fork the project and build it yourself using maven.  
-Source code: [https://gitee.com/Soldier233/VipSystemRecode.git](https://gitee.com/Soldier233/VipSystemRecode.git)
 ## API
 You can use```VipSystemAPI.getInstance()``` to get the instance of ```VipSystemAPI```  
 Javadoc is on the way.

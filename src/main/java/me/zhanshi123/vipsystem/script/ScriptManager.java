@@ -2,12 +2,10 @@ package me.zhanshi123.vipsystem.script;
 
 import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import me.zhanshi123.vipsystem.Main;
-import me.zhanshi123.vipsystem.custom.CustomFunction;
+import org.bukkit.Bukkit;
 
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
-import javax.script.ScriptException;
+import javax.script.*;
+import java.util.function.Consumer;
 
 public class ScriptManager {
     private boolean enable = false;
@@ -35,6 +33,9 @@ public class ScriptManager {
             Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
             return null;
         }
+        Bindings bindings = nashorn.createBindings();
+        bindings.put("sendMessage", (Consumer<String>) ScriptHelper::sendMessage);
+        bindings.put("getPlayer", (Consumer<String>) Bukkit::getPlayer);
         return nashorn;
     }
 

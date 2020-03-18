@@ -97,4 +97,24 @@ public class ConfigManager {
     public String getDefaultGroup() {
         return config.getString("defaultGroup");
     }
+
+    public boolean isDisableVault() {
+        return config.getBoolean("groupCommands.enable", false);
+    }
+
+    public String getAddGroupCommand() {
+        return config.getString("groupCommands.addGroup", "pex user {0} group add {1}");
+    }
+
+    public String getRemoveGroupCommand() {
+        return config.getString("groupCommands.removeGroup", "pex user {0} group remove {1}");
+    }
+
+    public String getAddWorldGroupCommand() {
+        return config.getString("groupCommands.addWorldGroup", "pex user {0} group add {1} {2}");
+    }
+
+    public String getRemoveWorldGroupCommand() {
+        return config.getString("groupCommands.removeWorldGroup", "pex user {0} group remove {1} {2}");
+    }
 }

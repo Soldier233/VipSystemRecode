@@ -40,10 +40,18 @@ public class VipManager {
         vipData = activateEvent.getVipData();
         Main.getCache().addVipData(name, vipData);
         String group = vipData.getVip();
-        if (Main.getConfigManager().isGlobal()) {
-            Main.getPermission().playerAddGroup(player, group);
+        if (Main.getConfigManager().isDisableVault()) {
+            if (Main.getConfigManager().isGlobal()) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(Main.getConfigManager().getAddGroupCommand(), player.getName(), group));
+            } else {
+                Main.getConfigManager().getWorlds().forEach(worldName -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(Main.getConfigManager().getAddWorldGroupCommand(), player.getName(), group, worldName)));
+            }
         } else {
-            Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, group));
+            if (Main.getConfigManager().isGlobal()) {
+                Main.getPermission().playerAddGroup(player, group);
+            } else {
+                Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, group));
+            }
         }
         new CheckVipTask(player).runTask(Main.getInstance());
     }
@@ -80,19 +88,37 @@ public class VipManager {
         Bukkit.getPluginManager().callEvent(expireEvent);
         Main.getCache().removePlayer(name);
         Main.getDataBase().deletePlayer(name);
-        if (Main.getConfigManager().isGlobal()) {
-            Main.getPermission().playerRemoveGroup(player, vipData.getVip());
-            if (Main.getConfigManager().isPreviousGroup()) {
-                Main.getPermission().playerAddGroup(player, vipData.getPrevious());
-            } else if (Main.getConfigManager().getDefaultGroup() != null) {
-                Main.getPermission().playerAddGroup(player, Main.getConfigManager().getDefaultGroup());
+        if (Main.getConfigManager().isDisableVault()) {
+            if (Main.getConfigManager().isGlobal()) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(Main.getConfigManager().getRemoveGroupCommand(), player.getName(), vipData.getVip()));
+                if (Main.getConfigManager().isPreviousGroup()) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(Main.getConfigManager().getAddGroupCommand(), player.getName(), vipData.getPrevious()));
+                } else if (Main.getConfigManager().getDefaultGroup() != null) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(Main.getConfigManager().getAddGroupCommand(), player.getName(), Main.getConfigManager().getDefaultGroup()));
+                }
+            } else {
+                Main.getConfigManager().getWorlds().forEach(worldName -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(Main.getConfigManager().getRemoveWorldGroupCommand(), player.getName(), vipData.getVip(), worldName)));
+                if (Main.getConfigManager().isPreviousGroup()) {
+                    Main.getConfigManager().getWorlds().forEach(worldName -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(Main.getConfigManager().getAddWorldGroupCommand(), player.getName(), vipData.getPrevious(), worldName)));
+                } else if (Main.getConfigManager().getDefaultGroup() != null) {
+                    Main.getConfigManager().getWorlds().forEach(worldName -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(Main.getConfigManager().getAddWorldGroupCommand(), player.getName(), Main.getConfigManager().getDefaultGroup(), worldName)));
+                }
             }
         } else {
-            Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerRemoveGroup(worldName, player, vipData.getVip()));
-            if (Main.getConfigManager().isPreviousGroup()) {
-                Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, vipData.getPrevious()));
-            } else if (Main.getConfigManager().getDefaultGroup() != null) {
-                Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, Main.getConfigManager().getDefaultGroup()));
+            if (Main.getConfigManager().isGlobal()) {
+                Main.getPermission().playerRemoveGroup(player, vipData.getVip());
+                if (Main.getConfigManager().isPreviousGroup()) {
+                    Main.getPermission().playerAddGroup(player, vipData.getPrevious());
+                } else if (Main.getConfigManager().getDefaultGroup() != null) {
+                    Main.getPermission().playerAddGroup(player, Main.getConfigManager().getDefaultGroup());
+                }
+            } else {
+                Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerRemoveGroup(worldName, player, vipData.getVip()));
+                if (Main.getConfigManager().isPreviousGroup()) {
+                    Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, vipData.getPrevious()));
+                } else if (Main.getConfigManager().getDefaultGroup() != null) {
+                    Main.getConfigManager().getWorlds().forEach(worldName -> Main.getPermission().playerAddGroup(worldName, player, Main.getConfigManager().getDefaultGroup()));
+                }
             }
         }
         return vipData;

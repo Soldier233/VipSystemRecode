@@ -18,6 +18,9 @@ VipSystemEx可以帮你自主管理服务器的vip，支持限时，永久，可
 |/vipsys reload | 重载插件 | vipsys.reload |
 |/vipsys customs | 查看自定义函数 | vipsys.customs |
 
+![](http://www.zhanshi123.me/wp-content/uploads/2020/02/QQ截图20200215093116.png)
+
+
 ## 用法介绍
 ### 基础用法
 #### 准备工作
@@ -103,6 +106,12 @@ say {0} is no longer a vip
 ```
 svip组同理，如果你有更多的vip种类，可以按照上方格式自行添加  
 如果不需要使用该功能，可以直接整项删除
+## 自定义函数
+插件支持你自己编辑自定义函数，来完成一些自动的定时操作  
+比如你可以通过插件实现临时权限的功能  
+![http://www.zhanshi123.me/wp-content/uploads/2020/02/1.png](http://www.zhanshi123.me/wp-content/uploads/2020/02/1.png)  
+具体编辑的方法可以查看 [http://www.zhanshi123.me/?p=320](http://www.zhanshi123.me/?p=320)  
+上图的功能你可以直接前往[https://www.mcbbs.net/thread-959456-1-1.html](https://www.mcbbs.net/thread-959456-1-1.html)进行下载
 ## 插件下载
 该插件为免费插件，但是不提供jar的直接下载地址  
 你可以clone/fork该项目并自行构建，只需安装maven后进入项目目录，输入```mvn install```即可自动完成构建。目标文件会生成在```/target```目录下  
