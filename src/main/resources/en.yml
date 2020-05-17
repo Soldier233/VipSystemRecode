@@ -53,7 +53,7 @@ Command:
     desc: 'List the vips'
     usage: '/vipsys list'
     #Do not add any space in usage!
-    list: '§7Below are the vips(Player,Vip,Date To Expire):'
+    list: '§7Below are the vips(Player,Vip,Date To Expire,Time Left):'
     amount: '§7Total Vip amount: §e{0}'
   customs:
     desc: 'List the custom functions'

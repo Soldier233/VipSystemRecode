@@ -22,6 +22,7 @@ public class UpdateCheckTask extends BukkitRunnable {
             InputStream in = url.openStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
             String json = br.readLine();
+            br.close();
             update = new Gson().fromJson(json, Update.class);
         } catch (Exception e) {
             new BukkitRunnable() {
