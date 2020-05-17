@@ -16,7 +16,7 @@ public class CheckFunctionTask extends BukkitRunnable {
         if (function == null) {
             return;
         }
-        if (function.getTimeToExpire() >= 1000 * 60l) {
+        if (function.getTimeToExpire() >= 1000 * 60L) {
             return;
         }
         long temp = function.getTimeToExpire();

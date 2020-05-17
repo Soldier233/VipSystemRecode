@@ -53,7 +53,7 @@ Command:
     desc: '列出所有VIP'
     usage: '/vipsys list'
     #Do not add any space in usage!
-    list: '§7下方是Vip列表(玩家名,Vip组,到期时间):'
+    list: '§7下方是Vip列表(玩家名,Vip组,到期时间,剩余时间):'
     amount: '§7Vip总数量: §e{0}'
   customs:
     desc: '查看所有自定义函数'

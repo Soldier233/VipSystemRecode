@@ -1,5 +1,6 @@
 package me.zhanshi123.vipsystem.api.vip;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.api.event.VipActivateEvent;
@@ -8,6 +9,7 @@ import me.zhanshi123.vipsystem.api.event.VipRenewEvent;
 import me.zhanshi123.vipsystem.customcommand.CustomCommand;
 import me.zhanshi123.vipsystem.task.CheckVipTask;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
@@ -62,7 +64,16 @@ public class VipManager {
         if (customCommand == null) {
             return;
         }
-        customCommand.getActivate().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(cmd, player.getName(), vipData.getPrevious())));
+        customCommand.getActivate().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), formatVipCustomCommand(cmd, player, vipData)));
+    }
+
+    private String formatVipCustomCommand(String command, Player player, VipData vipData) {
+        command = command.replace("{0}", player.getName())
+                .replace("{1}", vipData.getPrevious());
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            command = PlaceholderAPI.setPlaceholders((OfflinePlayer) player, command);
+        }
+        return command;
     }
 
     public void renewVip(Player player, long duration) {
@@ -130,7 +141,7 @@ public class VipManager {
         if (customCommand == null) {
             return;
         }
-        customCommand.getExpire().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MessageFormat.format(cmd, player.getName(), vipData.getPrevious())));
+        customCommand.getExpire().forEach(cmd -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), formatVipCustomCommand(cmd, player, vipData)));
     }
 
     public Set<VipData> getVipDatum() {

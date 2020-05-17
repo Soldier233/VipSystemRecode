@@ -10,6 +10,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +25,13 @@ public class Cache implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onJoin(PlayerJoinEvent e) {
-        Player player = e.getPlayer();
-        cache(player);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Player player = e.getPlayer();
+                cache(player);
+            }
+        }.runTaskLater(Main.getInstance(), 20L);
     }
 
     @EventHandler

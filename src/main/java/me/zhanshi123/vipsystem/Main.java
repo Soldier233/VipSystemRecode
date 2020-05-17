@@ -146,7 +146,7 @@ public final class Main extends JavaPlugin {
         cache = new Cache();
         scriptManager = new ScriptManager();
         customManager = new CustomManager();
-        new CheckAllTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
+        new CheckAllTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60L);
         VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> cache.cache(player));
     }
 
