@@ -1,16 +1,21 @@
 package me.zhanshi123.vipsystem.command;
 
 import me.zhanshi123.vipsystem.Main;
+import me.zhanshi123.vipsystem.command.tab.TabCompletable;
 import me.zhanshi123.vipsystem.command.type.AdminCommand;
 import me.zhanshi123.vipsystem.command.type.PermissionCommand;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class CommandsExecutor implements CommandExecutor {
+public class CommandsExecutor implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         if (args.length == 0) {
             sendHelp(commandSender);
@@ -70,5 +75,26 @@ public class CommandsExecutor implements CommandExecutor {
                     .filter(subCommand -> subCommand.getDescription() != null)
                     .forEach(subCommand -> sender.sendMessage(MessageFormat.format(MessageManager.getString("Command.format"), subCommand.getUsage(), subCommand.getDescription())));
         }
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
+        if (args.length == 1) {
+            return Main.getCommandHandler().getCommands().stream()
+                    .map(SubCommand::getName)
+                    .collect(Collectors.toList());
+        } else if (args.length >= 2) {
+            String commandName = args[0];
+            SubCommand subCommand = Main.getCommandHandler().getSubCommand(commandName);
+            if (commandName == null) {
+                return new ArrayList<>();
+            }
+            if (!(subCommand instanceof TabCompletable)) {
+                return new ArrayList<>();
+            }
+            TabCompletable tabCompletable = (TabCompletable) subCommand;
+            return tabCompletable.getArguments().get(args.length - 2).run();
+        }
+        return new ArrayList<>();
     }
 }

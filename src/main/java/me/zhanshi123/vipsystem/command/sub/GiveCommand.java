@@ -1,8 +1,11 @@
 package me.zhanshi123.vipsystem.command.sub;
 
+import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.api.vip.VipData;
 import me.zhanshi123.vipsystem.command.SubCommand;
+import me.zhanshi123.vipsystem.command.tab.CommandTab;
+import me.zhanshi123.vipsystem.command.tab.TabCompletable;
 import me.zhanshi123.vipsystem.command.type.PermissionCommand;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import org.bukkit.Bukkit;
@@ -10,7 +13,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class GiveCommand extends SubCommand implements PermissionCommand {
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class GiveCommand extends SubCommand implements PermissionCommand, TabCompletable {
     public GiveCommand() {
         super("give", MessageManager.getString("Command.give.usage"), MessageManager.getString("Command.give.desc"));
     }
@@ -50,5 +57,14 @@ public class GiveCommand extends SubCommand implements PermissionCommand {
         }
 
         return true;
+    }
+
+    @Override
+    public List<CommandTab> getArguments() {
+        return Arrays.asList(new CommandTab[]{
+                () -> VipSystemAPI.getInstance().getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()),
+                () -> Arrays.asList(Main.getPermission().getGroups()),
+                () -> Arrays.asList("7d", "30d", "180d", "-1")
+        });
     }
 }
