@@ -8,9 +8,11 @@ import me.zhanshi123.vipsystem.api.vip.VipManager;
 import me.zhanshi123.vipsystem.custom.CustomArg;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -123,6 +125,15 @@ public class VipSystemAPI {
         customArgs.forEach(customArg -> tmp.put(customArg.getName(), customArg.getValue()));
         result.add("custom", gson.toJsonTree(tmp));
         return result.toString();
+    }
+
+    public void runAsync(Consumer<Void> consumer) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                consumer.accept(null);
+            }
+        }.runTaskAsynchronously(Main.getInstance());
     }
 
 }
