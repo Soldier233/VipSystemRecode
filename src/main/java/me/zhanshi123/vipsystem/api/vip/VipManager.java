@@ -89,13 +89,13 @@ public class VipManager {
         new CheckVipTask(player).runTask(Main.getInstance());
     }
 
-    public VipData removeVipWithoutCommands(Player player) {
+    public VipData removeVipWithoutCommandsInternal(Player player, boolean natural) {
         String name = VipSystemAPI.getInstance().getPlayerName(player);
         VipData vipData = getVipData(player);
         if (vipData == null) {
             return null;
         }
-        VipExpireEvent expireEvent = new VipExpireEvent(player, vipData);
+        VipExpireEvent expireEvent = new VipExpireEvent(player, vipData, natural);
         Bukkit.getPluginManager().callEvent(expireEvent);
         Main.getCache().removePlayer(name);
         Main.getDataBase().deletePlayer(name);
@@ -133,6 +133,10 @@ public class VipManager {
             }
         }
         return vipData;
+    }
+
+    public VipData removeVipWithoutCommands(Player player) {
+        return removeVipWithoutCommandsInternal(player, true);
     }
 
     public void removeVip(Player player) {
