@@ -14,4 +14,8 @@ public class CustomCommandManager {
     public CustomCommand get(String vip) {
         return data.get(vip);
     }
+
+    public Map<String, CustomCommand> getData() {
+        return data;
+    }
 }

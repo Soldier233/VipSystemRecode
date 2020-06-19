@@ -3,6 +3,8 @@ package me.zhanshi123.vipsystem.command.sub;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.command.SubCommand;
+import me.zhanshi123.vipsystem.command.tab.CommandTab;
+import me.zhanshi123.vipsystem.command.tab.TabCompletable;
 import me.zhanshi123.vipsystem.command.type.AdminCommand;
 import me.zhanshi123.vipsystem.custom.CustomArg;
 import me.zhanshi123.vipsystem.custom.CustomFunction;
@@ -12,9 +14,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class RunCommand extends SubCommand implements AdminCommand {
+public class RunCommand extends SubCommand implements AdminCommand, TabCompletable {
     public RunCommand() {
         super("run");
     }
@@ -45,5 +49,12 @@ public class RunCommand extends SubCommand implements AdminCommand {
         Main.getDataBase().addCustomFunction(storedFunction, VipSystemAPI.getInstance().getJsonForCustomArgs(argList, new ArrayList<>()));
         storedFunction.executeStart();
         return true;
+    }
+
+    @Override
+    public List<CommandTab> getArguments() {
+        return Arrays.asList(new CommandTab[]{
+                () -> new ArrayList<>(Main.getCustomCommandManager().getData().keySet())
+        });
     }
 }

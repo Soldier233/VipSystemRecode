@@ -93,6 +93,9 @@ public class CommandsExecutor implements CommandExecutor, TabCompleter {
                 return new ArrayList<>();
             }
             TabCompletable tabCompletable = (TabCompletable) subCommand;
+            if (args.length - 2 >= tabCompletable.getArguments().size()) {
+                return new ArrayList<>();
+            }
             return tabCompletable.getArguments().get(args.length - 2).run();
         }
         return new ArrayList<>();
