@@ -22,6 +22,6 @@ public class DelayedExecuteFunctionTask extends BukkitRunnable {
             return;
         }
         storedFunction.executeEnd();
-        VipSystemAPI.getInstance().runAsync(a -> Main.getDataBase().removeFunction(storedFunction.getId()));
+        Main.getDataBase().removeFunction(storedFunction.getId());
     }
 }

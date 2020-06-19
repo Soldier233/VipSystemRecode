@@ -49,13 +49,11 @@ public class GiveCommand extends SubCommand implements PermissionCommand, TabCom
                 return true;
             }
             VipSystemAPI.getInstance().getVipManager().renewVip(player, temp);
-            sender.sendMessage(MessageManager.getString("Command.give.success"));
         } else {
             vipData = new VipData(player, args[2], temp);
             VipSystemAPI.getInstance().getVipManager().addVip(player, vipData);
-            sender.sendMessage(MessageManager.getString("Command.give.success"));
         }
-
+        sender.sendMessage(MessageManager.getString("Command.give.success"));
         return true;
     }
 
