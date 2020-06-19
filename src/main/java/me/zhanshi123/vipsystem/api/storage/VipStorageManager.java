@@ -33,7 +33,7 @@ public class VipStorageManager {
         long time = vipData.getDuration() + vipData.getStart() - now;
         VipStorage vipStorage = new VipStorage(VipSystemAPI.getInstance().getPlayerName(player), vipData.getVip(), vipData.getPrevious(), now, time);
         addVipStorage(vipStorage);
-        VipSystemAPI.getInstance().getVipManager().removeVipWithoutCommands(player);
+        VipSystemAPI.getInstance().getVipManager().removeVipWithoutCommandsInternal(player,false);
         return true;
     }
 

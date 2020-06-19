@@ -1,6 +1,7 @@
 package me.zhanshi123.vipsystem.task;
 
 import me.zhanshi123.vipsystem.Main;
+import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.custom.StoredFunction;
 import org.bukkit.scheduler.BukkitRunnable;
 

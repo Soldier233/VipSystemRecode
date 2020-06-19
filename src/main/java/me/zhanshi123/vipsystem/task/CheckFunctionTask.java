@@ -22,7 +22,6 @@ public class CheckFunctionTask extends BukkitRunnable {
         long temp = function.getTimeToExpire();
         if (temp < 0) {
             temp = 0;
-            //Auto fix up
         }
         new DelayedExecuteFunctionTask(function).runTaskLater(Main.getInstance(), temp / 1000 * 20);
     }

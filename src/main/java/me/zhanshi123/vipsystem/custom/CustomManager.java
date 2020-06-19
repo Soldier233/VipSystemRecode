@@ -30,6 +30,9 @@ public class CustomManager {
         }
         File[] functions = file.listFiles();
         for (File function : functions) {
+            if (function.isFile()) {
+                continue;
+            }
             try {
                 File config = new File(function, "custom.yml");
                 if (!config.exists()) {
@@ -48,9 +51,7 @@ public class CustomManager {
                 tmp.toArray(array);
                 CustomFunction customFunction = new CustomFunction(function.getName(), yamlConfig.getString("description"), array, yamlConfig.getString("duration"), onStart, onEnd, script);
                 functionMap.putIfAbsent(customFunction.getName(), customFunction);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InvalidConfigurationException e) {
+            } catch (IOException | InvalidConfigurationException e) {
                 e.printStackTrace();
             }
         }
