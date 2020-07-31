@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class ConfigManager {
     private FileConfiguration config = new YamlConfiguration();
@@ -33,7 +34,7 @@ public class ConfigManager {
                 plugin.saveResource("config.yml", false);
             }
             config.load(new BufferedReader(new InputStreamReader(new FileInputStream(f), Charsets.UTF_8)));
-            dateFormat = new SimpleDateFormat(config.getString("dateFormat"));
+            dateFormat = new SimpleDateFormat(Objects.requireNonNull(config.getString("dateFormat")));
             ConfigurationSection customCommands = config.getConfigurationSection("customCommands");
             if (customCommands != null) {
                 customCommands.getKeys(false).forEach(group -> Main.getCustomCommandManager().add(new CustomCommand(group, customCommands.getStringList(group + ".activate"), customCommands.getStringList(group + ".expire"))));
@@ -57,12 +58,10 @@ public class ConfigManager {
     }
 
     public List<String> getMySQL() {
-        return Arrays.asList(new String[]{
-                config.getString("dataBase.MySQL.address"),
+        return Arrays.asList(config.getString("dataBase.MySQL.address"),
                 config.getString("dataBase.MySQL.user"),
                 config.getString("dataBase.MySQL.password"),
-                config.getString("dataBase.MySQL.table")
-        });
+                config.getString("dataBase.MySQL.table"));
     }
 
     public boolean isUUID() {

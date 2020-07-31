@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class VipManager {
     /**
-     * Get player's VipData.
+     * Get player's VipData.<br/>
      * Return null if not exists.
      *
      * @param player Player
@@ -30,6 +30,11 @@ public class VipManager {
         return Main.getCache().getVipData(name);
     }
 
+    /**
+     * Check the player has vip
+     * @param player Player
+     * @return whether player have vip
+     */
     public boolean hasVip(Player player) {
         String name = VipSystemAPI.getInstance().getPlayerName(player);
         return Main.getCache().getVipData(name) != null;

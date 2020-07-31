@@ -6,7 +6,7 @@
 
     <groupId>me.zhanshi123</groupId>
     <artifactId>VipSystem</artifactId>
-    <version>4.9</version>
+    <version>4.10</version>
     <packaging>jar</packaging>
 
     <name>VipSystem</name>
@@ -83,7 +83,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <version>1.16.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
