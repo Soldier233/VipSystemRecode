@@ -116,4 +116,8 @@ public class ConfigManager {
     public String getRemoveWorldGroupCommand() {
         return config.getString("groupCommands.removeWorldGroup", "pex user {0} group remove {1} {2}");
     }
+
+    public boolean isDebug() {
+        return config.getBoolean("debug", false);
+    }
 }

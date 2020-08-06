@@ -150,4 +150,9 @@ public final class Main extends JavaPlugin {
         VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> cache.cache(player));
     }
 
+    public void debug(String text) {
+        if(configManager.isDebug()){
+            Bukkit.getConsoleSender().sendMessage("§c[VipSystem-Debug] §f" + text);
+        }
+    }
 }

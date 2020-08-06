@@ -3,6 +3,9 @@ lang: 'en'
 #Now available: en zh_CN
 #VipSystem的语言
 #可用语言: en zh_CN
+debug: false
+#whether enable debug mode
+#是否启用debug模式
 groupCommands:
   enable: false
   #Use commands rather than Vault to move group

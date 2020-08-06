@@ -97,4 +97,16 @@ public class VipData {
         day = Math.round(day * 100) / 100;
         return day;
     }
+
+    @Override
+    public String toString() {
+        return "VipData{" +
+                "player='" + player + '\'' +
+                ", vip='" + vip + '\'' +
+                ", previous='" + previous + '\'' +
+                ", start=" + start +
+                ", duration=" + duration +
+                ", date=" + date +
+                '}';
+    }
 }
