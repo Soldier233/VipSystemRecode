@@ -1,16 +1,35 @@
 description: 'Give vip by moving group manually'
 #Description of the custom function
+#自定义函数的描述
 args: ["Player","Group","Time"]
 #Arguments of the custom function
+#自定义函数的参数
 duration: '{Time}'
 #Duration of the custom function
 #You can use {Time} to replace it with the time provided in the arguments
 #Or you can use a time stamp in milli seconds
+#自定义函数的执行延时
+#你可以填写{Time}来使用参数提供的时间
+#或者你可以在这里填写运行延时的毫秒数
+waitTillOnline: '{Player}'
+#You can define whether to check the player is online
+#to guarantee the commands executed successfully
+#To disable the function,you can delete the whole line above
+#你可以在这里设置是否需要检查上方填写的玩家
+#是否在线，来确保你的每条命令都能被成功执行
+#若上方玩家不在线，自定义函数将不会结束运行周期
+#如果不需要该功能，删除该行即可
 onStart:
   - '[Console] pex user {Player} group remove {Group}'
 #The procedure of the function on start
+#函数开始执行时的步骤
 onEnd:
   - '[Console] pex user {Player} group remove {Group}'
+#The procedure of the function on end
+#函数结束执行时的步骤
 #Function tag available:
 #'[Console] command' execute a console command
 #'[Script] func(arg1,arg2)' invoke the function in 'script.js' with the provided arguments
+#可用的函数标签
+#'[Console] command' 执行一个控制台命令
+#'[Script] func(arg1,arg2)' 使用给定的函数调用 'script.js' 的函数

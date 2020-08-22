@@ -2,14 +2,15 @@ package me.zhanshi123.vipsystem.manager;
 
 import com.google.common.base.Charsets;
 import me.zhanshi123.vipsystem.Main;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MessageManager {
     private static FileConfiguration config = new YamlConfiguration();
@@ -26,8 +27,6 @@ public class MessageManager {
             }
             fileOutputStream.close();
             input.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,9 +50,7 @@ public class MessageManager {
             if (count[0] != 0) {
                 config.save(f);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidConfigurationException e) {
+        } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
     }
@@ -65,18 +62,14 @@ public class MessageManager {
             f = new File(Main.getInstance().getDataFolder().getAbsolutePath() + File.separator + "messages" + File.separator + Main.getConfigManager().getLanguage() + ".yml");
             if (!f.exists()) {
                 InputStream inputStream = Main.getInstance().getResource(Main.getConfigManager().getLanguage() + ".yml");
-                if (inputStream != null) {
-                    writeFile(inputStream, f);
-                } else {
+                if (inputStream == null) {
                     inputStream = Main.getInstance().getResource("en.yml");
                     f = new File(Main.getInstance().getDataFolder().getAbsolutePath() + File.separator + "messages" + File.separator + Main.getConfigManager().getLanguage() + ".yml");
-                    writeFile(inputStream, f);
                 }
+                writeFile(inputStream, f);
             }
-            config.load(new InputStreamReader(new FileInputStream(f), "UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidConfigurationException e) {
+            config.load(new InputStreamReader(new FileInputStream(f), StandardCharsets.UTF_8));
+        } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
         update();
@@ -87,16 +80,39 @@ public class MessageManager {
         if (str == null) {
             return path;
         }
-        return str.replace("&", "§");
+        return ChatColor.translateAlternateColorCodes('&', translateHexColor(str));
     }
 
     public static List<String> getStringList(String path) {
-        List<String> array = config.getStringList(path);
-        if (array == null) {
-            array = Arrays.asList(new String[]{path});
+        return config.getStringList(path)
+                .stream()
+                .map(str -> ChatColor.translateAlternateColorCodes('&', str))
+                .map(MessageManager::translateHexColor)
+                .collect(Collectors.toList());
+    }
+
+    private static String translateHexColor(String text) {
+        char[] chars = text.toCharArray();
+        Main.getInstance().debug("Translate hex: " + text);
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '$') {
+                Main.getInstance().debug("i+8:" + (i + 7));
+                Main.getInstance().debug("chars.length-1:" + (chars.length - 1));
+                if (i + 7 < chars.length - 1) {
+                    Main.getInstance().debug("chars[i+1]: " + chars[i + 1]);
+                    Main.getInstance().debug("chars[i+8]: " + chars[i + 8]);
+                    if (chars[i + 1] == '[' && chars[i + 8] == ']') {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for (int j = i + 2; j < i + 8; j++) {
+                            stringBuilder.append(chars[j]);
+                        }
+                        String hexColor = stringBuilder.toString();
+                        Main.getInstance().debug("hex: " + hexColor);
+                        text = text.replace("$[" + hexColor + "]", ChatColor.of("#" + hexColor).toString());
+                    }
+                }
+            }
         }
-        List<String> temp = new ArrayList<>();
-        array.forEach(str -> temp.add(str.replace("&", "§")));
-        return temp;
+        return text;
     }
 }

@@ -24,7 +24,9 @@ public class DelayedRemoveVipTask extends BukkitRunnable {
         if (vipData == null) {
             return;
         }
-        if (vipData.getTimeToExpire() > 0) {
+        long tmp = vipData.getTimeToExpire();
+        Main.getInstance().debug(player.getName() + " 's vip is scheduled to remove, time to expire:" + tmp);
+        if (tmp >= 1000) {
             return;
         }
         VipSystemAPI.getInstance().getVipManager().removeVip(player);

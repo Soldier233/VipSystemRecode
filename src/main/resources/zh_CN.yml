@@ -1,3 +1,6 @@
+#如果想使用十六进制颜色
+#请使用以下格式
+#$[66CCFF]消息
 updateCheckFailure: '§6§lVipSystem §7>>> §a更新检查失败，原因: {0}'
 latestVersion: '§6§lVipSystem §7>>> §a你正在使用最新版本的VipSystem'
 newUpdate: '§6§lVipSystem §7>>> §aVipSystem {0} 更新了，内容: {1}'
