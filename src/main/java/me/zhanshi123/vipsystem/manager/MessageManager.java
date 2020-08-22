@@ -97,14 +97,18 @@ public class MessageManager {
             return text;
         }
         char[] chars = text.toCharArray();
-        Main.getInstance().debug("Translate hex: " + text);
+//        Main.getInstance().debug("Translate hex: " + text);
         for (int i = 0; i < chars.length; i++) {
             if (chars[i] == '$') { //判断是否有16进制匹配关键词
+                /*
                 Main.getInstance().debug("i+8:" + (i + 7));
                 Main.getInstance().debug("chars.length-1:" + (chars.length - 1));
+                 */
                 if (i + 7 < chars.length - 1) { //判断是否超长
+                    /*
                     Main.getInstance().debug("chars[i+1]: " + chars[i + 1]);
                     Main.getInstance().debug("chars[i+8]: " + chars[i + 8]);
+                     */
                     if (chars[i + 1] == '[' && chars[i + 8] == ']') { //判断是否有左右括号匹配
                         StringBuilder stringBuilder = new StringBuilder();
                         for (int j = i + 2; j < i + 8; j++) {
