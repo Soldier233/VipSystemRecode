@@ -86,6 +86,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        minecraftVersion = Integer.parseInt(getVersion());
         convertManager = new ConvertManager();
         customCommandManager = new CustomCommandManager();
         configManager = new ConfigManager();
@@ -150,8 +151,20 @@ public final class Main extends JavaPlugin {
         VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> cache.cache(player));
     }
 
+    private static int minecraftVersion = 0;
+
+    public static int getMinecraftVersion() {
+        return minecraftVersion;
+    }
+
+    public String getVersion() {
+        String version = Bukkit.getServer().getClass().getPackage().getName();
+        String[] tmp = version.split("\\.");
+        return tmp[tmp.length - 1];
+    }
+
     public void debug(String text) {
-        if(configManager.isDebug()){
+        if (configManager.isDebug()) {
             Bukkit.getConsoleSender().sendMessage("§c[VipSystem-Debug] §f" + text);
         }
     }

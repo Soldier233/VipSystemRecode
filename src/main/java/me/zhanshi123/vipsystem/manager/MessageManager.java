@@ -93,6 +93,9 @@ public class MessageManager {
 
     //匹配16进制颜色
     private static String translateHexColor(String text) {
+        if (Main.getMinecraftVersion() < 16) {
+            return text;
+        }
         char[] chars = text.toCharArray();
         Main.getInstance().debug("Translate hex: " + text);
         for (int i = 0; i < chars.length; i++) {
