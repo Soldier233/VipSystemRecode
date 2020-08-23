@@ -1,3 +1,6 @@
+#If you want to use hex color
+#Please use the following format
+#$[FFFFFF]message
 updateCheckFailure: '§6§lVipSystem §7>>> §aUpdate checks failed, reason: {0}'
 latestVersion: '§6§lVipSystem §7>>> §aYou are running the latest version of VipSystem'
 newUpdate: '§6§lVipSystem §7>>> §aVipSystem {0} has released!'
