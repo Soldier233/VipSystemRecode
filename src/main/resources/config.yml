@@ -1,3 +1,6 @@
+#If you want to use hex color
+#Please use the following format
+#$[FFFFFF]message
 lang: 'en'
 #Language of VipSystem
 #Now available: en zh_CN
