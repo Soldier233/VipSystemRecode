@@ -160,7 +160,7 @@ public final class Main extends JavaPlugin {
     public String getVersion() {
         String version = Bukkit.getServer().getClass().getPackage().getName();
         String[] tmp = version.split("\\.");
-        return tmp[tmp.length - 1];
+        return tmp[tmp.length - 1].split("_")[1];
     }
 
     public void debug(String text) {
