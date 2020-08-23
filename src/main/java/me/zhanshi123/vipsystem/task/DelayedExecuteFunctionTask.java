@@ -18,7 +18,7 @@ public class DelayedExecuteFunctionTask extends BukkitRunnable {
         if (storedFunction == null) {
             return;
         }
-        if (storedFunction.getTimeToExpire() > 0) {
+        if (storedFunction.getTimeToExpire() > 1000) {
             return;
         }
         storedFunction.executeEnd();

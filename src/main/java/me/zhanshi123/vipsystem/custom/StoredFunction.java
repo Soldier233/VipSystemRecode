@@ -103,8 +103,7 @@ public class StoredFunction extends CustomFunction {
                 .map(string -> string = string.replace("[Console]", "").trim())
                 .forEach(cmd -> {
                     final String[] tmp = {cmd};
-                    getMustArgs().forEach(customArg -> tmp[0] = tmp[0].replace("{" + customArg.getName() + "}", customArg.getValue()));
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), tmp[0]);
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), translateArgPlaceholder(tmp[0]));
                 });
         procedureList.stream()
                 .filter(string -> string.startsWith("[Script]"))
@@ -118,6 +117,22 @@ public class StoredFunction extends CustomFunction {
                     }
                     executeFunction(script, arg);
                 });
+    }
+
+    public String getAwaitingPlayer() {
+        if (getWaitTillOnline() == null) {
+            return null;
+        }
+        if (!(getWaitTillOnline().contains("{") && getWaitTillOnline().contains("}"))) {
+            return getWaitTillOnline();
+        }
+        return translateArgPlaceholder(getWaitTillOnline());
+    }
+
+    public String translateArgPlaceholder(String text) {
+        final String[] tmp = {text};
+        getMustArgs().forEach(customArg -> tmp[0] = tmp[0].replace("{" + customArg + "}", customArg.getValue()));
+        return tmp[0];
     }
 }
 

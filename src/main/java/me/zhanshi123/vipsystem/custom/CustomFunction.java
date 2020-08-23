@@ -20,6 +20,7 @@ public class CustomFunction {
     private String description;
     private String[] args;
     private long duration;
+    private String waitTillOnline;
     private List<String> onStart;
     private List<String> onEnd;
     private File script;
@@ -34,6 +35,7 @@ public class CustomFunction {
         this.description = customFunction.getDescription();
         this.args = customFunction.getArgs();
         this.duration = customFunction.getDuration();
+        this.waitTillOnline = customFunction.getWaitTillOnline();
         this.onStart = customFunction.getOnStart();
         this.onEnd = customFunction.getOnEnd();
         this.script = customFunction.getScript();
@@ -42,15 +44,19 @@ public class CustomFunction {
         this.durationArgName = customFunction.getDurationArgName();
     }
 
-    public CustomFunction(String name, String description, String[] args, String durationArgName, List<String> onStart, List<String> onEnd, File script) {
+    public CustomFunction(String name, String description, String[] args, String durationArgName, String waitTillOnline, List<String> onStart, List<String> onEnd, File script) {
         this.name = name;
         this.description = description;
         this.args = args;
         this.duration = 0;
+        if (durationArgName == null) {
+            durationArgName = "60000";
+        }
         if (durationArgName.contains("{") && durationArgName.contains("}")) {
             this.durationArgName = durationArgName.replace("{", "").replace("}", "");
             this.duration = VipSystemAPI.getInstance().getTimeMillis(this.durationArgName);
         }
+        this.waitTillOnline = waitTillOnline;
         this.onStart = onStart;
         this.onEnd = onEnd;
         this.script = script;
@@ -169,6 +175,14 @@ public class CustomFunction {
 
     public void setDuration(long duration) {
         this.duration = duration;
+    }
+
+    public String getWaitTillOnline() {
+        return waitTillOnline;
+    }
+
+    public void setWaitTillOnline(String waitTillOnline) {
+        this.waitTillOnline = waitTillOnline;
     }
 
     public String getDurationArgName() {

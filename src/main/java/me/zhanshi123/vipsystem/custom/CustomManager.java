@@ -49,7 +49,7 @@ public class CustomManager {
                 List<String> tmp = yamlConfig.getStringList("args");
                 String[] array = new String[tmp.size()];
                 tmp.toArray(array);
-                CustomFunction customFunction = new CustomFunction(function.getName(), yamlConfig.getString("description"), array, yamlConfig.getString("duration"), onStart, onEnd, script);
+                CustomFunction customFunction = new CustomFunction(function.getName(), yamlConfig.getString("description"), array, yamlConfig.getString("duration"),yamlConfig.getString("waitTillOnline"), onStart, onEnd, script);
                 functionMap.putIfAbsent(customFunction.getName(), customFunction);
             } catch (IOException | InvalidConfigurationException e) {
                 e.printStackTrace();
