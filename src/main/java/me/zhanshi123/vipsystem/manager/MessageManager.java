@@ -35,9 +35,9 @@ public class MessageManager {
     private static void update() {
         FileConfiguration builtIn = new YamlConfiguration();
         try {
-            InputStream inputStream = Main.getInstance().getResource(Main.getConfigManager().getLanguage() + ".yml");
+            InputStream inputStream = Main.getInstance().getResource(getFileName(Main.getConfigManager().getLanguage()));
             if (inputStream == null) {
-                inputStream = Main.getInstance().getResource("en.yml");
+                inputStream = Main.getInstance().getResource(getFileName("en"));
             }
             builtIn.load(new InputStreamReader(inputStream, Charsets.UTF_8));
             long[] count = {0};
@@ -55,15 +55,22 @@ public class MessageManager {
         }
     }
 
+    private static String getFileName(String lang) {
+        if (Main.getMinecraftVersion() < 16) {
+            return lang + ".yml";
+        }
+        return lang + "_16.yml";
+    }
+
     public static void init() {
         try {
             File folder = new File(Main.getInstance().getDataFolder(), "messages");
             folder.mkdirs();
             f = new File(Main.getInstance().getDataFolder().getAbsolutePath() + File.separator + "messages" + File.separator + Main.getConfigManager().getLanguage() + ".yml");
             if (!f.exists()) {
-                InputStream inputStream = Main.getInstance().getResource(Main.getConfigManager().getLanguage() + ".yml");
+                InputStream inputStream = Main.getInstance().getResource( getFileName(Main.getConfigManager().getLanguage()));
                 if (inputStream == null) {
-                    inputStream = Main.getInstance().getResource("en.yml");
+                    inputStream = Main.getInstance().getResource(getFileName("en"));
                     f = new File(Main.getInstance().getDataFolder().getAbsolutePath() + File.separator + "messages" + File.separator + Main.getConfigManager().getLanguage() + ".yml");
                 }
                 writeFile(inputStream, f);
