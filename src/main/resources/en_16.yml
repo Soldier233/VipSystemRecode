@@ -1,0 +1,68 @@
+#If you want to use hex color
+#Please use the following format
+#$[FFFFFF]message
+updateCheckFailure: '§6§lVipSystem §7>>> §aUpdate checks failed, reason: {0}'
+latestVersion: '§6§lVipSystem §7>>> §aYou are running the latest version of VipSystem'
+newUpdate: '§6§lVipSystem §7>>> §aVipSystem {0} has released!'
+fatalError: '§6§lVipSystem §7>>> §cFatal error has occurred! Stop loading!'
+permissionDeny: '§cYou do not have enough permission to do this'
+consoleForbid: '§cYou cannot use the command in Console'
+playerNotFound: '§cTarget player is not online!'
+Command:
+  format: '§7{0} $[FF69B4]{1}'
+  me:
+    desc: 'Get the Vip information of yourself'
+    usage: '$[DC143C]/$[FF1493]v$[FFA500]i$[FFFF00]p$[3CB371]s$[4169E1]y$[4B0082]s $[66CCFF]me'
+    #Do not add any space in usage!
+    result: '§7You are §e{0}§7. Vip expires when §e{1} §7, §e{2} §7days left'
+    resultPermanent: '§7You are permanent §e{0}§7.'
+    noVip: '§cYou have no Vip!'
+  give:
+    desc: 'Give the player specific vip group with specific time, time in xdxhxmxs which refers to x days, x hours, x minutes, x seconds. -1 for permanent'
+    usage: '$[DC143C]/$[FF1493]v$[FFA500]i$[FFFF00]p$[3CB371]s$[4169E1]y$[4B0082]s $[66CCFF]give [Player] [Group] [Time]'
+    #Do not add any space in usage!
+    alreadyHaveVip: '§7The player has already had a vip'
+    success: '§7Vip successfully given'
+    invalidTime: '§cTime is invalid. e.g. 1d2h3m4s for 1 day 2 hours 3 minutes and 4 seconds. -1 for permanent. Time should be larger than 60 seconds'
+  remove:
+    desc: 'Remove Vip of the player'
+    usage: '$[DC143C]/$[FF1493]v$[FFA500]i$[FFFF00]p$[3CB371]s$[4169E1]y$[4B0082]s $[66CCFF]remove [Player]'
+    #Do not add any space in usage!
+    noVip: '§cThe player has no Vip!'
+    success: '§7Vip successfully removed'
+  changevip:
+    desc: 'Change your activated vip group'
+    usage: '$[DC143C]/$[FF1493]v$[FFA500]i$[FFFF00]p$[3CB371]s$[4169E1]y$[4B0082]s $[66CCFF]changevip'
+    noVipStored: '§cYou have no vip in storage'
+    vipStored: '§7Following are your vip in storage. Hover the entry to get more details'
+    tellraw:
+      plain: '§7- §e{0}'
+      storeTime: '§7Time when stored: §e{0}'
+      expireTime: '§7Time when expire: §e{0}'
+      click: '§bClick to change the Vip'
+  reload:
+    desc: 'Reload the plugin'
+    usage: '$[DC143C]/$[FF1493]v$[FFA500]i$[FFFF00]p$[3CB371]s$[4169E1]y$[4B0082]s $[66CCFF]reload'
+    #Do not add any space in usage!
+    success: '§7Reload complete.'
+  look:
+    desc: 'Get the Vip information of the specific player'
+    usage: '$[DC143C]/$[FF1493]v$[FFA500]i$[FFFF00]p$[3CB371]s$[4169E1]y$[4B0082]s $[66CCFF]look [Player]'
+    #Do not add any space in usage!
+    result: '§7{3} is §e{0}§7. Vip expires when §e{1} §7, §e{2} §7days left'
+    resultPermanent: '§7{1} is permanent §e{0}§7.'
+    noVip: '§c{0} has no Vip!'
+  list:
+    desc: 'List the vips'
+    usage: '$[DC143C]/$[FF1493]v$[FFA500]i$[FFFF00]p$[3CB371]s$[4169E1]y$[4B0082]s $[66CCFF]list'
+    #Do not add any space in usage!
+    list: '§7Below are the vips(Player,Vip,Date To Expire,Time Left):'
+    amount: '§7Total Vip amount: §e{0}'
+  customs:
+    desc: 'List the custom functions'
+    usage: '$[DC143C]/$[FF1493]v$[FFA500]i$[FFFF00]p$[3CB371]s$[4169E1]y$[4B0082]s $[66CCFF]customs'
+    #Do not add any space in usage!
+    list: '§7Below are the loaded custom functions'
+  run:
+    usage: '$[DC143C]/$[FF1493]v$[FFA500]i$[FFFF00]p$[3CB371]s$[4169E1]y$[4B0082]s $[66CCFF]run [Function] <Args>'
+    notFound: 'Function not found'
