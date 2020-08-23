@@ -59,17 +59,22 @@ public class MessageManager {
         if (Main.getMinecraftVersion() < 16) {
             return lang + ".yml";
         }
+        Main.getInstance().debug("Return 1.16 hex language file");
         return lang + "_16.yml";
     }
 
     public static void init() {
         try {
+            Main.getInstance().debug("Try to init MessageManager");
             File folder = new File(Main.getInstance().getDataFolder(), "messages");
             folder.mkdirs();
             f = new File(Main.getInstance().getDataFolder().getAbsolutePath() + File.separator + "messages" + File.separator + Main.getConfigManager().getLanguage() + ".yml");
+            Main.getInstance().debug("Try to find file " + f.getAbsolutePath());
             if (!f.exists()) {
-                InputStream inputStream = Main.getInstance().getResource( getFileName(Main.getConfigManager().getLanguage()));
+                Main.getInstance().debug("File not exists, try to generate a new one");
+                InputStream inputStream = Main.getInstance().getResource(getFileName(Main.getConfigManager().getLanguage()));
                 if (inputStream == null) {
+                    Main.getInstance().debug("Language not integrated, copying from English");
                     inputStream = Main.getInstance().getResource(getFileName("en"));
                     f = new File(Main.getInstance().getDataFolder().getAbsolutePath() + File.separator + "messages" + File.separator + Main.getConfigManager().getLanguage() + ".yml");
                 }
@@ -122,7 +127,7 @@ public class MessageManager {
                             stringBuilder.append(chars[j]); //拼装16进制字符串
                         }
                         String hexColor = stringBuilder.toString();
-                        Main.getInstance().debug("hex: " + hexColor);
+//                        Main.getInstance().debug("hex: " + hexColor);
                         text = text.replace("$[" + hexColor + "]", ChatColor.of("#" + hexColor).toString());
                     }
                 }
