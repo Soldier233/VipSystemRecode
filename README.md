@@ -120,6 +120,12 @@ svip组同理，如果你有更多的vip种类，可以按照上方格式自行�
 ## API
 你可以通过```VipSystemAPI.getInstance()```来获取```VipSystemAPI```的实例  
 更多内容待补充
+## 鸣谢
+感谢下列用户对插件做出的赞助  
+(按时间排序)  
+| 用户 | 金额 |
+| :-: | :-: |
+| [yuguo99610](https://www.mcbbs.net/?62235) | 50元 |
 ## 联系作者
 如果你想提交bug，你可以发送issue或加群563012939联系群主获取帮助  
 你同样也可以通过email联系 Email: [i@zhanshi123.me](mailto:i@zhanshi123.me)
