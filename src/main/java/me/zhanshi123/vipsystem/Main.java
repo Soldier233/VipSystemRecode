@@ -107,7 +107,10 @@ public final class Main extends JavaPlugin {
         metrics = new Metrics(instance);
         cStats = new CStats(instance);
         cache = new Cache();
-        new CheckAllTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
+        if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")){
+            new VipSystemExpansion().register();
+        }
+        new CheckAllTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60L);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), instance);
         VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> cache.cache(player));
     }
