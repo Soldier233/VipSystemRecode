@@ -131,7 +131,10 @@ public class StoredFunction extends CustomFunction {
 
     public String translateArgPlaceholder(String text) {
         final String[] tmp = {text};
-        getMustArgs().forEach(customArg -> tmp[0] = tmp[0].replace("{" + customArg + "}", customArg.getValue()));
+        getMustArgs().forEach(customArg -> {
+            Main.getInstance().debug("translate {" + customArg.getName() + "} to " + customArg.getValue());
+            tmp[0] = tmp[0].replace("{" + customArg.getName() + "}", customArg.getValue());
+        });
         return tmp[0];
     }
 }
