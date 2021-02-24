@@ -9,8 +9,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,9 +26,10 @@ public class ConfigManager {
     private void load() {
         try {
             Main plugin = Main.getInstance();
+            plugin.getDataFolder().mkdirs();
             f = new File(plugin.getDataFolder(), "config.yml");
             if (!f.exists()) {
-                Files.copy(getConfigStream(), f.getParentFile().toPath(), StandardCopyOption.REPLACE_EXISTING);
+                MessageManager.writeFile(getConfigStream(), f);
             }
             config.load(new BufferedReader(new InputStreamReader(new FileInputStream(f), Charsets.UTF_8)));
             dateFormat = new SimpleDateFormat(Objects.requireNonNull(config.getString("dateFormat")));
@@ -44,10 +43,10 @@ public class ConfigManager {
 
     }
 
-    private InputStream getConfigStream(){
-        if(Bukkit.getPluginManager().isPluginEnabled("PermissionsEx")){
+    private InputStream getConfigStream() {
+        if (Bukkit.getPluginManager().getPlugin("PermissionsEx") != null) {
             return Main.getInstance().getResource("config_pex.yml");
-        }else if(Bukkit.getPluginManager().isPluginEnabled("LuckPerms")){
+        } else if (Bukkit.getPluginManager().getPlugin("LuckPerms") != null) {
             return Main.getInstance().getResource("config_lp.yml");
         }
         return Main.getInstance().getResource("config.yml");
