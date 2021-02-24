@@ -1,5 +1,6 @@
 package me.zhanshi123.vipsystem.command;
 
+import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.command.sub.*;
 import org.bukkit.Bukkit;
 
@@ -19,8 +20,10 @@ public class CommandHandler {
         commands.add(new ReloadCommand());
         commands.add(new LookCommand());
         commands.add(new ListCommand());
-        commands.add(new CustomsCommand());
-        commands.add(new RunCommand());
+        if (Main.isEnableCustomFunction()) {
+            commands.add(new CustomsCommand());
+            commands.add(new RunCommand());
+        }
         try {
             commands.add(new ChangeVipCommand());
         } catch (NoClassDefFoundError e) {
