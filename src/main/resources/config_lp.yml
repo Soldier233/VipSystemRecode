@@ -12,16 +12,16 @@ groupCommands:
   #是否使用命令而非Vault来移动权限组
   #如果你使用的是较新的权限组插件，例如新版GroupManager,PermissionsEx,LuckPerms
   #Vault对他们的兼容不是很好，所以可以自己在这里编辑移动组的命令
-  addGroup: 'pex user {0} group add {1}'
+  addGroup: 'lp user {0} parent set {1}'
   #add group command
   #添加组命令
-  removeGroup: 'pex user {0} group remove {1}'
+  removeGroup: 'lp user {0} parent remove {1}'
   #remove group command
   #删除组命令
-  addWorldGroup: 'pex user {0} group add {1} {2}'
+  addWorldGroup: 'lp user {0} parent set {1} {2}'
   #add world group command
   #添加世界组命令
-  removeWorldGroup: 'pex user {0} group remove {1} {2}'
+  removeWorldGroup: 'lp user {0} parent remove {1} {2}'
   #remove world group command
   #删除世界组命令
 uuid: false
