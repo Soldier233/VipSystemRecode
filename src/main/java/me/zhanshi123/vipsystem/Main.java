@@ -107,9 +107,9 @@ public final class Main extends JavaPlugin {
         database.prepare();
         setupPermissions();
         commandHandler = new CommandHandler("vipsys");
-        if (getJavaVersion() >= 15) {
+        if(System.getProperty("java.version").startsWith("15")){
             Bukkit.getConsoleSender().sendMessage("[VipSystem] §cSorry, You java version doesn't support JavaScript Engine Nashorn, skipping loading script module");
-        } else {
+        }else {
             scriptManager = new ScriptManager();
             enableCustomFunction = true;
             customManager = new CustomManager();
@@ -123,10 +123,6 @@ public final class Main extends JavaPlugin {
         new CheckAllTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60L);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), instance);
         VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> cache.cache(player));
-    }
-
-    public int getJavaVersion() {
-        return Integer.parseInt(System.getProperty("java.version"));
     }
 
     @Override
