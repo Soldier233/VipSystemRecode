@@ -54,7 +54,7 @@ public class RunCommand extends SubCommand implements AdminCommand, TabCompletab
     @Override
     public List<CommandTab> getArguments() {
         return Arrays.asList(new CommandTab[]{
-                () -> new ArrayList<>(Main.getCustomCommandManager().getData().keySet())
+                () -> new ArrayList<>(Main.getCustomManager().getFunctionMap().keySet())
         });
     }
 }

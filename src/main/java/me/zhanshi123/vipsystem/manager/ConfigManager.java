@@ -8,10 +8,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,9 +26,10 @@ public class ConfigManager {
     private void load() {
         try {
             Main plugin = Main.getInstance();
+            plugin.getDataFolder().mkdirs();
             f = new File(plugin.getDataFolder(), "config.yml");
             if (!f.exists()) {
-                plugin.saveResource("config.yml", false);
+                MessageManager.writeFile(getConfigStream(), f);
             }
             config.load(new BufferedReader(new InputStreamReader(new FileInputStream(f), Charsets.UTF_8)));
             dateFormat = new SimpleDateFormat(Objects.requireNonNull(config.getString("dateFormat")));
@@ -43,6 +41,15 @@ public class ConfigManager {
             e.printStackTrace();
         }
 
+    }
+
+    private InputStream getConfigStream() {
+        if (Bukkit.getPluginManager().getPlugin("PermissionsEx") != null) {
+            return Main.getInstance().getResource("config_pex.yml");
+        } else if (Bukkit.getPluginManager().getPlugin("LuckPerms") != null) {
+            return Main.getInstance().getResource("config_lp.yml");
+        }
+        return Main.getInstance().getResource("config.yml");
     }
 
     public String getLanguage() {

@@ -38,8 +38,7 @@ VipSystemEx可以帮你自主管理服务器的vip，支持限时，永久，可
 若需要移除vip，只需管理员输入```/vipsys remove Test```即可移除  
 #### 使用占位符
 如果你需要使用VipSystem提供的占位符，你需要安装PlaceholderAPI插件  
-输入命令```/papi ecloud download vipsystem```以载入占位符支持  
-然后你就可以使用占位符了，占位符映射如下  
+占位符映射如下  
 
 | 占位符 | 用途 |
 | :-: | :-: | 

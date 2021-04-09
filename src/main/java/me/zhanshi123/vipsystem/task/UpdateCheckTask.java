@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 
 public class UpdateCheckTask extends BukkitRunnable {
@@ -20,7 +21,7 @@ public class UpdateCheckTask extends BukkitRunnable {
         try {
             URL url = new URL("https://service.zhanshi123.me/update/index.php?name=VipSystemRecode");
             InputStream in = url.openStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
             String json = br.readLine();
             br.close();
             in.close();

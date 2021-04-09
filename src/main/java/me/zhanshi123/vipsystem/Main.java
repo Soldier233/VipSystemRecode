@@ -34,6 +34,7 @@ public final class Main extends JavaPlugin {
     private static CustomCommandManager customCommandManager;
     private static CustomManager customManager;
     private static ScriptManager scriptManager;
+    private static boolean enableCustomFunction = false;
 
     public static Main getInstance() {
         return instance;
@@ -83,6 +84,10 @@ public final class Main extends JavaPlugin {
         return scriptManager;
     }
 
+    public static boolean isEnableCustomFunction() {
+        return enableCustomFunction;
+    }
+
     @Override
     public void onEnable() {
         instance = this;
@@ -102,12 +107,20 @@ public final class Main extends JavaPlugin {
         database.prepare();
         setupPermissions();
         commandHandler = new CommandHandler("vipsys");
-        scriptManager = new ScriptManager();
-        customManager = new CustomManager();
+        if(System.getProperty("java.version").startsWith("15")){
+            Bukkit.getConsoleSender().sendMessage("[VipSystem] §cSorry, You java version doesn't support JavaScript Engine Nashorn, skipping loading script module");
+        }else {
+            scriptManager = new ScriptManager();
+            enableCustomFunction = true;
+            customManager = new CustomManager();
+        }
         metrics = new Metrics(instance);
         cStats = new CStats(instance);
         cache = new Cache();
-        new CheckAllTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60l);
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new VipSystemExpansion().register();
+        }
+        new CheckAllTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60L);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), instance);
         VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> cache.cache(player));
     }

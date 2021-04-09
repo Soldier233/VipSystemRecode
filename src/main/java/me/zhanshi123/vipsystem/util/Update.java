@@ -2,7 +2,7 @@ package me.zhanshi123.vipsystem.util;
 
 public class Update {
     private String name, message;
-    private double version;
+    private String version;
 
     public String getName() {
 	return name;
@@ -20,11 +20,11 @@ public class Update {
 	this.message = message;
     }
 
-    public double getVersion() {
+    public String getVersion() {
 	return version;
     }
 
-    public void setVersion(double version) {
+    public void setVersion(String version) {
 	this.version = version;
     }
 
