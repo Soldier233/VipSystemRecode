@@ -32,6 +32,10 @@ public class CustomFunction {
     public CustomFunction(String name) {
         this.name = name;
         CustomFunction customFunction = Main.getCustomManager().getCustomFunction(name);
+        if (customFunction == null) {
+            Main.getInstance().getLogger().warning("Custom function named " + name + " is not loaded, plz check it out!");
+            return;
+        }
         this.description = customFunction.getDescription();
         this.args = customFunction.getArgs();
         this.duration = customFunction.getDuration();
@@ -106,13 +110,13 @@ public class CustomFunction {
     }
 
     public String getFormattedArgs() {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < args.length; i++) {
-            stringBuffer.append("[");
-            stringBuffer.append(args[i]);
-            stringBuffer.append("] ");
+            stringBuilder.append("[");
+            stringBuilder.append(args[i]);
+            stringBuilder.append("] ");
         }
-        String tmp = stringBuffer.toString();
+        String tmp = stringBuilder.toString();
         tmp = tmp.substring(0, tmp.length() - 1);
         return tmp;
     }
