@@ -8,7 +8,7 @@ VipSystemEx可以帮你自主管理服务器的vip，支持限时，永久，可
 ## 命令
 
 | 命令 | 用途 | 权限 |
-| :-: | :-: | :-:|
+| --- | --- | --- |
 |/vipsys me | 查看你的vip情况 | 无 |
 |/vipsys changevip | 切换已开通的Vip | vipsys.changevip |
 |/vipsys give [玩家名] [Vip组名] [时间] | 给予玩家Vip(时间格式为xdxhxmxs，x天 x小时 x分 x秒) | vipsys.give |
