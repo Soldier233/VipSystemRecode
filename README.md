@@ -41,7 +41,7 @@ VipSystemEx可以帮你自主管理服务器的vip，支持限时，永久，可
 占位符映射如下  
 
 | 占位符 | 用途 |
-| :-: | :-: | 
+| --- | --- | 
 | %vipsystem_vip% | vip组名 |
 | %vipsystem_expire% | 到期时间 |
 | %vipsystem_previous% | 开通之前的组名 |
