@@ -106,7 +106,6 @@ public final class Main extends JavaPlugin {
         }
         database.prepare();
         setupPermissions();
-        commandHandler = new CommandHandler("vipsys");
         if(System.getProperty("java.version").startsWith("15")){
             Bukkit.getConsoleSender().sendMessage("[VipSystem] §cSorry, You java version doesn't support JavaScript Engine Nashorn, skipping loading script module");
         }else {
@@ -114,6 +113,7 @@ public final class Main extends JavaPlugin {
             enableCustomFunction = true;
             customManager = new CustomManager();
         }
+        commandHandler = new CommandHandler("vipsys");
         metrics = new Metrics(instance);
         cStats = new CStats(instance);
         cache = new Cache();
