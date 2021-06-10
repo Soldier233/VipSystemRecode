@@ -43,6 +43,7 @@ public class CustomFunction {
     }
 
     public void preCompile() {
+        Main.getInstance().debug("Precompile custom function " + name + " 's script, file:" + script.getAbsolutePath());
         Main.getScriptManager().getCompiledScript(script);
     }
 

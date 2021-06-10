@@ -20,15 +20,16 @@ public class ScriptManager {
     private Map<File, CompiledScript> cache = new HashMap();
 
     public CompiledScript getCompiledScript(File script) {
-        cache.computeIfAbsent(script, file -> {
+        return cache.computeIfAbsent(script, file -> {
             try {
+                Main.getInstance().debug(file.getAbsolutePath() + " 's compiled script not found in cache, compiling!");
                 return ((Compilable) nashorn).compile(new BufferedReader(new InputStreamReader(new FileInputStream(script), Charsets.UTF_8)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            Main.getInstance().debug(file.getAbsolutePath() + " compile failed");
             return null;
         });
-        return null;
     }
 
     public ScriptManager() {
@@ -54,9 +55,15 @@ public class ScriptManager {
     public Object invokeCustomFunction(CustomFunction customFunction, String function, String[] args) {
         CompiledScript compiledScript;
         try {
+            Main.getInstance().debug("Invoke " + customFunction.getScript().getAbsolutePath()+ " function " + function + " with args (" + String.join(",", args) + ")");
+            /*
             compiledScript = getCompiledScript(customFunction.getScript());
-            ((Invocable) compiledScript).invokeFunction(function, args, bindings);
-        } catch (ScriptException | NoSuchMethodException e) {
+            compiledScript.eval(bindings);
+            ((Invocable) compiledScript.getEngine()).invokeFunction(function, args);
+             */
+            nashorn.eval(new BufferedReader(new InputStreamReader(new FileInputStream(customFunction.getScript()), Charsets.UTF_8)), bindings);
+            return ((Invocable) nashorn).invokeFunction(function, args);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
