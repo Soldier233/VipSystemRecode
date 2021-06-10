@@ -2,6 +2,7 @@ package me.zhanshi123.vipsystem.script;
 
 import com.google.common.base.Charsets;
 import me.zhanshi123.vipsystem.Main;
+import me.zhanshi123.vipsystem.custom.CustomFunction;
 import org.bukkit.Bukkit;
 
 import javax.script.*;
@@ -14,8 +15,6 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class ScriptManager {
-    private boolean enable = false;
-
     private ScriptEngine nashorn;
     private Bindings bindings;
     private Map<File, CompiledScript> cache = new HashMap();
@@ -35,7 +34,6 @@ public class ScriptManager {
     public ScriptManager() {
         try {
             Class.forName("org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory");
-            enable = true;
             nashorn = new ScriptEngineManager(Main.getInstance().getClass().getClassLoader()).getEngineByName("nashorn");
             if (nashorn == null) {
                 Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
@@ -53,17 +51,11 @@ public class ScriptManager {
         return nashorn;
     }
 
-    public Object invokeCustomFunction(String function, String[] args) {
-        CompiledScript compiledScript = null;
+    public Object invokeCustomFunction(CustomFunction customFunction, String function, String[] args) {
+        CompiledScript compiledScript;
         try {
-            compiledScript = ((Compilable) nashorn).compile(function);
-
-        } catch (ScriptException e) {
-            e.printStackTrace();
-        }
-        try {
-            Invocable invocable = (Invocable) nashorn;
-            return invocable.invokeFunction(function, args);
+            compiledScript = getCompiledScript(customFunction.getScript());
+            ((Invocable) compiledScript).invokeFunction(function, args, bindings);
         } catch (ScriptException | NoSuchMethodException e) {
             e.printStackTrace();
         }

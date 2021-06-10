@@ -1,14 +1,9 @@
 package me.zhanshi123.vipsystem.custom;
 
-import com.google.common.base.Charsets;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 
-import javax.script.CompiledScript;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,13 +39,11 @@ public class CustomFunction {
         this.script = customFunction.getScript();
         this.functions = customFunction.getFunctions();
         this.durationArgName = customFunction.getDurationArgName();
+        preCompile();
     }
 
     public void preCompile() {
-        CompiledScript compiledScript = Main.getScriptManager().getCompiledScript(script);
-        if (compiledScript == null) {
-
-        }
+        Main.getScriptManager().getCompiledScript(script);
     }
 
     public CustomFunction(String name, String description, String[] args, String durationArgName, String waitTillOnline, List<String> onStart, List<String> onEnd, File script) {
@@ -77,7 +70,7 @@ public class CustomFunction {
                 .collect(Collectors.toList());
         if (scripts.size() != 0) {
             try {
-                Main.getScriptManager().getNashorn().eval(new BufferedReader(new InputStreamReader(new FileInputStream(script), Charsets.UTF_8)));
+                preCompile();
                 scripts.forEach(function -> {
                     if (function.contains("(") && function.contains(")")) {
                         String functionName = function.substring(0, function.indexOf("("));
@@ -162,7 +155,7 @@ public class CustomFunction {
     }
 
     public Object executeFunction(String functionName, String... args) {
-        return Main.getScriptManager().invokeCustomFunction(functionName, args);
+        return Main.getScriptManager().invokeCustomFunction(this, functionName, args);
     }
 
     public String getDescription() {
