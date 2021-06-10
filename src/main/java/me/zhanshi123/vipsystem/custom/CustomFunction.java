@@ -4,7 +4,6 @@ import com.google.common.base.Charsets;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 
-import javax.script.ScriptEngine;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +25,6 @@ public class CustomFunction {
     private File script;
     private List<String> scripts = new ArrayList<>();
     private Map<String, String[]> functions = new HashMap<>();
-    private ScriptEngine nashorn;
     private String durationArgName;
 
     public CustomFunction(String name) {
@@ -44,7 +42,6 @@ public class CustomFunction {
         this.onEnd = customFunction.getOnEnd();
         this.script = customFunction.getScript();
         this.functions = customFunction.getFunctions();
-        this.nashorn = customFunction.getNashorn();
         this.durationArgName = customFunction.getDurationArgName();
     }
 
@@ -72,8 +69,7 @@ public class CustomFunction {
                 .collect(Collectors.toList());
         if (scripts.size() != 0) {
             try {
-                nashorn = Main.getScriptManager().getNashorn();
-                nashorn.eval(new BufferedReader(new InputStreamReader(new FileInputStream(script), Charsets.UTF_8)));
+                Main.getScriptManager().getNashorn().eval(new BufferedReader(new InputStreamReader(new FileInputStream(script), Charsets.UTF_8)));
                 scripts.forEach(function -> {
                     if (function.contains("(") && function.contains(")")) {
                         String functionName = function.substring(0, function.indexOf("("));
@@ -153,16 +149,12 @@ public class CustomFunction {
         this.script = script;
     }
 
-    public ScriptEngine getNashorn() {
-        return nashorn;
-    }
-
     public String[] getSortedArguments(String functionName) {
         return functions.get(functionName);
     }
 
     public Object executeFunction(String functionName, String... args) {
-        return Main.getScriptManager().invokeCustomFunction(nashorn, functionName, args);
+        return Main.getScriptManager().invokeCustomFunction(functionName, args);
     }
 
     public String getDescription() {

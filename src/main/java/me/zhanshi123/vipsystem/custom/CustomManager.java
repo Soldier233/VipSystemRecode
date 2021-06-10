@@ -18,8 +18,10 @@ public class CustomManager {
     private File file;
 
     public CustomManager() {
+        Main.getInstance().debug("Start to load custom function");
         file = new File(Main.getInstance().getDataFolder(), "custom");
         if (!file.exists()) {
+            Main.getInstance().debug("Custom function folder not found, generate default one");
             file.mkdirs();
             File folder = new File(file, "Example");
             folder.mkdirs();
@@ -33,6 +35,7 @@ public class CustomManager {
             if (function.isFile()) {
                 continue;
             }
+            Main.getInstance().debug("Loading custom function folder from" + function.getAbsolutePath());
             try {
                 File config = new File(function, "custom.yml");
                 if (!config.exists()) {
@@ -49,7 +52,7 @@ public class CustomManager {
                 List<String> tmp = yamlConfig.getStringList("args");
                 String[] array = new String[tmp.size()];
                 tmp.toArray(array);
-                CustomFunction customFunction = new CustomFunction(function.getName(), yamlConfig.getString("description"), array, yamlConfig.getString("duration"),yamlConfig.getString("waitTillOnline"), onStart, onEnd, script);
+                CustomFunction customFunction = new CustomFunction(function.getName(), yamlConfig.getString("description"), array, yamlConfig.getString("duration"), yamlConfig.getString("waitTillOnline"), onStart, onEnd, script);
                 functionMap.putIfAbsent(customFunction.getName(), customFunction);
             } catch (IOException | InvalidConfigurationException e) {
                 e.printStackTrace();
