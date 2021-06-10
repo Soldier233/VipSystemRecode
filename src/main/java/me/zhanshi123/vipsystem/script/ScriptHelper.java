@@ -5,15 +5,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class ScriptHelper {
-    public static void sendMessage(String message) {
+    public void sendMessage(String message) {
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
 
-    public static void sendMessage(Player player, String message) {
+    public void sendMessage(Player player, String message) {
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
 
-    public static Player getPlayer(String name) {
+    public Player getPlayer(String name) {
         return Bukkit.getPlayer(name);
     }
 }

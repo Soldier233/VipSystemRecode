@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 
+import javax.script.CompiledScript;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,6 +44,13 @@ public class CustomFunction {
         this.script = customFunction.getScript();
         this.functions = customFunction.getFunctions();
         this.durationArgName = customFunction.getDurationArgName();
+    }
+
+    public void preCompile() {
+        CompiledScript compiledScript = Main.getScriptManager().getCompiledScript(script);
+        if (compiledScript == null) {
+
+        }
     }
 
     public CustomFunction(String name, String description, String[] args, String durationArgName, String waitTillOnline, List<String> onStart, List<String> onEnd, File script) {
