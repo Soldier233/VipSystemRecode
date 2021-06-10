@@ -82,6 +82,7 @@ public class CommandsExecutor implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             return Main.getCommandHandler().getCommands().stream()
                     .map(SubCommand::getName)
+                    .filter(str -> str.startsWith(args[0]))
                     .collect(Collectors.toList());
         } else if (args.length >= 2) {
             String commandName = args[0];
@@ -96,7 +97,11 @@ public class CommandsExecutor implements CommandExecutor, TabCompleter {
             if (args.length - 2 >= tabCompletable.getArguments().size()) {
                 return new ArrayList<>();
             }
-            return tabCompletable.getArguments().get(args.length - 2).run();
+            return tabCompletable.getArguments().get(args.length - 2)
+                    .run()
+                    .stream()
+                    .filter(str -> str.startsWith(args[args.length - 2]))
+                    .collect(Collectors.toList());
         }
         return new ArrayList<>();
     }
