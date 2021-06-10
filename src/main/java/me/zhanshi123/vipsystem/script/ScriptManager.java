@@ -1,23 +1,20 @@
 package me.zhanshi123.vipsystem.script;
 
 import com.google.common.base.Charsets;
+import com.google.common.collect.Maps;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.custom.CustomFunction;
-import org.bukkit.Bukkit;
 
 import javax.script.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class ScriptManager {
     private ScriptEngine nashorn;
-    private Bindings bindings;
-    private Map<File, CompiledScript> cache = new HashMap();
+    private final Map<File, CompiledScript> cache = Maps.newHashMap();
 
     public CompiledScript getCompiledScript(File script) {
         return cache.computeIfAbsent(script, file -> {
@@ -35,13 +32,12 @@ public class ScriptManager {
     public ScriptManager() {
         try {
             Class.forName("org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory");
-            nashorn = new ScriptEngineManager(Main.getInstance().getClass().getClassLoader()).getEngineByName("nashorn");
+            nashorn = new ScriptEngineManager(ScriptHelper.getInstance().getClass().getClassLoader()).getEngineByName("nashorn");
             if (nashorn == null) {
                 Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
+                return;
             }
-            bindings = nashorn.createBindings();
-            bindings.put("helper", new ScriptHelper());
-            bindings.put("getPlayer", (Consumer<String>) Bukkit::getPlayer);
+            nashorn.put("helper", ScriptHelper.getInstance());
         } catch (ClassNotFoundException e) {
             Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
             e.printStackTrace();
@@ -55,13 +51,12 @@ public class ScriptManager {
     public Object invokeCustomFunction(CustomFunction customFunction, String function, String[] args) {
         CompiledScript compiledScript;
         try {
-            Main.getInstance().debug("Invoke " + customFunction.getScript().getAbsolutePath()+ " function " + function + " with args (" + String.join(",", args) + ")");
+            Main.getInstance().debug("Invoke " + customFunction.getScript().getAbsolutePath() + " function " + function + " with args (" + String.join(",", args) + ")");
             /*
             compiledScript = getCompiledScript(customFunction.getScript());
-            compiledScript.eval(bindings);
-            ((Invocable) compiledScript.getEngine()).invokeFunction(function, args);
+            return ((Invocable) compiledScript.getEngine()).invokeFunction(function, args);
              */
-            nashorn.eval(new BufferedReader(new InputStreamReader(new FileInputStream(customFunction.getScript()), Charsets.UTF_8)), bindings);
+            nashorn.eval(new BufferedReader(new InputStreamReader(new FileInputStream(customFunction.getScript()), Charsets.UTF_8)));
             return ((Invocable) nashorn).invokeFunction(function, args);
         } catch (Exception e) {
             e.printStackTrace();

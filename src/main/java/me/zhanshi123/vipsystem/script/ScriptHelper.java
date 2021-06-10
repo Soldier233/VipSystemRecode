@@ -5,6 +5,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class ScriptHelper {
+    private static ScriptHelper instance = new ScriptHelper();
+
+    public static ScriptHelper getInstance() {
+        return instance;
+    }
+
     public void sendMessage(String message) {
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
