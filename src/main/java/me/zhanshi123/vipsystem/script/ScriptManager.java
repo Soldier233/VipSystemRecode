@@ -31,14 +31,14 @@ public class ScriptManager {
 
     public ScriptManager() {
         try {
-            Class.forName("org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory");
+//            Class.forName("org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory");
             nashorn = new ScriptEngineManager(ScriptHelper.getInstance().getClass().getClassLoader()).getEngineByName("nashorn");
             if (nashorn == null) {
                 Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
                 return;
             }
             nashorn.put("helper", ScriptHelper.getInstance());
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
             e.printStackTrace();
         }
@@ -49,11 +49,10 @@ public class ScriptManager {
     }
 
     public Object invokeCustomFunction(CustomFunction customFunction, String function, String[] args) {
-        CompiledScript compiledScript;
         try {
             Main.getInstance().debug("Invoke " + customFunction.getScript().getAbsolutePath() + " function " + function + " with args (" + String.join(",", args) + ")");
             /*
-            compiledScript = getCompiledScript(customFunction.getScript());
+            CompiledScript compiledScript = getCompiledScript(customFunction.getScript());
             return ((Invocable) compiledScript.getEngine()).invokeFunction(function, args);
              */
             nashorn.eval(new BufferedReader(new InputStreamReader(new FileInputStream(customFunction.getScript()), Charsets.UTF_8)));
