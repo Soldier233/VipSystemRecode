@@ -49,18 +49,20 @@ public class ScriptManager {
             default:
                 Main.getInstance().debug("Trying to load new nashorn API");
                 try {
-//            Class.forName("org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory");
                     nashorn = new ScriptEngineManager(Main.getInstance().getClass().getClassLoader()).getEngineByName("nashorn");
                     if (nashorn == null) {
                         Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
                         return;
                     }
-                    nashorn.put("helper", ScriptHelper.getInstance());
+
                 } catch (Exception e) {
                     Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
                     e.printStackTrace();
                 }
                 break;
+        }
+        if (nashorn != null) {
+            nashorn.put("helper", ScriptHelper.getInstance());
         }
 
     }
