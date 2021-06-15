@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 public class ScriptManager {
@@ -30,18 +31,38 @@ public class ScriptManager {
     }
 
     public ScriptManager() {
-        try {
+        String javaVersion = System.getProperty("java.specification.version");
+        Main.getInstance().debug("Your java version: " + javaVersion);
+        switch (javaVersion) {
+            case "1.8":
+                Main.getInstance().debug("Trying to load old nashorn API");
+                try {
+                    Class factoryClass = Class.forName("jdk.nashorn.api.scripting.NashornScriptEngineFactory");
+                    Object factoryObject = factoryClass.getConstructor().newInstance();
+                    Method getScriptEngineMethod = factoryClass.getMethod("getScriptEngine", ClassLoader.class);
+                    nashorn = (ScriptEngine) getScriptEngineMethod.invoke(factoryObject, Main.getInstance().getClass().getClassLoader());
+                } catch (Exception e) {
+                    Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
+                    e.printStackTrace();
+                }
+                break;
+            default:
+                Main.getInstance().debug("Trying to load new nashorn API");
+                try {
 //            Class.forName("org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory");
-            nashorn = new ScriptEngineManager(ScriptHelper.getInstance().getClass().getClassLoader()).getEngineByName("nashorn");
-            if (nashorn == null) {
-                Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
-                return;
-            }
-            nashorn.put("helper", ScriptHelper.getInstance());
-        } catch (Exception e) {
-            Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
-            e.printStackTrace();
+                    nashorn = new ScriptEngineManager(Main.getInstance().getClass().getClassLoader()).getEngineByName("nashorn");
+                    if (nashorn == null) {
+                        Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
+                        return;
+                    }
+                    nashorn.put("helper", ScriptHelper.getInstance());
+                } catch (Exception e) {
+                    Main.getInstance().getLogger().warning("Cannot load JavaScript engine, custom script disabled");
+                    e.printStackTrace();
+                }
+                break;
         }
+
     }
 
     public ScriptEngine getNashorn() {
