@@ -64,16 +64,16 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>vault-repo</id>
-            <url>https://nexus.hc.to/content/repositories/pub_releases</url>
-        </repository>
-        <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
         <repository>
             <id>clips-public-repo</id>
             <url>https://repo.extendedclip.com/content/repositories/public/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -90,9 +90,9 @@
             <version>4.0.3</version>
         </dependency>
         <dependency>
-            <groupId>net.milkbowl.vault</groupId>
+            <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
-            <version>1.6</version>
+            <version>1.7</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
