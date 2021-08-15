@@ -92,13 +92,13 @@ public class MessageManager {
         if (str == null) {
             return path;
         }
-        return ChatColor.translateAlternateColorCodes('&', translateHexColor(str));
+        return ChatColor.translateAlternateColorCodes('&', translateHexColor(str)).replace("\\n","\n");
     }
 
     public static List<String> getStringList(String path) {
         return config.getStringList(path)
                 .stream()
-                .map(str -> ChatColor.translateAlternateColorCodes('&', str))
+                .map(str -> ChatColor.translateAlternateColorCodes('&', str).replace("\\n","\n"))
                 .map(MessageManager::translateHexColor)
                 .collect(Collectors.toList());
     }
