@@ -1,8 +1,12 @@
 package me.zhanshi123.vipsystem.command;
 
+import me.zhanshi123.vipsystem.Main;
+import me.zhanshi123.vipsystem.command.type.AdminCommand;
+import me.zhanshi123.vipsystem.command.type.PermissionCommand;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
 
@@ -45,6 +49,16 @@ public abstract class SubCommand {
         if (usage != null && description != null) {
             sender.sendMessage(MessageFormat.format(MessageManager.getString("Command.format"), usage, description));
         }
+    }
+
+    public boolean hasPermission(CommandSender player) {
+        if (this instanceof PermissionCommand) {
+            return Main.getPermission().has(player, "vipsys." + name);
+        }
+        if (this instanceof AdminCommand) {
+            return player.isOp();
+        }
+        return true;
     }
 
     public boolean isNeedArg() {
