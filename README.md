@@ -117,6 +117,21 @@ svip组同理，如果你有更多的vip种类，可以按照上方格式自行�
 如果你没有自行构建的能力，你可以联系作者支付￥20作为赞助，并由作者提供构建后的文件
 所有支付的款项都是对作者开发极大的支持!
 ## API
+使用本插件作为前置(以Maven为例)  
+```
+<repository>
+  <id>soldier-repo</id>
+  <url>https://repo.zhanshi123.me/repository/maven-public/</url>
+</repository>
+```
+```
+<dependency>
+  <groupId>me.zhanshi123</groupId>
+  <artifactId>VipSystem</artifactId>
+  <version>4.13</version>
+  <scope>provided</scope>
+</dependency>
+```
 你可以通过```VipSystemAPI.getInstance()```来获取```VipSystemAPI```的实例  
 更多内容待补充
 ## 鸣谢
