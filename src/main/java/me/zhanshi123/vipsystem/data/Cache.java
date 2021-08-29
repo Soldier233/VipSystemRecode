@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cache implements Listener {
-    private Map<String, VipData> map = new HashMap<>();
+    private final Map<String, VipData> map = new HashMap<>();
 
     public Cache() {
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
@@ -49,7 +49,7 @@ public class Cache implements Listener {
         }
         String name = VipSystemAPI.getInstance().getPlayerName(player);
         Main.getInstance().debug("Cache player " + player.getName() + "'s data as " + name);
-        Main.getInstance().debug("Data: " + vipData.toString());
+        Main.getInstance().debug("Data: " + vipData);
         map.remove(name);
         map.put(name, vipData);
     }
@@ -73,7 +73,7 @@ public class Cache implements Listener {
         map.remove(name);
         Main.getDataBase().updateVipData(vipData);
         Main.getInstance().debug("Player " + player.getName() + "'s cached data removed and updated in database");
-        Main.getInstance().debug("New data: " + vipData.toString());
+        Main.getInstance().debug("New data: " + vipData);
     }
 
     public void addVipData(String playerName, VipData vipData) {

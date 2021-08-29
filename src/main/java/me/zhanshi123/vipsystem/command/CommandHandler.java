@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class CommandHandler {
 
-    private Set<SubCommand> commands = new HashSet<>();
+    private final Set<SubCommand> commands = new HashSet<>();
 
     public CommandHandler(String name) {
         Bukkit.getPluginCommand(name).setExecutor(new CommandsExecutor());

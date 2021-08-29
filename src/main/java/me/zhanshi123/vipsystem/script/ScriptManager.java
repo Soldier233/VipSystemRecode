@@ -37,7 +37,7 @@ public class ScriptManager {
             case "1.8":
                 Main.getInstance().debug("Trying to load old nashorn API");
                 try {
-                    Class factoryClass = Class.forName("jdk.nashorn.api.scripting.NashornScriptEngineFactory");
+                    Class<?> factoryClass = Class.forName("jdk.nashorn.api.scripting.NashornScriptEngineFactory");
                     Object factoryObject = factoryClass.getConstructor().newInstance();
                     Method getScriptEngineMethod = factoryClass.getMethod("getScriptEngine", ClassLoader.class);
                     nashorn = (ScriptEngine) getScriptEngineMethod.invoke(factoryObject, Main.getInstance().getClass().getClassLoader());

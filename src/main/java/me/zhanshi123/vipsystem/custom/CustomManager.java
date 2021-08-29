@@ -11,6 +11,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class CustomManager {
     private Map<String, CustomFunction> functionMap = new HashMap<>();
@@ -26,9 +27,9 @@ public class CustomManager {
             File folder = new File(file, "Example");
             folder.mkdirs();
             File example = new File(folder, "custom.yml");
-            MessageManager.writeFile(Main.getInstance().getResource("custom.yml"), example);
+            MessageManager.writeFile(Objects.requireNonNull(Main.getInstance().getResource("custom.yml")), example);
             example = new File(folder, "script.js");
-            MessageManager.writeFile(Main.getInstance().getResource("script.js"), example);
+            MessageManager.writeFile(Objects.requireNonNull(Main.getInstance().getResource("script.js")), example);
         }
         File[] functions = file.listFiles();
         for (File function : functions) {
@@ -39,11 +40,11 @@ public class CustomManager {
             try {
                 File config = new File(function, "custom.yml");
                 if (!config.exists()) {
-                    MessageManager.writeFile(Main.getInstance().getResource("custom.yml"), config);
+                    MessageManager.writeFile(Objects.requireNonNull(Main.getInstance().getResource("custom.yml")), config);
                 }
                 File script = new File(function, "script.js");
                 if (!script.exists()) {
-                    MessageManager.writeFile(Main.getInstance().getResource("script.js"), script);
+                    MessageManager.writeFile(Objects.requireNonNull(Main.getInstance().getResource("script.js")), script);
                 }
                 FileConfiguration yamlConfig = new YamlConfiguration();
                 yamlConfig.load(new BufferedReader(new InputStreamReader(new FileInputStream(config), Charsets.UTF_8)));

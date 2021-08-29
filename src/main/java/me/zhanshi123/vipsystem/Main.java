@@ -13,7 +13,6 @@ import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
 import me.zhanshi123.vipsystem.metrics.CStats;
 import me.zhanshi123.vipsystem.metrics.Metrics;
-import me.zhanshi123.vipsystem.script.ScriptHelper;
 import me.zhanshi123.vipsystem.script.ScriptManager;
 import me.zhanshi123.vipsystem.task.CheckAllTask;
 import net.milkbowl.vault.permission.Permission;
@@ -106,7 +105,10 @@ public final class Main extends JavaPlugin {
             return;
         }
         database.prepare();
-        setupPermissions();
+        if (!setupPermissions()) {
+            getLogger().warning("Error when hooking Vault! Stop Loading");
+            setEnabled(false);
+        }
         scriptManager = new ScriptManager();
         enableCustomFunction = true;
         customManager = new CustomManager();
