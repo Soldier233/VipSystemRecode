@@ -3,6 +3,7 @@ package me.zhanshi123.vipsystem.data;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.api.vip.VipData;
+import me.zhanshi123.vipsystem.task.CheckVipTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cache implements Listener {
-    private Map<String, VipData> map = new HashMap<>();
+    private final Map<String, VipData> map = new HashMap<>();
 
     public Cache() {
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
@@ -31,7 +32,7 @@ public class Cache implements Listener {
                 Player player = e.getPlayer();
                 cache(player);
             }
-        }.runTaskLater(Main.getInstance(), 20L);
+        }.runTaskLaterAsynchronously(Main.getInstance(), 20L);
     }
 
     @EventHandler
@@ -49,9 +50,16 @@ public class Cache implements Listener {
         }
         String name = VipSystemAPI.getInstance().getPlayerName(player);
         Main.getInstance().debug("Cache player " + player.getName() + "'s data as " + name);
-        Main.getInstance().debug("Data: " + vipData.toString());
+        Main.getInstance().debug("Data: " + vipData);
         map.remove(name);
         map.put(name, vipData);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                new CheckVipTask(player).runTask(Main.getInstance());
+            }
+        }.runTask(Main.getInstance());
+
     }
 
     public VipData getVipData(String playerName) {
@@ -73,7 +81,7 @@ public class Cache implements Listener {
         map.remove(name);
         Main.getDataBase().updateVipData(vipData);
         Main.getInstance().debug("Player " + player.getName() + "'s cached data removed and updated in database");
-        Main.getInstance().debug("New data: " + vipData.toString());
+        Main.getInstance().debug("New data: " + vipData);
     }
 
     public void addVipData(String playerName, VipData vipData) {

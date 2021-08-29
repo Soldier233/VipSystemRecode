@@ -40,16 +40,21 @@ public class ChangeVipCommand extends SubCommand implements PermissionCommand {
         data.forEach(entry -> {
             TextComponent component = new TextComponent();
             String text = MessageFormat.format(MessageManager.getString("Command.changevip.tellraw.plain"), entry.getVip());
-            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
-                    new TextComponent(MessageFormat.format(MessageManager.getString("Command.changevip.tellraw.storeTime"), getTimeString(entry.getActivate())) + "\n"),
-                    new TextComponent(MessageFormat.format(MessageManager.getString("Command.changevip.tellraw.expireTime"), getTimeString(entry.getActivate() + entry.getLeft())) + "\n"),
-                    new TextComponent(MessageManager.getString("Command.changevip.tellraw.click"))
-            }));
+            component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, getComponents(entry)));
             component.setText(text);
             component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/vipsys claim " + entry.getId()));
             player.spigot().sendMessage(component);
         });
         return true;
+    }
+
+    private BaseComponent[] getComponents(VipStorage data) {
+        String arg0 = getTimeString(data.getActivate());
+        String arg1 = getTimeString(data.getActivate() + data.getLeft());
+        return MessageManager.getStringList("Command.changevip.tellraw.extra").stream()
+                .map(str -> MessageFormat.format(str, arg0, arg1))
+                .map(str -> new TextComponent(str + "\n"))
+                .toArray(BaseComponent[]::new);
     }
 
     private String getTimeString(long time) {

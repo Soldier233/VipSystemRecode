@@ -12,15 +12,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class VipSystemAPI {
-    private static VipSystemAPI instance = new VipSystemAPI();
-    private VipManager vipManager;
-    private VipStorageManager vipStorageManager;
-    private Gson gson = new Gson();
+    private static final VipSystemAPI instance = new VipSystemAPI();
+    private final VipManager vipManager;
+    private final VipStorageManager vipStorageManager;
+    private final Gson gson = new Gson();
 
     public static VipSystemAPI getInstance() {
         return instance;
@@ -47,10 +46,10 @@ public class VipSystemAPI {
         return player.getName();
     }
 
-    private String dMatches = "[0-9]+d";
-    private String hMatches = "[0-9]+h";
-    private String mMatches = "[0-9]+m";
-    private String sMatches = "[0-9]+s";
+    private Pattern dMatchesPattern = Pattern.compile("[0-9]+d");
+    private Pattern hMatchesPattern = Pattern.compile("[0-9]+h");
+    private Pattern mMatchesPattern = Pattern.compile("[0-9]+m");
+    private Pattern sMatchesPattern = Pattern.compile("[0-9]+s");
 
     public long getTimeMillis(String text) {
         if (text.equalsIgnoreCase("-1")) {
@@ -60,42 +59,39 @@ public class VipSystemAPI {
         long h = 0L;
         long m = 0L;
         long s = 0L;
-        Pattern p = Pattern.compile(dMatches);
-        Matcher ma = p.matcher(text);
+        Matcher ma = dMatchesPattern.matcher(text);
         if (ma.find()) {
             d = getTime(ma.group());
         }
-        p = Pattern.compile(hMatches);
-        ma = p.matcher(text);
+        ma = hMatchesPattern.matcher(text);
         if (ma.find()) {
             h = getTime(ma.group());
         }
-        p = Pattern.compile(mMatches);
-        ma = p.matcher(text);
+        ma = mMatchesPattern.matcher(text);
         if (ma.find()) {
             m = getTime(ma.group());
         }
-        p = Pattern.compile(sMatches);
-        ma = p.matcher(text);
+        ma = sMatchesPattern.matcher(text);
         if (ma.find()) {
             s = getTime(ma.group());
         }
         long time = d * 86400L;
         time += h * 3600L;
         time += m * 60L;
-        time += s * 1L;
+        time += s;
         return time * 1000;
     }
 
+    private Pattern pattern = Pattern.compile("[0-9]+");
+
     private long getTime(String a) {
-        Pattern p = Pattern.compile("[0-9]+");
-        Matcher m = p.matcher(a);
+        Matcher m = pattern.matcher(a);
         if (m.find()) {
             return Long.parseLong(m.group());
         }
         try {
             return Integer.parseInt(a);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return 0;
     }
@@ -110,6 +106,7 @@ public class VipSystemAPI {
             } else {
                 players = Arrays.asList((Player[]) method.invoke(Bukkit.getServer()));
             }
+            Main.getInstance().debug("online player count:" + players.size() );
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -127,11 +124,11 @@ public class VipSystemAPI {
         return result.toString();
     }
 
-    public void runAsync(Consumer<Void> consumer) {
+    public void runAsync(AsyncTask consumer) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                consumer.accept(null);
+                consumer.run();
             }
         }.runTaskAsynchronously(Main.getInstance());
     }

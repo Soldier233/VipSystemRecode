@@ -108,8 +108,8 @@ svip组同理，如果你有更多的vip种类，可以按照上方格式自行�
 ## 自定义函数
 插件支持你自己编辑自定义函数，来完成一些自动的定时操作  
 比如你可以通过插件实现临时权限的功能  
-![http://www.zhanshi123.me/wp-content/uploads/2020/02/1.png](http://www.zhanshi123.me/wp-content/uploads/2020/02/1.png)  
-具体编辑的方法可以查看 [http://www.zhanshi123.me/?p=320](http://www.zhanshi123.me/?p=320)  
+![https://www.zhanshi123.me/wp-content/uploads/2020/02/1.png](https://www.zhanshi123.me/wp-content/uploads/2020/02/1.png)  
+具体编辑的方法可以查看 [https://www.zhanshi123.me/?p=320](https://www.zhanshi123.me/?p=320)  
 上图的功能你可以直接前往[https://www.mcbbs.net/thread-959456-1-1.html](https://www.mcbbs.net/thread-959456-1-1.html)进行下载
 ## 插件下载
 该插件为免费插件，但是不提供jar的直接下载地址  
@@ -117,12 +117,31 @@ svip组同理，如果你有更多的vip种类，可以按照上方格式自行�
 如果你没有自行构建的能力，你可以联系作者支付￥20作为赞助，并由作者提供构建后的文件
 所有支付的款项都是对作者开发极大的支持!
 ## API
+使用本插件作为前置(以Maven为例)  
+```
+<repository>
+  <id>soldier-repo</id>
+  <url>https://repo.zhanshi123.me/repository/maven-public/</url>
+</repository>
+```
+```
+<dependency>
+  <groupId>me.zhanshi123</groupId>
+  <artifactId>VipSystem</artifactId>
+  <version>4.13</version>
+  <scope>provided</scope>
+</dependency>
+```
 你可以通过```VipSystemAPI.getInstance()```来获取```VipSystemAPI```的实例  
 更多内容待补充
 ## 鸣谢
 感谢下列用户对插件做出的赞助  
 (按时间排序)  
-[yuguo99610](https://www.mcbbs.net/?62235) 50元 
+
+| 用户 | 金额 |
+| ---  | --- |
+|[yuguo99610](https://www.mcbbs.net/?62235)| 50元 |  
+| 匿名 | 50元 |
 ## 联系作者
 如果你想提交bug，你可以发送issue或加群563012939联系群主获取帮助  
 你同样也可以通过email联系 Email: [i@zhanshi123.me](mailto:i@zhanshi123.me)

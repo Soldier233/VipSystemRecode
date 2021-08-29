@@ -66,15 +66,9 @@ public class CommandsExecutor implements CommandExecutor, TabCompleter {
 
     private void sendHelp(CommandSender sender) {
         Main.getCommandHandler().getCommands().stream()
-                .filter(subCommand -> !(subCommand instanceof AdminCommand))
+                .filter(subCommand -> subCommand.hasPermission(sender))
                 .filter(subCommand -> subCommand.getDescription() != null)
                 .forEach(subCommand -> sender.sendMessage(MessageFormat.format(MessageManager.getString("Command.format"), subCommand.getUsage(), subCommand.getDescription())));
-        if (sender.isOp()) {
-            Main.getCommandHandler().getCommands().stream()
-                    .filter(subCommand -> subCommand instanceof AdminCommand)
-                    .filter(subCommand -> subCommand.getDescription() != null)
-                    .forEach(subCommand -> sender.sendMessage(MessageFormat.format(MessageManager.getString("Command.format"), subCommand.getUsage(), subCommand.getDescription())));
-        }
     }
 
     @Override
@@ -100,7 +94,7 @@ public class CommandsExecutor implements CommandExecutor, TabCompleter {
             return tabCompletable.getArguments().get(args.length - 2)
                     .run()
                     .stream()
-                    .filter(str -> str.startsWith(args[args.length - 2]))
+                    .filter(str -> str.startsWith(args[args.length - 1]))
                     .collect(Collectors.toList());
         }
         return new ArrayList<>();

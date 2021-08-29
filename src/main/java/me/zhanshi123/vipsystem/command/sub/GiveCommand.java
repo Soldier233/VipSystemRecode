@@ -39,6 +39,7 @@ public class GiveCommand extends SubCommand implements PermissionCommand, TabCom
         if (vipData != null) {
             if (!vipData.getVip().equalsIgnoreCase(args[2])) {
                 if (vipData.getDuration() != -1) {
+//                    玩家已经有拥有别的vip 需要将原来的vip存储
                     VipSystemAPI.getInstance().getVipStorageManager().store(player);
                     vipData = new VipData(player, args[2], temp);
                     VipSystemAPI.getInstance().getVipManager().addVip(player, vipData);

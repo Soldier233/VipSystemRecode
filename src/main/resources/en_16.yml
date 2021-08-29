@@ -38,9 +38,10 @@ Command:
     vipStored: '§7Following are your vip in storage. Hover the entry to get more details'
     tellraw:
       plain: '§7- §e{0}'
-      storeTime: '§7Time when stored: §e{0}'
-      expireTime: '§7Time when expire: §e{0}'
-      click: '§bClick to change the Vip'
+      extra:
+        - '§7Time when stored: §e{0}'
+        - '§7Time when expire: §e{1}'
+        - '§bClick to change the Vip'
   reload:
     desc: 'Reload the plugin'
     usage: '$[DC143C]/$[FF1493]v$[FFA500]i$[FFFF00]p$[3CB371]s$[4169E1]y$[4B0082]s $[66CCFF]reload'

@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class DelayedRemoveVipTask extends BukkitRunnable {
-    private Player player;
-    private String name;
+    private final Player player;
+    private final String name;
 
     public DelayedRemoveVipTask(Player player) {
         this.player = player;
