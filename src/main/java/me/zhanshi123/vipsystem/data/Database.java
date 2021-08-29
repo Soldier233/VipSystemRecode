@@ -40,7 +40,7 @@ public class Database {
             handler.init(connectionData);
             connection = handler.getConnection();
         } catch (Exception e) {
-            e.printStackTrace();
+            handleException(e);
             Bukkit.getConsoleSender().sendMessage("§6[VipSystem] §cError! Cannot initialize database connection.Please try to turn usePool to false in config or check the passwords");
             Bukkit.getConsoleSender().sendMessage("§6[VipSystem] §c错误! 无法初始化数据库连接，请尝试在配置文件中更改 usePool 为 false 或检查数据库密码等信息");
             Bukkit.getConsoleSender().sendMessage("§6[VipSystem] §cTrying to disable pooled connection");
@@ -55,24 +55,28 @@ public class Database {
         return connection != null;
     }
 
+    private void convertOldData() throws SQLException {
+        if (newData != null) {
+            connection.setAutoCommit(false);
+            Statement convertStatement = connection.createStatement();
+            newData.forEach(data -> {
+                try {
+                    String sql = "INSERT INTO `" + table + "players` (`player`,`vip`,`previous`,`start`,`duration`) VALUES('" + data.getPlayer() + "','" + data.getVip() + "','" + data.getPrevious() + "','" + data.getStart() + "','" + data.getDuration() + "');";
+                    convertStatement.addBatch(sql);
+                } catch (SQLException e) {
+                    handleException(e);
+                }
+            });
+            convertStatement.executeBatch();
+            connection.setAutoCommit(true);
+            convertStatement.close();
+            Main.getInstance().getLogger().info("Database from previous version has been converted.");
+        }
+    }
+
     public void prepare() {
         try {
-            if (newData != null) {
-                connection.setAutoCommit(false);
-                Statement convertStatement = connection.createStatement();
-                newData.forEach(data -> {
-                    try {
-                        String sql = "INSERT INTO `" + table + "players` (`player`,`vip`,`previous`,`start`,`duration`) VALUES('" + data.getPlayer() + "','" + data.getVip() + "','" + data.getPrevious() + "','" + data.getStart() + "','" + data.getDuration() + "');";
-                        convertStatement.addBatch(sql);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                });
-                convertStatement.executeBatch();
-                connection.setAutoCommit(true);
-                convertStatement.close();
-                Main.getInstance().getLogger().info("Database from previous version has been converted.");
-            }
+            convertOldData();
             Statement statement = connection.createStatement();
             if (connectionData.isUseMySQL()) {
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS `" + table + "players` (\n" +
@@ -158,11 +162,24 @@ public class Database {
             getAllFunction = connection.prepareStatement("SELECT `name`,`id`,`args`,`activate`,`left` FROM `" + table + "custom`;");
             removeFunction = connection.prepareStatement("DELETE FROM `" + table + "custom` WHERE `id` = ?;");
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
     }
 
     private List<VipData> newData = null;
+
+    private void handleException(Exception e) {
+        String message = e.getMessage();
+        e.printStackTrace();
+        if (message.contains("locked")) {
+            Main.getInstance().getLogger().warning("Detect SQLite Error, please try restart the server! Or you will lose your Vip data");
+            Main.getInstance().getLogger().warning("检测到SQLite数据库被锁定，如果没有打开过.db的数据文件，请重启服务器。此状态下不会有任何vip数据被保存");
+            return;
+        }
+        if (message.contains("out of memory")) {
+            Main.getInstance().getLogger().warning("检测到SQLite数据库内存溢出，请检查你的目录是否有中文");
+        }
+    }
 
     public void checkOldVersion() {
         if (!Main.getConvertManager().isOldVersion()) {
@@ -191,7 +208,7 @@ public class Database {
             dropStatement.executeUpdate("DROP TABLE `" + table + "vipkeys`;");
             dropStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
 
     }
@@ -209,7 +226,7 @@ public class Database {
                 connection = handler.getConnection();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
     }
 
@@ -231,7 +248,7 @@ public class Database {
             updatePlayer.setString(5, data.getPlayer());
             updatePlayer.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
     }
 
@@ -245,7 +262,7 @@ public class Database {
             insertPlayer.setLong(5, data.getDuration());
             insertPlayer.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
     }
 
@@ -255,7 +272,7 @@ public class Database {
             deletePlayer.setString(1, player);
             deletePlayer.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
     }
 
@@ -269,7 +286,7 @@ public class Database {
                 data = new VipData(player, resultSet.getString("vip"), resultSet.getString("previous"), resultSet.getLong("start"), resultSet.getLong("duration"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
         return data;
     }
@@ -283,7 +300,7 @@ public class Database {
                 dataSet.add(new VipData(resultSet.getString("player"), resultSet.getString("vip"), resultSet.getString("previous"), resultSet.getLong("start"), resultSet.getLong("duration")));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
         return dataSet;
     }
@@ -299,7 +316,7 @@ public class Database {
             }
             resultSet.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
         validVerify(set);
         return set;
@@ -315,7 +332,7 @@ public class Database {
             insertStorage.setLong(5, vipStorage.getLeft());
             insertStorage.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
     }
 
@@ -330,7 +347,7 @@ public class Database {
             }
             resultSet.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
         if (vipStorage == null) {
             return null;
@@ -347,7 +364,7 @@ public class Database {
             removeStorage.setInt(1, id);
             removeStorage.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
     }
 
@@ -370,7 +387,7 @@ public class Database {
             insertFunction.setLong(4, customFunction.getDuration());
             insertFunction.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
     }
 
@@ -380,7 +397,7 @@ public class Database {
             removeFunction.setInt(1, id);
             removeFunction.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
     }
 
@@ -410,7 +427,7 @@ public class Database {
             }
             resultSet.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleException(e);
         }
         return functions;
     }

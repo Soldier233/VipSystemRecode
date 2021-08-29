@@ -38,9 +38,10 @@ Command:
     vipStored: '§7下面是你已经开通的可切换的Vip，鼠标移到文本上可以看到详细内容'
     tellraw:
       plain: '§7- §e{0}'
-      storeTime: '§7存放时间: §e{0}'
-      expireTime: '§7到期时间: §e{0}'
-      click: '§b点击切换'
+      extra:
+        - '§7存放时间: §e{0}'
+        - '§7到期时间: §e{1}'
+        - '§b点击切换'
   reload:
     desc: '重载插件'
     usage: '$[DC143C]/$[FF1493]v$[FFA500]i$[FFFF00]p$[3CB371]s$[4169E1]y$[4B0082]s $[66CCFF]reload'

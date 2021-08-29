@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MessageManager {
-    private static FileConfiguration config = new YamlConfiguration();
+    private static final FileConfiguration config = new YamlConfiguration();
     private static File f = null;
 
     public static void writeFile(InputStream input, File file) {
@@ -109,25 +109,15 @@ public class MessageManager {
             return text;
         }
         char[] chars = text.toCharArray();
-//        Main.getInstance().debug("Translate hex: " + text);
         for (int i = 0; i < chars.length; i++) {
             if (chars[i] == '$') { //判断是否有16进制匹配关键词
-                /*
-                Main.getInstance().debug("i+8:" + (i + 7));
-                Main.getInstance().debug("chars.length-1:" + (chars.length - 1));
-                 */
                 if (i + 7 < chars.length - 1) { //判断是否超长
-                    /*
-                    Main.getInstance().debug("chars[i+1]: " + chars[i + 1]);
-                    Main.getInstance().debug("chars[i+8]: " + chars[i + 8]);
-                     */
                     if (chars[i + 1] == '[' && chars[i + 8] == ']') { //判断是否有左右括号匹配
                         StringBuilder stringBuilder = new StringBuilder();
                         for (int j = i + 2; j < i + 8; j++) {
                             stringBuilder.append(chars[j]); //拼装16进制字符串
                         }
                         String hexColor = stringBuilder.toString();
-//                        Main.getInstance().debug("hex: " + hexColor);
                         text = text.replace("$[" + hexColor + "]", ChatColor.of("#" + hexColor).toString());
                     }
                 }
