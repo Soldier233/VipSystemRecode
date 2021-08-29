@@ -3,6 +3,7 @@ package me.zhanshi123.vipsystem.data;
 import me.zhanshi123.vipsystem.Main;
 import me.zhanshi123.vipsystem.api.VipSystemAPI;
 import me.zhanshi123.vipsystem.api.vip.VipData;
+import me.zhanshi123.vipsystem.task.CheckVipTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,7 +32,7 @@ public class Cache implements Listener {
                 Player player = e.getPlayer();
                 cache(player);
             }
-        }.runTaskLater(Main.getInstance(), 20L);
+        }.runTaskLaterAsynchronously(Main.getInstance(), 20L);
     }
 
     @EventHandler
@@ -52,6 +53,13 @@ public class Cache implements Listener {
         Main.getInstance().debug("Data: " + vipData);
         map.remove(name);
         map.put(name, vipData);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                new CheckVipTask(player).runTask(Main.getInstance());
+            }
+        }.runTask(Main.getInstance());
+
     }
 
     public VipData getVipData(String playerName) {

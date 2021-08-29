@@ -7,7 +7,6 @@ import me.zhanshi123.vipsystem.custom.CustomManager;
 import me.zhanshi123.vipsystem.customcommand.CustomCommandManager;
 import me.zhanshi123.vipsystem.data.Cache;
 import me.zhanshi123.vipsystem.data.Database;
-import me.zhanshi123.vipsystem.listener.PlayerListener;
 import me.zhanshi123.vipsystem.manager.ConfigManager;
 import me.zhanshi123.vipsystem.manager.MessageManager;
 import me.zhanshi123.vipsystem.manager.UpdateManager;
@@ -120,7 +119,6 @@ public final class Main extends JavaPlugin {
             new VipSystemExpansion().register();
         }
         new CheckAllTask().runTaskTimerAsynchronously(instance, 0L, 20 * 60L);
-        Bukkit.getPluginManager().registerEvents(new PlayerListener(), instance);
         VipSystemAPI.getInstance().getOnlinePlayers().forEach(player -> cache.cache(player));
     }
 

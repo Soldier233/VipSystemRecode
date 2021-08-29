@@ -94,7 +94,7 @@ public class CommandsExecutor implements CommandExecutor, TabCompleter {
             return tabCompletable.getArguments().get(args.length - 2)
                     .run()
                     .stream()
-                    .filter(str -> str.startsWith(args[args.length - 2]))
+                    .filter(str -> str.startsWith(args[args.length - 1]))
                     .collect(Collectors.toList());
         }
         return new ArrayList<>();

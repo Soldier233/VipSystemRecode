@@ -106,6 +106,7 @@ public class VipSystemAPI {
             } else {
                 players = Arrays.asList((Player[]) method.invoke(Bukkit.getServer()));
             }
+            Main.getInstance().debug("online player count:" + players.size() );
         } catch (Exception e) {
             e.printStackTrace();
         }
